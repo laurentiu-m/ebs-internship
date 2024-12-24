@@ -1,7 +1,7 @@
 function App() {
   return (
     <div>
-      <h1>Admin Panel</h1>
+      <h1>Admin Page</h1>
     </div>
   );
 }
