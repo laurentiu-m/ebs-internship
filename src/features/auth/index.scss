@@ -1,45 +1,53 @@
 @use '../../styles/mixins.scss';
 @use '../../styles/variables.scss';
 
-.register-container {
+.auth {
   @include mixins.flex(center, center, column);
   gap: 14px;
 
-  h1 {
+  &__header {
     font-size: variables.$header;
     font-weight: variables.$font-bold;
   }
 
-  form {
+  .form {
     @include mixins.flex(space-between, center, column);
     gap: 20px;
-  }
-}
 
-.reg-input {
-  width: 400px;
-  background: none;
-  border: none;
-  border-bottom: 1px solid variables.$white;
-  padding: 10px 0px;
-  outline: none;
-  font-size: 16px;
-  transition: all 0.1s ease-in-out;
-  &:focus {
-    border-color: variables.$accent;
-  }
-}
+    &__input {
+      width: 400px;
+      background: none;
+      border: none;
+      border-bottom: 1px solid variables.$white;
+      padding: 10px 0px;
+      outline: none;
+      transition: all 0.1s ease-in-out;
+      &:focus {
+        border-color: variables.$accent;
+      }
+    }
 
-.submit-button {
-  width: 100%;
-  padding: 10px;
-  font-weight: variables.$font-semibold;
-  text-transform: uppercase;
-  background-color: variables.$accent;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.1s ease;
-  &:hover {
-    opacity: 85%;
+    &__submit {
+      width: 100%;
+      padding: 10px;
+      font-weight: variables.$font-semibold;
+      text-transform: uppercase;
+      background-color: variables.$accent;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+      &:hover {
+        background-color: variables.$accenth-hover;
+      }
+    }
+
+    &__redirect {
+      text-decoration: none;
+      transition: color 0.1s ease;
+
+      &:hover {
+        color: variables.$accent;
+      }
+    }
   }
 }

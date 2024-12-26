@@ -3,14 +3,16 @@ import '../index.scss';
 
 export const Login = () => {
   return (
-    <div className="register-container">
-      <h1>Login</h1>
+    <div className="auth">
+      <h1 className="auth__header">Login</h1>
 
-      <form>
-        <input className="reg-input" type="email" placeholder="Email" />
-        <input className="reg-input" type="password" placeholder="Password" />
-        <input className="submit-button" type="submit" value="Login" />
-        <Link to="/register">Register</Link>
+      <form className="form">
+        <input className="form__input" type="email" placeholder="Email" />
+        <input className="form__input" type="password" placeholder="Password" />
+        <input className="form__submit" type="submit" value="Login" />
+        <Link to="/register" className="form__redirect">
+          Register
+        </Link>
       </form>
     </div>
   );
