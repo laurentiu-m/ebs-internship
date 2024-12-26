@@ -12,10 +12,12 @@
 
   .form {
     @include mixins.flex(space-between, center, column);
+    width: 400px;
     gap: 20px;
 
-    &__input {
-      width: 400px;
+    &__input,
+    &__select {
+      width: 100%;
       background: none;
       border: none;
       border-bottom: 1px solid variables.$white;
@@ -25,6 +27,10 @@
       &:focus {
         border-color: variables.$accent;
       }
+    }
+
+    &__select {
+      cursor: pointer;
     }
 
     &__submit {
