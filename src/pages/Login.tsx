@@ -1,4 +1,4 @@
-function Login() {
+export const Login = () => {
   return (
     <div className="register-container">
       <h1>Login</h1>
@@ -10,6 +10,4 @@ function Login() {
       </form>
     </div>
   );
-}
-
-export default Login;
+};

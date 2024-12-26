@@ -1,11 +1,9 @@
-import Login from './pages/Login';
+import { Login } from './pages/Login';
 
-function App() {
+export const App = () => {
   return (
     <main className="main-container">
       <Login />
     </main>
   );
-}
-
-export default App;
+};
