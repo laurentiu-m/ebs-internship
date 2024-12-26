@@ -1,0 +1,42 @@
+.register-container {
+  @include flex(center, center, column);
+  gap: 14px;
+
+  h1 {
+    font-size: $header;
+    font-weight: $font-bold;
+  }
+
+  form {
+    @include flex(space-between, center, column);
+    gap: 20px;
+  }
+}
+
+.reg-input {
+  width: 400px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid $white;
+  padding: 10px 0px;
+  outline: none;
+  font-size: 16px;
+  transition: all 0.1s ease-in-out;
+  &:focus {
+    border-color: $accent;
+  }
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  font-weight: $font-semibold;
+  text-transform: uppercase;
+  background-color: $accent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.1s ease;
+  &:hover {
+    opacity: 85%;
+  }
+}

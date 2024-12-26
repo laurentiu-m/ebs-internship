@@ -1,8 +1,10 @@
+import Login from "./pages/Login";
+
 function App() {
   return (
-    <div>
-      <h1>Admin Panel</h1>
-    </div>
+    <main className="main-container">
+      <Login />
+    </main>
   );
 }
 
