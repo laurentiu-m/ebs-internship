@@ -1,3 +1,5 @@
+import '../auth.scss';
+
 export const Register = () => {
   return (
     <div>

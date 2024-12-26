@@ -1,10 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
-@import "variables";
-@import "mixins";
-@import "register";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import 'variables';
+@import 'mixins';
 
 * {
-  font-family: "Poppins", serif;
+  font-family: 'Poppins', serif;
   font-size: $text-base;
   line-height: 1.5;
   font-weight: $font-normal;
