@@ -1,4 +1,4 @@
-import '../auth.scss';
+import '../index.scss';
 
 export const Register = () => {
   return (

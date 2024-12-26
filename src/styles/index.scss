@@ -1,15 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-@import 'variables';
-@import 'mixins';
+@use 'variables';
+@use 'mixins';
 
 * {
   font-family: 'Poppins', serif;
-  font-size: $text-base;
+  font-size: variables.$text-base;
   line-height: 1.5;
-  font-weight: $font-normal;
+  font-weight: variables.$font-normal;
 
-  color: $white;
-  background-color: $background-dark;
+  color: variables.$white;
+  background-color: variables.$background-dark;
 
   box-sizing: border-box;
   margin: 0;
@@ -18,5 +17,5 @@
 
 .main-container {
   min-height: 100vh;
-  @include flex(center, center, column);
+  @include mixins.flex(center, center, column);
 }
