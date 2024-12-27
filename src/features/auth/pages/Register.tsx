@@ -29,8 +29,6 @@ export const Register = () => {
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
 
   const onSubmit = (data: FormData) => {
-    console.log(data);
-
     reset();
   };
 
