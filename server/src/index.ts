@@ -3,7 +3,7 @@ import cors from "cors";
 import path from "path";
 
 const server = jsonServer.create();
-const router = jsonServer.router(path.join(__dirname, "db.json"));
+const router = jsonServer.router("src/db.json");
 const middlewares = jsonServer.defaults();
 
 server.use(cors());
