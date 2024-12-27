@@ -29,6 +29,11 @@
       }
     }
 
+    &__error {
+      font-size: variables.$text-sm;
+      color: variables.$error;
+    }
+
     &__select {
       cursor: pointer;
     }
