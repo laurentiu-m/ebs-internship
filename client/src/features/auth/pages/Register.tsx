@@ -5,6 +5,8 @@ import { z } from 'zod';
 import validator from 'validator';
 import '../index.scss';
 import { api } from '../../../api/index';
+import { useState } from 'react';
+import { AxiosError } from 'axios';
 
 const registerSchema = z
   .object({
@@ -25,6 +27,8 @@ const registerSchema = z
 type FormData = z.infer<typeof registerSchema>;
 
 export const Register = () => {
+  const [error, setError] = useState({ message: '', active: false });
+
   const {
     register,
     handleSubmit,
@@ -38,9 +42,17 @@ export const Register = () => {
 
     try {
       await api.users.createUser(registerData);
+
+      setError({ message: '', active: false });
       reset();
-    } catch (error) {
-      console.log('Failed to create user', error);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        console.error('Failed to create a new user: ', err.response?.data.message);
+        setError({ message: err.response?.data.message, active: true });
+      } else {
+        console.error('Something went wrong: ', err);
+        setError({ message: 'Something went wrong', active: true });
+      }
     }
   };
 
@@ -77,6 +89,7 @@ export const Register = () => {
           placeholder="Confirm Password"
         />
         {errors.confirmPassword && <p className="form__error">{`${errors.confirmPassword.message}`}</p>}
+        {error.active && <p className="form__error">{error.message}</p>}
         <input disabled={isSubmitting} type="submit" className="form__submit" value="Register" />
         <Link to="/login" className="form__redirect">
           Login

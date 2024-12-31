@@ -1,5 +1,5 @@
 import api from './axios';
-import { User, UserFormSend, UserResponse } from '../types/index';
+import { User, UserFormSend } from '../types/index';
 
 export const getUsers = async (): Promise<User[]> => {
   try {
@@ -21,12 +21,11 @@ export const getUserById = async (id: number): Promise<User> => {
   }
 };
 
-export const createUser = async (userData: UserFormSend): Promise<UserResponse> => {
+export const createUser = async (userData: UserFormSend) => {
   try {
-    const response = await api.post<UserResponse>('/api/auth/register', userData);
+    const response = await api.post('/api/auth/register', userData);
     return response.data;
   } catch (error) {
-    console.error('Failed to create a new user', error);
     throw error;
   }
 };

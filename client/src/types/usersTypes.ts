@@ -43,7 +43,3 @@ export type UserFormSend = {
   password: string;
   confirmPassword: string;
 };
-
-export type UserResponse = {
-  message: string;
-};
