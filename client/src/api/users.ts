@@ -1,34 +1,42 @@
-import apiClient from './axios';
+import api from './axios';
+import { User, UserFormSend, UserResponse } from '../types/index';
 
-type userData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  gender: string;
-  role: string;
+export const getUsers = async (): Promise<User[]> => {
+  try {
+    const response = await api.get<User[]>('/users');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch users', error);
+    throw error;
+  }
 };
 
-export const fetchUsers = async () => {
-  const response = await apiClient.get('/users');
-  return response.data;
+export const getUserById = async (id: number): Promise<User> => {
+  try {
+    const response = await api.get<User>(`/users/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch the user', error);
+    throw error;
+  }
 };
 
-export const fetchUserId = async (id: string) => {
-  const response = await apiClient.get(`/users/${id}`);
-  return response.data;
+export const createUser = async (userData: UserFormSend): Promise<UserResponse> => {
+  try {
+    const response = await api.post<UserResponse>('/api/auth/register', userData);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to create a new user', error);
+    throw error;
+  }
 };
 
-export const createUser = async (data: userData) => {
-  const response = await apiClient.post('/users', data);
-  return response.data;
-};
-
-export const updateUser = async (id: string, data: userData) => {
-  const response = await apiClient.put(`/users/${id}`, data);
+export const updateUser = async (id: string, data: UserFormSend) => {
+  const response = await api.put(`/users/${id}`, data);
   return response.data;
 };
 
 export const deleteUser = async (id: string) => {
-  const response = await apiClient.delete(`/users/${id}`);
+  const response = await api.delete(`/users/${id}`);
   return response.data;
 };
