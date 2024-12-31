@@ -24,17 +24,7 @@ export type User = {
   role: string;
 };
 
-export type UserForm = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  gender: string;
-  phone: string;
-  password: string;
-  confirmPassword: string;
-};
-
-export type UserFormSend = {
+export type UserRegister = {
   name: string;
   username: string;
   email: string;
@@ -42,4 +32,9 @@ export type UserFormSend = {
   phone: string;
   password: string;
   confirmPassword: string;
+};
+
+export type UserLogin = {
+  email: string;
+  password: string;
 };
