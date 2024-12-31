@@ -8,14 +8,14 @@ import { api } from '../../../api/index';
 
 const registerSchema = z
   .object({
-    firstName: z.string().min(2, 'First name is required'),
-    lastName: z.string().min(2, 'Last name is required'),
-    username: z.string().min(4, 'Username is required'),
-    email: z.string().email('Invalid email address'),
-    phone: z.string().refine(validator.isMobilePhone),
+    firstName: z.string().nonempty('First name is required').min(2, 'First name must be at least 2 characters'),
+    lastName: z.string().nonempty('Last name is required').min(2, 'Last name must be at least 2 characters'),
+    username: z.string().nonempty('Username is required').min(4, 'Username must be at least 4 characters'),
+    email: z.string().nonempty('Please add your email').email('Invalid email address'),
+    phone: z.string().nonempty('Please add your phone number').refine(validator.isMobilePhone, 'Invalid phone number'),
     gender: z.string().nonempty('Please select a gender'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string()
+    password: z.string().nonempty('Password is required').min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string().nonempty('Confirm password is required')
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Password must match',
@@ -33,14 +33,11 @@ export const Register = () => {
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
 
   const onSubmit = async (data: FormData) => {
-    const formattedData = {
-      ...data,
-      name: `${data.firstName} ${data.lastName}`
-    };
-    const { firstName, lastName, ...dataToSend } = formattedData;
+    const { firstName, lastName, ...rest } = data;
+    const registerData = { ...rest, name: `${firstName} ${lastName}` };
 
     try {
-      await api.users.createUser(dataToSend);
+      await api.users.createUser(registerData);
       reset();
     } catch (error) {
       console.log('Failed to create user', error);
