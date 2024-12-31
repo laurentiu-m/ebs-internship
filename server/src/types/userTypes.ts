@@ -19,6 +19,7 @@ export type User = {
     catchPhrase: string;
     bs: string;
   };
+  gender: string;
   password: string;
   role: string;
 };
@@ -33,5 +34,7 @@ export type RegisterUser = {
   email: string;
   name: string;
   password: string;
+  confirmPassword: string;
+  gender: string;
   phone: string;
 };
