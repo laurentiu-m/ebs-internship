@@ -27,14 +27,14 @@ router.post("/login", (req: Request, res: Response) => {
         { expiresIn: "1h" }
       );
 
-      res.status(200).json({ message: "You have login successfully", token });
+      res.status(200).json({ message: "You've login successfully", token });
       return;
     } else {
-      res.status(404).json("Email or password is not valid");
+      res.status(404).json({ message: "Email or password is not valid" });
       return;
     }
   } else {
-    res.status(404).json("Email or password is not valid");
+    res.status(404).json({ message: "Email or password is not valid" });
     return;
   }
 });
