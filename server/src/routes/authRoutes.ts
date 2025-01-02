@@ -5,13 +5,18 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import { axiosInstance } from "../api/axios";
 
-const router = Router();
-
-const db = jsonServer.router("db.json").db;
-
 dotenv.config();
 
-const secretKey = process.env.JWT_SECRET_KEY;
+const config = {
+  jwtSecret: process.env.JWT_SECRET_KEY || "default-secret-key",
+  jwtExpiration: process.env.JWT_EXPIRATION_TIME || "1h",
+  port: process.env.PORT || 3000,
+  db: "./db.json",
+};
+
+const db = jsonServer.router(config.db).db;
+
+const router = Router();
 
 router.post("/login", (req: Request, res: Response) => {
   const { email, password }: LoginUser = req.body;
@@ -19,24 +24,18 @@ router.post("/login", (req: Request, res: Response) => {
   const users: User[] = db.get("users").value();
   const user: User = users.find((user) => user.email === email);
 
-  if (user) {
-    if (user.password === password) {
-      const token = jwt.sign(
-        { userId: user.id, username: user.username },
-        secretKey,
-        { expiresIn: "1h" }
-      );
-
-      res.status(200).json({ message: "You have login successfully", token });
-      return;
-    } else {
-      res.status(404).json("Email or password is not valid");
-      return;
-    }
-  } else {
-    res.status(404).json("Email or password is not valid");
+  if (!user || user.password !== password) {
+    res.status(400).json({ message: "Invalid email or password" });
     return;
   }
+
+  const token = jwt.sign(
+    { userId: user.id, username: user.username },
+    config.jwtSecret,
+    { expiresIn: config.jwtExpiration }
+  );
+
+  res.status(200).json({ message: "You have login successfully", token });
 });
 
 router.post("/register", async (req: Request, res: Response) => {
@@ -76,11 +75,9 @@ router.post("/register", async (req: Request, res: Response) => {
       phone,
     });
     res.status(200).json("You've been registred successfully");
-    return;
   } catch (error) {
     console.error("Something went wrong", error);
     res.status(500).json("An error occurred during registration");
-    return;
   }
 });
 
