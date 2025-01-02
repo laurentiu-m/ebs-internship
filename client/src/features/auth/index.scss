@@ -27,11 +27,12 @@
       &:focus {
         border-color: variables.$accent;
       }
-    }
-
-    &__error {
-      font-size: variables.$text-sm;
-      color: variables.$error;
+      &--error {
+        border-color: variables.$error;
+        &:focus {
+          border-color: variables.$error;
+        }
+      }
     }
 
     &__select {
@@ -60,5 +61,10 @@
         color: variables.$accent;
       }
     }
+  }
+
+  .error {
+    font-size: variables.$text-sm;
+    color: variables.$error;
   }
 }

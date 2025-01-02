@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import '../index.scss';
-import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '../../../api';
 import { AxiosError } from 'axios';
@@ -15,11 +14,10 @@ const loginSchema = z.object({
 type FormData = z.infer<typeof loginSchema>;
 
 export const Login = () => {
-  const [error, setError] = useState({ message: '', active: false });
-
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
     reset
   } = useForm<FormData>({ resolver: zodResolver(loginSchema) });
@@ -27,34 +25,54 @@ export const Login = () => {
   const onSubmit = async (data: FormData) => {
     try {
       await api.users.loginUser(data);
-      setError({ message: '', active: false });
       reset();
     } catch (err) {
       if (err instanceof AxiosError) {
-        console.error('Failed to login: ', err.response?.data.message);
-        setError({ message: err.response?.data.message, active: true });
+        const formError = { type: 'server', message: err.response?.data.message };
+        setError('email', formError);
       } else {
-        console.error('Something went wrong: ', err);
-        setError({ message: 'Something went wrong', active: true });
+        setError('email', { type: 'server', message: 'Something went wrong' });
       }
     }
   };
+
+  const allErrors = Object.values(errors)
+    .map((error) => {
+      if (error.type === 'invalid_string' || error.type === 'server') {
+        return error.message;
+      }
+    })
+    .filter(Boolean);
 
   return (
     <div className="auth">
       <h1 className="auth__header">Login</h1>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <input {...register('email')} type="email" className="form__input" placeholder="Email" />
-        {errors.email && <p className="form__error">{`${errors.email.message}`}</p>}
-        <input {...register('password')} type="password" className="form__input" placeholder="Password" />
-        {errors.password && <p className="form__error">{`${errors.password.message}`}</p>}
+        <input
+          {...register('email')}
+          type="email"
+          className={`form__input ${errors.email && 'form__input--error'}`}
+          placeholder={errors.email?.type === 'too_small' ? errors.email.message : 'Email'}
+        />
+        <input
+          {...register('password')}
+          type="password"
+          className={`form__input ${errors.password && 'form__input--error'}`}
+          placeholder={errors.password?.type === 'too_small' ? errors.password.message : 'Password'}
+        />
         <input disabled={isSubmitting} className="form__submit" type="submit" value="Login" />
-        {error.active && <p className="form__error">{error.message}</p>}
+
         <Link to="/register" className="form__redirect">
           Register
         </Link>
       </form>
+      {allErrors &&
+        allErrors.map((error) => (
+          <p className="error" key={error}>
+            {error}
+          </p>
+        ))}
     </div>
   );
 };
