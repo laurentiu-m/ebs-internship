@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import '../index.scss';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '../../../api';
+import { api } from '@api/index';
 import { AxiosError } from 'axios';
 
 const loginSchema = z.object({
@@ -28,10 +28,11 @@ export const Login = () => {
       reset();
     } catch (err) {
       if (err instanceof AxiosError) {
-        const formError = { type: 'server', message: err.response?.data.message };
-        setError('email', formError);
+        setError('email', { type: 'server', message: err.response?.data.message });
+        setError('password', { type: 'server', message: '' });
       } else {
         setError('email', { type: 'server', message: 'Something went wrong' });
+        setError('password', { type: 'server', message: '' });
       }
     }
   };

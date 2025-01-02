@@ -3,7 +3,7 @@
 
 .auth {
   @include mixins.flex(center, center, column);
-  gap: 14px;
+  gap: 18px;
 
   &__header {
     font-size: variables.$header;
@@ -29,6 +29,9 @@
       }
       &--error {
         border-color: variables.$error;
+        &::placeholder {
+          color: variables.$error;
+        }
         &:focus {
           border-color: variables.$error;
         }
@@ -64,7 +67,6 @@
   }
 
   .error {
-    font-size: variables.$text-sm;
     color: variables.$error;
   }
 }
