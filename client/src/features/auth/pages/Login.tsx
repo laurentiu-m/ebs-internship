@@ -1,12 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import '../index.scss';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '@api/index';
 import { AxiosError } from 'axios';
 import { FormInput } from '../components/FormInput';
 import { Errors } from '../components/Errors';
+import { useLogin } from '../hooks/useLogin';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -14,6 +16,11 @@ const loginSchema = z.object({
 });
 
 type FormData = z.infer<typeof loginSchema>;
+
+const fetchToken = () => {
+  const token = localStorage.getItem('token');
+  return token ? token : null; // Return the token or null
+};
 
 export const Login = () => {
   const {
@@ -24,9 +31,21 @@ export const Login = () => {
     reset
   } = useForm<FormData>({ resolver: zodResolver(loginSchema) });
 
+  const navigate = useNavigate();
+
+  const { data: token, isLoading } = useQuery(['token'], fetchToken);
+
+  useEffect(() => {
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
+
+  const loginMutation = useLogin();
+
   const onSubmit = async (data: FormData) => {
     try {
-      await api.users.loginUser(data);
+      await loginMutation.mutateAsync(data);
       reset();
     } catch (err) {
       if (err instanceof AxiosError) {
@@ -38,6 +57,8 @@ export const Login = () => {
       }
     }
   };
+
+  if (isLoading) return <div>Loading...</div>;
 
   const allErrors = Object.values(errors)
     .map((error) => error.message)

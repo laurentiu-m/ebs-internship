@@ -40,3 +40,8 @@ export type UserLogin = {
   email: string;
   password: string;
 };
+
+export type UserLoginRes = {
+  token: string;
+  role: string;
+};
