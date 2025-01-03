@@ -45,6 +45,7 @@ router.post("/register", async (req: Request, res: Response) => {
     email,
     phone,
     gender,
+    language,
     password,
     confirmPassword,
   }: RegisterUser = req.body;
@@ -56,7 +57,8 @@ router.post("/register", async (req: Request, res: Response) => {
     !gender ||
     !confirmPassword ||
     !username ||
-    !phone
+    !phone ||
+    !language
   ) {
     res.status(404).json({
       error: "form_invalid",
@@ -69,6 +71,7 @@ router.post("/register", async (req: Request, res: Response) => {
         { field: "confirmPassword", message: "" },
         { field: "username", message: "" },
         { field: "phone", message: "" },
+        { field: "language", message: "" },
       ],
     });
     return;
@@ -117,6 +120,7 @@ router.post("/register", async (req: Request, res: Response) => {
       email,
       phone,
       gender,
+      language,
       password,
       role: "user",
     });

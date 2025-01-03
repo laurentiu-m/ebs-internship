@@ -20,6 +20,7 @@ export type User = {
     bs: string;
   };
   gender: string;
+  language: string;
   password: string;
   role: string;
 };
@@ -36,5 +37,6 @@ export type RegisterUser = {
   password: string;
   confirmPassword: string;
   gender: string;
+  language: string;
   phone: string;
 };
