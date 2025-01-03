@@ -52,9 +52,16 @@ export const Register = () => {
       reset();
     } catch (err) {
       if (err instanceof AxiosError) {
-        console.error('Failed to create a new user: ', err.response?.data.message);
-      } else {
-        console.error('Something went wrong: ', err);
+        const errData = err.response?.data;
+
+        if (errData.error === 'form_invalid') {
+          errData.fields.map((error: { field: keyof FormData; message: string }) => {
+            setError(error.field, { type: 'server', message: error.message });
+          });
+          return;
+        }
+
+        setError(errData.field, { type: errData.type, message: errData.message });
       }
     }
   };
@@ -62,8 +69,6 @@ export const Register = () => {
   const allErrors = Object.values(errors)
     .map((error) => error.message)
     .filter(Boolean);
-
-  console.log(errors);
 
   return (
     <div className="auth">
