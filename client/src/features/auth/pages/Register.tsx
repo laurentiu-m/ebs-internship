@@ -5,8 +5,10 @@ import { z } from 'zod';
 import validator from 'validator';
 import '../index.scss';
 import { api } from '../../../api/index';
-import { useState } from 'react';
 import { AxiosError } from 'axios';
+import { FormInput } from '../components/FormInput';
+import { Select } from '../components/Select';
+import { Errors } from '../components/Errors';
 
 const registerSchema = z
   .object({
@@ -27,14 +29,19 @@ const registerSchema = z
 type FormData = z.infer<typeof registerSchema>;
 
 export const Register = () => {
-  const [error, setError] = useState({ message: '', active: false });
-
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
     reset
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
+
+  const genderOptions = [
+    { value: 'male', text: 'Male' },
+    { value: 'female', text: 'Female' },
+    { value: 'prefer not to say', text: 'Prefer Not to Say' }
+  ];
 
   const onSubmit = async (data: FormData) => {
     const { firstName, lastName, ...rest } = data;
@@ -42,59 +49,55 @@ export const Register = () => {
 
     try {
       await api.users.createUser(registerData);
-
-      setError({ message: '', active: false });
       reset();
     } catch (err) {
       if (err instanceof AxiosError) {
         console.error('Failed to create a new user: ', err.response?.data.message);
-        setError({ message: err.response?.data.message, active: true });
       } else {
         console.error('Something went wrong: ', err);
-        setError({ message: 'Something went wrong', active: true });
       }
     }
   };
+
+  const allErrors = Object.values(errors)
+    .map((error) => error.message)
+    .filter(Boolean);
+
+  console.log(errors);
 
   return (
     <div className="auth">
       <h1 className="auth__header">Register</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
-        <input {...register('firstName')} type="text" className="form__input" placeholder="First Name" />
-        {errors.firstName && <p className="form__error">{`${errors.firstName.message}`}</p>}
-        <input {...register('lastName')} type="text" className="form__input" placeholder="Last Name" />
-        {errors.lastName && <p className="form__error">{`${errors.lastName.message}`}</p>}
-        <input {...register('email')} type="email" className="form__input" placeholder="Email" />
-        {errors.email && <p className="form__error">{`${errors.email.message}`}</p>}
-        <input {...register('username')} type="text" className="form__input" placeholder="Username" />
-        {errors.username && <p className="form__error">{`${errors.username.message}`}</p>}
-        <input {...register('phone')} type="text" className="form__input" placeholder="Phone" />
-        {errors.phone && <p className="form__error">{`${errors.phone.message}`}</p>}
-        <select {...register('gender')} defaultValue="" className="form__select">
-          <option value="" disabled>
-            Select Gender
-          </option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="prefer not to say">Prefer Not to Say</option>
-        </select>
-        {errors.gender && <p className="form__error">{`${errors.gender.message}`}</p>}
-        <input {...register('password')} type="password" className="form__input" placeholder="Password" />
-        {errors.password && <p className="form__error">{`${errors.password.message}`}</p>}
-        <input
-          {...register('confirmPassword')}
-          type="password"
-          className="form__input"
-          placeholder="Confirm Password"
+        <FormInput name="firstName" type="text" register={register} placeholder="First Name" error={errors.firstName} />
+        <FormInput name="lastName" type="text" register={register} placeholder="Last Name" error={errors.lastName} />
+        <FormInput name="email" type="email" register={register} placeholder="Email" error={errors.email} />
+        <FormInput name="username" type="text" register={register} placeholder="Username" error={errors.username} />
+        <FormInput name="phone" type="text" register={register} placeholder="Phone" error={errors.phone} />
+        <Select
+          register={register}
+          name="gender"
+          description="Select Gender"
+          options={genderOptions}
+          error={errors.gender}
         />
-        {errors.confirmPassword && <p className="form__error">{`${errors.confirmPassword.message}`}</p>}
-        {error.active && <p className="form__error">{error.message}</p>}
+        <FormInput name="password" type="password" register={register} placeholder="Password" error={errors.password} />
+        <FormInput
+          name="confirmPassword"
+          type="password"
+          register={register}
+          placeholder="Confirm Password"
+          error={errors.confirmPassword}
+        />
+
         <input disabled={isSubmitting} type="submit" className="form__submit" value="Register" />
         <Link to="/login" className="form__redirect">
           Login
         </Link>
       </form>
+
+      {allErrors && <Errors allErrors={allErrors} />}
     </div>
   );
 };

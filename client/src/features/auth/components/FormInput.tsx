@@ -1,5 +1,4 @@
 import { FieldError, FieldValues, UseFormRegister, Path } from 'react-hook-form';
-import '../index.scss';
 
 type InputProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
@@ -14,7 +13,7 @@ export const FormInput = <T extends FieldValues>({ register, name, type, placeho
     <input
       {...register(name)}
       type={type}
-      placeholder={error?.message || placeholder}
+      placeholder={placeholder}
       className={`form__input ${error && 'form__input--error'}`}
     />
   );

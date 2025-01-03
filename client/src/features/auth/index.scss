@@ -29,9 +29,6 @@
       }
       &--error {
         border-color: variables.$error;
-        &::placeholder {
-          color: variables.$error;
-        }
         &:focus {
           border-color: variables.$error;
         }
@@ -66,7 +63,12 @@
     }
   }
 
-  .error {
-    color: variables.$error;
+  .errors {
+    @include mixins.flex(center, center, column);
+    gap: 4px;
+    p {
+      font-size: variables.$text-sm;
+      color: variables.$error;
+    }
   }
 }
