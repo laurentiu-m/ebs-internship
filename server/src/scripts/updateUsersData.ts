@@ -1,37 +1,13 @@
 import { faker } from "@faker-js/faker";
 import { axiosInstance } from "../api/axios";
+import { User } from "../types";
 
-type UserData = {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-  address: {
-    street: string;
-    suite: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
-  password: string;
-  role: string;
-};
-
-const getUsers = async (): Promise<UserData[]> => {
-  const response = await axiosInstance.get<UserData[]>("/users");
+const getUsers = async (): Promise<User[]> => {
+  const response = await axiosInstance.get<User[]>("/users");
   return response.data;
 };
 
-const updateUser = (user: UserData): UserData => {
+const updateUser = (user: User): User => {
   return {
     ...user,
     password: faker.internet.password(),
