@@ -3,11 +3,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const port = process.env.PORT;
-const apiUrl = `${process.env.API_URL}:${port}`;
+const config = {
+  apiUrl: process.env.API_URL,
+  port: process.env.PORT || 3000,
+};
 
 export const axiosInstance = axios.create({
-  baseURL: apiUrl,
+  baseURL: `${config.apiUrl}:${config.port}`,
   timeout: 1000,
   headers: {
     "Content-Type": "application/json",
