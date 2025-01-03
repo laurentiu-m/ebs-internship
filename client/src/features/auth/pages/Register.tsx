@@ -18,6 +18,7 @@ const registerSchema = z
     email: z.string().nonempty('Please add your email').email('Invalid email address'),
     phone: z.string().nonempty('Please add your phone number').refine(validator.isMobilePhone, 'Invalid phone number'),
     gender: z.string().nonempty('Please select a gender'),
+    language: z.string().nonempty('Please select a language'),
     password: z.string().nonempty('Password is required').min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string().nonempty('Confirm password is required')
   })
@@ -41,6 +42,11 @@ export const Register = () => {
     { value: 'male', text: 'Male' },
     { value: 'female', text: 'Female' },
     { value: 'prefer not to say', text: 'Prefer Not to Say' }
+  ];
+
+  const languageOptions = [
+    { value: 'english', text: 'English' },
+    { value: 'romanian', text: 'Romana' }
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -86,6 +92,13 @@ export const Register = () => {
           description="Select Gender"
           options={genderOptions}
           error={errors.gender}
+        />
+        <Select
+          register={register}
+          name="language"
+          description="Select Language"
+          options={languageOptions}
+          error={errors.language}
         />
         <FormInput name="password" type="password" register={register} placeholder="Password" error={errors.password} />
         <FormInput
