@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@api/index';
 import { AxiosError } from 'axios';
 import { FormInput } from '../components/FormInput';
+import { Errors } from '../components/Errors';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -39,11 +40,7 @@ export const Login = () => {
   };
 
   const allErrors = Object.values(errors)
-    .map((error) => {
-      if (error.type === 'invalid_string' || error.type === 'server') {
-        return error.message;
-      }
-    })
+    .map((error) => error.message)
     .filter(Boolean);
 
   return (
@@ -60,12 +57,7 @@ export const Login = () => {
           Register
         </Link>
       </form>
-      {allErrors &&
-        allErrors.map((error) => (
-          <p className="error" key={error}>
-            {error}
-          </p>
-        ))}
+      {allErrors && <Errors allErrors={allErrors} />}
     </div>
   );
 };

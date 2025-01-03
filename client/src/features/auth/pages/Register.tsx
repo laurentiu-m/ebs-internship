@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import validator from 'validator';
 import '../index.scss';
-import { api } from '../../../api/index';
+import { api } from '@api/index';
 import { AxiosError } from 'axios';
 import { FormInput } from '../components/FormInput';
 import { Select } from '../components/Select';
