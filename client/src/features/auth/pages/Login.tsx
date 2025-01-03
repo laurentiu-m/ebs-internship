@@ -5,6 +5,7 @@ import '../index.scss';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { api } from '@api/index';
 import { AxiosError } from 'axios';
+import { FormInput } from '../components/FormInput';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -50,18 +51,9 @@ export const Login = () => {
       <h1 className="auth__header">Login</h1>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <input
-          {...register('email')}
-          type="email"
-          className={`form__input ${errors.email && 'form__input--error'}`}
-          placeholder={errors.email?.type === 'too_small' ? errors.email.message : 'Email'}
-        />
-        <input
-          {...register('password')}
-          type="password"
-          className={`form__input ${errors.password && 'form__input--error'}`}
-          placeholder={errors.password?.type === 'too_small' ? errors.password.message : 'Password'}
-        />
+        <FormInput name="email" type="email" register={register} placeholder="Email" error={errors.email} />
+        <FormInput name="password" type="password" register={register} placeholder="Password" error={errors.password} />
+
         <input disabled={isSubmitting} className="form__submit" type="submit" value="Login" />
 
         <Link to="/register" className="form__redirect">
