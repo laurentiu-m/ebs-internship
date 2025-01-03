@@ -39,10 +39,41 @@ router.post("/login", (req: Request, res: Response) => {
 });
 
 router.post("/register", async (req: Request, res: Response) => {
-  const { username, email, name, password, phone }: RegisterUser = req.body;
+  const {
+    name,
+    username,
+    email,
+    phone,
+    gender,
+    language,
+    password,
+    confirmPassword,
+  }: RegisterUser = req.body;
 
-  if (!username || !email || !name || !password || !phone) {
-    res.status(404).json("Please complete the register form");
+  if (
+    !email ||
+    !name ||
+    !password ||
+    !gender ||
+    !confirmPassword ||
+    !username ||
+    !phone ||
+    !language
+  ) {
+    res.status(404).json({
+      error: "form_invalid",
+      fields: [
+        { field: "email", message: "Please complete the register form" },
+        { field: "firstName", message: "" },
+        { field: "lastName", message: "" },
+        { field: "password", message: "" },
+        { field: "gender", message: "" },
+        { field: "confirmPassword", message: "" },
+        { field: "username", message: "" },
+        { field: "phone", message: "" },
+        { field: "language", message: "" },
+      ],
+    });
     return;
   }
 
@@ -52,7 +83,11 @@ router.post("/register", async (req: Request, res: Response) => {
     (user) => user.email === email
   );
   if (checkEmail) {
-    res.status(404).json("Someone already has this email, please try another");
+    res.status(404).json({
+      field: "email",
+      type: "email_invalid",
+      message: "Someone already is using this email, please try another",
+    });
     return;
   }
 
@@ -60,23 +95,37 @@ router.post("/register", async (req: Request, res: Response) => {
     (user) => user.username === username
   );
   if (checkUsername) {
-    res
-      .status(404)
-      .json("Someone already has this username, please try another");
+    res.status(404).json({
+      field: "username",
+      type: "username_invalid",
+      message: "Someone already is using this username, please try another",
+    });
+    return;
+  }
+
+  const checkPassword = password === confirmPassword;
+  if (!checkPassword) {
+    res.status(404).json({
+      field: "confirmPassword",
+      type: "confirmPassword_invalid",
+      message: "Confirm password must match with password",
+    });
     return;
   }
 
   try {
     await axiosInstance.post("/users", {
+      name,
       username,
       email,
-      name,
-      password,
       phone,
+      gender,
+      language,
+      password,
+      role: "user",
     });
     res.status(200).json("You've been registred successfully");
   } catch (error) {
-    console.error("Something went wrong", error);
     res.status(500).json("An error occurred during registration");
   }
 });

@@ -10,6 +10,8 @@ const getUsers = async (): Promise<User[]> => {
 const updateUser = (user: User): User => {
   return {
     ...user,
+    gender: faker.helpers.arrayElement(["male", "female", "prefer not to say"]),
+    language: faker.helpers.arrayElement(["English", "Romana"]),
     password: faker.internet.password(),
     role: faker.helpers.arrayElement(["admin", "moderator", "user"]),
   };

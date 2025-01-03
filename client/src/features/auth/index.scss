@@ -3,7 +3,7 @@
 
 .auth {
   @include mixins.flex(center, center, column);
-  gap: 14px;
+  gap: 18px;
 
   &__header {
     font-size: variables.$header;
@@ -27,11 +27,12 @@
       &:focus {
         border-color: variables.$accent;
       }
-    }
-
-    &__error {
-      font-size: variables.$text-sm;
-      color: variables.$error;
+      &--error {
+        border-color: variables.$error;
+        &:focus {
+          border-color: variables.$error;
+        }
+      }
     }
 
     &__select {
@@ -59,6 +60,15 @@
       &:hover {
         color: variables.$accent;
       }
+    }
+  }
+
+  .errors {
+    @include mixins.flex(center, center, column);
+    gap: 4px;
+    p {
+      font-size: variables.$text-sm;
+      color: variables.$error;
     }
   }
 }

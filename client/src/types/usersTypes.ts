@@ -25,18 +25,18 @@ export type User = {
   role: string;
 };
 
-export type LoginUser = {
-  email: string;
-  password: string;
-};
-
-export type RegisterUser = {
+export type UserRegister = {
+  name: string;
   username: string;
   email: string;
-  name: string;
-  password: string;
-  confirmPassword: string;
   gender: string;
   language: string;
   phone: string;
+  password: string;
+  confirmPassword: string;
+};
+
+export type UserLogin = {
+  email: string;
+  password: string;
 };
