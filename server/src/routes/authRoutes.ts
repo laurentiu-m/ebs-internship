@@ -35,7 +35,9 @@ router.post("/login", (req: Request, res: Response) => {
     { expiresIn: config.jwtExpiration }
   );
 
-  res.status(200).json({ message: "You have login successfully", token });
+  res
+    .status(200)
+    .json({ message: "You have login successfully", token, role: user.role });
 });
 
 router.post("/register", async (req: Request, res: Response) => {
