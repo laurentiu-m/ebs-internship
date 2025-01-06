@@ -1,29 +1,25 @@
+import { api } from '@api/index';
+import { useQuery } from '@tanstack/react-query';
 import { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from 'src/components/Loading';
 
 type ProtectedRouteProps = {
   children: ReactNode;
-  role: string;
 };
 
-export const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
-  const [isLoading, setIsLoading] = useState(true);
-
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const token = localStorage.getItem('accessToken');
-  const userRole = localStorage.getItem('role');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token || userRole !== role) {
+  const { isLoading } = useQuery(['validUser', token], () => api.users.validUser(token), {
+    retry: false,
+    onError: () => {
       navigate('/login');
-    } else {
-      setIsLoading(false);
     }
   });
 
   if (isLoading) return <Loading />;
 
-  return children;
+  return <>{children}</>;
 };

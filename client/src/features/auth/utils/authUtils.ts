@@ -1,11 +1,16 @@
 import { api } from '@api/index';
+import { loginUser } from '@api/users';
 import { AxiosError } from 'axios';
 import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm } from 'src/types';
 
-export const loginSubmit: UserLoginSubmit = async (data, loginMutation, reset, setError) => {
+export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => {
   try {
-    await loginMutation.mutateAsync(data);
-    reset();
+    const response = await loginUser(data);
+
+    localStorage.setItem('accessToken', response.token);
+    localStorage.setItem('userRole', response.role);
+
+    navigate('/dashboard');
   } catch (err) {
     if (err instanceof AxiosError) {
       setError('email', { type: 'server', message: err.response?.data.message });
@@ -38,9 +43,4 @@ export const registerSubmit: UserRegisterSubmit = async (data, reset, setError) 
       setError(errData.field, { type: errData.type, message: errData.message });
     }
   }
-};
-
-export const fetchToken = () => {
-  const token = localStorage.getItem('accessToken');
-  return token ? token : null;
 };

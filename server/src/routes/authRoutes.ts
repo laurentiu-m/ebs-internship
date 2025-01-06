@@ -126,9 +126,31 @@ router.post("/register", async (req: Request, res: Response) => {
       password,
       role: "user",
     });
-    res.status(200).json("You've been registred successfully");
+    res.status(200).json("You've been registered successfully");
   } catch (error) {
     res.status(500).json("An error occurred during registration");
+  }
+});
+
+router.post("/valid", (req: Request, res: Response) => {
+  const { token } = req.body;
+
+  if (!token) {
+    res.status(400).json({
+      message: "Token is invalid or expired. Please log in again",
+    });
+    return;
+  }
+
+  const decoded = jwt.verify(token, config.jwtSecret);
+
+  if (decoded) {
+    res.status(200).json({ message: "Token is valid" });
+    return;
+  } else {
+    res.status(400).json({
+      message: "Token is invalid or expired. Please log in again",
+    });
   }
 });
 

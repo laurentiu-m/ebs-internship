@@ -1,5 +1,5 @@
-import { UseMutationResult } from '@tanstack/react-query';
 import { UseFormReset, UseFormSetError } from 'react-hook-form';
+import { NavigateFunction } from 'react-router-dom';
 
 export type User = {
   id: number;
@@ -56,9 +56,8 @@ export type UserLoginRes = {
 
 export type UserLoginSubmit = (
   data: UserLogin,
-  loginMutation: UseMutationResult<any, unknown, UserLogin>,
-  reset: UseFormReset<UserLogin>,
-  setError: UseFormSetError<UserLogin>
+  setError: UseFormSetError<UserLogin>,
+  navigate: NavigateFunction
 ) => Promise<void>;
 
 export type UserRegisterSubmit = (

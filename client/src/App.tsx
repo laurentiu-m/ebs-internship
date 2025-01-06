@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import { ProtectedRoute } from './router/ProtectedRoute';
-
 import { Loading } from './components/Loading';
 
 const Login = React.lazy(() => import('./features/auth/pages/Login').then((module) => ({ default: module.Login })));
@@ -25,7 +24,7 @@ export const App = () => {
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute role="user">
+                <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
               }

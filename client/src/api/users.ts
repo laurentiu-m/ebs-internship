@@ -39,6 +39,15 @@ export const loginUser = async (userData: UserLogin) => {
   }
 };
 
+export const validUser = async (token: string | null) => {
+  try {
+    const response = await api.post('/api/auth/valid', { token });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateUser = async (id: string, data: UserRegister) => {
   const response = await api.put(`/users/${id}`, data);
   return response.data;

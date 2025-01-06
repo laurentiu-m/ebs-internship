@@ -1,15 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
-import { loginSubmit, fetchToken } from '../utils/authUtils';
+import { loginSubmit } from '../utils/authUtils';
 import { FormInput } from '../components/FormInput';
 import { Errors } from '../components/Errors';
-import { useLogin } from '../hooks/useLogin';
 import '../index.scss';
-import { Loading } from 'src/components/Loading';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -23,27 +19,14 @@ export const Login = () => {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
-    reset
+    formState: { errors, isSubmitting }
   } = useForm<FormData>({ resolver: zodResolver(loginSchema) });
 
   const navigate = useNavigate();
 
-  const { data: token, isLoading } = useQuery(['accessToken'], fetchToken);
-
-  useEffect(() => {
-    if (token) {
-      navigate('/dashboard');
-    }
-  }, [token, navigate]);
-
-  const loginMutation = useLogin();
-
   const onSubmit = async (data: FormData) => {
-    loginSubmit(data, loginMutation, reset, setError);
+    await loginSubmit(data, setError, navigate);
   };
-
-  if (isLoading) return <Loading />;
 
   const allErrors = Object.values(errors)
     .map((error) => error.message)
