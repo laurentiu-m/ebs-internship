@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Loading } from 'src/components/Loading';
 
 type ProtectedRouteProps = {
   children: ReactNode;
@@ -22,7 +23,7 @@ export const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
     }
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   return children;
 };

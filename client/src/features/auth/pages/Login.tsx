@@ -9,6 +9,7 @@ import { FormInput } from '../components/FormInput';
 import { Errors } from '../components/Errors';
 import { useLogin } from '../hooks/useLogin';
 import '../index.scss';
+import { Loading } from 'src/components/Loading';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -42,7 +43,7 @@ export const Login = () => {
     loginSubmit(data, loginMutation, reset, setError);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
 
   const allErrors = Object.values(errors)
     .map((error) => error.message)

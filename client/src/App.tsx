@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 
 import { ProtectedRoute } from './router/ProtectedRoute';
 
+import { Loading } from './components/Loading';
+
 const Login = React.lazy(() => import('./features/auth/pages/Login').then((module) => ({ default: module.Login })));
 const Register = React.lazy(() =>
   import('./features/auth/pages/Register').then((module) => ({ default: module.Register }))
@@ -15,7 +17,7 @@ export const App = () => {
   return (
     <Router>
       <main className="main-container">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Navigate to={'/login'} />} />
             <Route path="/login" element={<Login />} />
