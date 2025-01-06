@@ -12,7 +12,7 @@ export const useLogin = () => {
 
   return useMutation(login, {
     onSuccess: (data) => {
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('accessToken', data.token);
       localStorage.setItem('role', data.role);
       navigate('/dashboard');
     },

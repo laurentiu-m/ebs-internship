@@ -19,7 +19,7 @@ type FormData = z.infer<typeof loginSchema>;
 
 const fetchToken = () => {
   const token = localStorage.getItem('token');
-  return token ? token : null; // Return the token or null
+  return token ? token : null;
 };
 
 export const Login = () => {
@@ -33,7 +33,7 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
-  const { data: token, isLoading } = useQuery(['token'], fetchToken);
+  const { data: token, isLoading } = useQuery(['accessToken'], fetchToken);
 
   useEffect(() => {
     if (token) {

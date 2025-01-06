@@ -1,10 +1,15 @@
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 
 import { ProtectedRoute } from './router/ProtectedRoute';
 
-import { Login } from './features/auth/pages/Login';
-import { Register } from './features/auth/pages/Register';
-import { Dashboard } from './features/dashboard/pages/Dashboard';
+const Login = React.lazy(() => import('./features/auth/pages/Login').then((module) => ({ default: module.Login })));
+const Register = React.lazy(() =>
+  import('./features/auth/pages/Register').then((module) => ({ default: module.Register }))
+);
+const Dashboard = React.lazy(() =>
+  import('./features/dashboard/pages/Dashboard').then((module) => ({ default: module.Dashboard }))
+);
 
 export const App = () => {
   return (
