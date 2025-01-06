@@ -10,7 +10,7 @@ type ProtectedRouteProps = {
 export const ProtectedRoute = ({ children, role }: ProtectedRouteProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
   const userRole = localStorage.getItem('role');
   const navigate = useNavigate();
 

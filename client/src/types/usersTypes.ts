@@ -1,3 +1,6 @@
+import { UseMutationResult } from '@tanstack/react-query';
+import { UseFormReset, UseFormSetError } from 'react-hook-form';
+
 export type User = {
   id: number;
   name: string;
@@ -36,6 +39,11 @@ export type UserRegister = {
   confirmPassword: string;
 };
 
+export type UserRegisterForm = Omit<UserRegister, 'name'> & {
+  firstName: string;
+  lastName: string;
+};
+
 export type UserLogin = {
   email: string;
   password: string;
@@ -45,3 +53,16 @@ export type UserLoginRes = {
   token: string;
   role: string;
 };
+
+export type UserLoginSubmit = (
+  data: UserLogin,
+  loginMutation: UseMutationResult<any, unknown, UserLogin>,
+  reset: UseFormReset<UserLogin>,
+  setError: UseFormSetError<UserLogin>
+) => Promise<void>;
+
+export type UserRegisterSubmit = (
+  data: UserRegisterForm,
+  reset: UseFormReset<UserRegisterForm>,
+  setError: UseFormSetError<UserRegisterForm>
+) => Promise<void>;

@@ -1,14 +1,13 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import validator from 'validator';
-import '../index.scss';
-import { api } from '@api/index';
-import { AxiosError } from 'axios';
+import { registerSubmit } from '../utils/authUtils';
 import { FormInput } from '../components/FormInput';
 import { Select } from '../components/Select';
 import { Errors } from '../components/Errors';
+import '../index.scss';
 
 const registerSchema = z
   .object({
@@ -50,26 +49,7 @@ export const Register = () => {
   ];
 
   const onSubmit = async (data: FormData) => {
-    const { firstName, lastName, ...rest } = data;
-    const registerData = { ...rest, name: `${firstName} ${lastName}` };
-
-    try {
-      await api.users.createUser(registerData);
-      reset();
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        const errData = err.response?.data;
-
-        if (errData.error === 'form_invalid') {
-          errData.fields.map((error: { field: keyof FormData; message: string }) => {
-            setError(error.field, { type: 'server', message: error.message });
-          });
-          return;
-        }
-
-        setError(errData.field, { type: errData.type, message: errData.message });
-      }
-    }
+    registerSubmit(data, reset, setError);
   };
 
   const allErrors = Object.values(errors)

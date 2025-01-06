@@ -1,14 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
-import '../index.scss';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AxiosError } from 'axios';
+import { useEffect } from 'react';
+import { loginSubmit, fetchToken } from '../utils/authUtils';
 import { FormInput } from '../components/FormInput';
 import { Errors } from '../components/Errors';
 import { useLogin } from '../hooks/useLogin';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import '../index.scss';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -16,11 +16,6 @@ const loginSchema = z.object({
 });
 
 type FormData = z.infer<typeof loginSchema>;
-
-const fetchToken = () => {
-  const token = localStorage.getItem('token');
-  return token ? token : null;
-};
 
 export const Login = () => {
   const {
@@ -44,18 +39,7 @@ export const Login = () => {
   const loginMutation = useLogin();
 
   const onSubmit = async (data: FormData) => {
-    try {
-      await loginMutation.mutateAsync(data);
-      reset();
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        setError('email', { type: 'server', message: err.response?.data.message });
-        setError('password', { type: 'server', message: '' });
-      } else {
-        setError('email', { type: 'server', message: 'Something went wrong' });
-        setError('password', { type: 'server', message: '' });
-      }
-    }
+    loginSubmit(data, loginMutation, reset, setError);
   };
 
   if (isLoading) return <div>Loading...</div>;
