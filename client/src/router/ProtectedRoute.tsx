@@ -6,10 +6,12 @@ import { Loading } from 'src/components/Loading';
 
 type ProtectedRouteProps = {
   children: ReactNode;
+  requiredRole: string;
 };
 
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const token = localStorage.getItem('accessToken');
+  const userRole = localStorage.getItem('userRole');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     }
   });
 
-  const { isLoading, isError } = useQuery(['validUser', token], () => api.users.validUser(token), {
+  const { isLoading, isError } = useQuery(['userToken', token], () => api.users.validUser(token), {
     retry: false,
     onError: () => {
       navigate('/login');
@@ -28,7 +30,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   if (isLoading) return <Loading />;
 
-  if (!isError) {
+  if (!isError && requiredRole === userRole) {
     return children;
   }
 };

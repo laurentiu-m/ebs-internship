@@ -8,8 +8,13 @@ const Login = React.lazy(() => import('./features/auth/pages/Login').then((modul
 const Register = React.lazy(() =>
   import('./features/auth/pages/Register').then((module) => ({ default: module.Register }))
 );
-const Dashboard = React.lazy(() =>
-  import('./features/dashboard/pages/Dashboard').then((module) => ({ default: module.Dashboard }))
+const AdminDashboard = React.lazy(() =>
+  import('./features/dashboard/pages/AdminDashboard').then((module) => ({ default: module.AdminDashboard }))
+);
+const UserDashboard = React.lazy(() =>
+  import('./features/dashboard/pages/UserDashboard').then((module) => ({
+    default: module.UserDashboard
+  }))
 );
 
 export const App = () => {
@@ -22,10 +27,18 @@ export const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route
+              path="/dashboard-admin"
+              element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/dashboard"
               element={
-                <ProtectedRoute>
-                  <Dashboard />
+                <ProtectedRoute requiredRole="user">
+                  <UserDashboard />
                 </ProtectedRoute>
               }
             />

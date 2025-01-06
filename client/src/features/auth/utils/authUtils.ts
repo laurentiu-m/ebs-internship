@@ -10,7 +10,11 @@ export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => 
     localStorage.setItem('accessToken', response.token);
     localStorage.setItem('userRole', response.role);
 
-    navigate('/dashboard');
+    if (response.role === 'user') {
+      navigate('/dashboard');
+    } else {
+      navigate(`/dashboard-${response.role}`);
+    }
   } catch (err) {
     if (err instanceof AxiosError) {
       setError('email', { type: 'server', message: err.response?.data.message });
