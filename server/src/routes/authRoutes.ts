@@ -134,7 +134,7 @@ router.post("/register", async (req: Request, res: Response) => {
       role: user.role,
     });
   } catch (error) {
-    res.status(500).json("An error occurred during registration");
+    res.status(500).json({ message: "An error occurred during registration" });
   }
 });
 

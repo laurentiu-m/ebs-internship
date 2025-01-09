@@ -7,27 +7,25 @@ import { ACCESS_TOKEN, USER_ROLE, Routes } from '@types';
 
 type ProtectedRouteProps = {
   children: ReactNode;
-  requiredRole: string;
 };
 
-export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
+export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const token = localStorage.getItem(ACCESS_TOKEN);
-  const userRole = localStorage.getItem(USER_ROLE);
   const navigate = useNavigate();
 
   const { isLoading, isError } = useQuery(['userToken', token], () => validUser(token), {
     retry: false,
-    onError: (error) => {
+    onError: () => {
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(USER_ROLE);
-      navigate(Routes.Error, { state: { errorMessage: error, buttonMessage: 'Login', navigate: Routes.Login } });
+      navigate(Routes.Login);
       return;
     }
   });
 
   if (isLoading) return <Loading />;
 
-  if (!isError && requiredRole === userRole) {
+  if (!isError) {
     return children;
   }
 };
