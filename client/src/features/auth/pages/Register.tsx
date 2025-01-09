@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,9 +33,10 @@ export const Register = () => {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
-    reset
+    formState: { errors, isSubmitting }
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
+
+  const navigate = useNavigate();
 
   const genderOptions = [
     { value: 'male', text: 'Male' },
@@ -49,7 +50,7 @@ export const Register = () => {
   ];
 
   const onSubmit = async (data: FormData) => {
-    registerSubmit(data, reset, setError);
+    registerSubmit(data, setError, navigate);
   };
 
   const allErrors = Object.values(errors)

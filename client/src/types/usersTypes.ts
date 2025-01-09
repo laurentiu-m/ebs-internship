@@ -1,4 +1,4 @@
-import { UseFormReset, UseFormSetError } from 'react-hook-form';
+import { UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
 
 export type User = {
@@ -62,6 +62,6 @@ export type UserLoginSubmit = (
 
 export type UserRegisterSubmit = (
   data: UserRegisterForm,
-  reset: UseFormReset<UserRegisterForm>,
-  setError: UseFormSetError<UserRegisterForm>
+  setError: UseFormSetError<UserRegisterForm>,
+  navigate: NavigateFunction
 ) => Promise<void>;

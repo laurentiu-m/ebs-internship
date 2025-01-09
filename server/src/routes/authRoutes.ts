@@ -116,7 +116,7 @@ router.post("/register", async (req: Request, res: Response) => {
   }
 
   try {
-    await axiosInstance.post("/users", {
+    const response = await axiosInstance.post("/users", {
       name,
       username,
       email,
@@ -126,7 +126,18 @@ router.post("/register", async (req: Request, res: Response) => {
       password,
       role: "user",
     });
-    res.status(200).json("You've been registered successfully");
+
+    const user = response.data;
+    const token = jwt.sign(
+      { userId: user.id, username: user.username, role: user.role },
+      config.jwtSecret,
+      { expiresIn: config.jwtExpiration }
+    );
+    res.status(200).json({
+      message: "You've been registered successfully",
+      token,
+      role: user.role,
+    });
   } catch (error) {
     res.status(500).json("An error occurred during registration");
   }

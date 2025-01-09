@@ -26,13 +26,21 @@ export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => 
   }
 };
 
-export const registerSubmit: UserRegisterSubmit = async (data, reset, setError) => {
+export const registerSubmit: UserRegisterSubmit = async (data, setError, navigate) => {
   const { firstName, lastName, ...rest } = data;
   const registerData = { ...rest, name: `${firstName} ${lastName}` };
 
   try {
-    await api.users.createUser(registerData);
-    reset();
+    const response = await api.users.createUser(registerData);
+
+    localStorage.setItem('accessToken', response.token);
+    localStorage.setItem('userRole', response.role);
+
+    if (response.role === 'user') {
+      navigate('/dashboard');
+    } else {
+      navigate(`/dashboard-${response.role}`);
+    }
   } catch (err) {
     if (err instanceof AxiosError) {
       const errData = err.response?.data;
