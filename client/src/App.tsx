@@ -16,10 +16,16 @@ const UserDashboard = React.lazy(() =>
     default: module.UserDashboard
   }))
 );
-const Unauthorized = React.lazy(() =>
-  import('./components/Unauthorized').then((module) => ({ default: module.Unauthorized }))
-);
 const Error = React.lazy(() => import('./components/Error').then((module) => ({ default: module.Error })));
+
+const routesConfig = [
+  { path: '/', element: <Navigate to={'/login'} />, role: null },
+  { path: '/login', element: <Login />, role: null },
+  { path: '/register', element: <Register />, role: null },
+  { path: '/dashboard', element: <UserDashboard />, role: 'user' },
+  { path: '/dashboard-admin', element: <AdminDashboard />, role: 'admin' },
+  { path: '/error', element: <Error />, role: null }
+];
 
 export const App = () => {
   return (
@@ -27,27 +33,13 @@ export const App = () => {
       <main className="main-container">
         <Suspense fallback={<Loading />}>
           <Routes>
-            <Route path="/" element={<Navigate to={'/login'} />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route
-              path="/dashboard-admin"
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <AdminDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute requiredRole="user">
-                  <UserDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/unauthorized" element={<Unauthorized />} />
-            <Route path="/error" element={<Error />} />
+            {routesConfig.map(({ path, element, role }) => (
+              <Route
+                key={path}
+                path={path}
+                element={role ? <ProtectedRoute requiredRole={role}>{element}</ProtectedRoute> : element}
+              />
+            ))}
           </Routes>
         </Suspense>
       </main>

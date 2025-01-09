@@ -6,6 +6,8 @@ import { loginSubmit } from '../utils/authUtils';
 import { FormInput } from '../components/FormInput';
 import { Errors } from '../components/Errors';
 import '../index.scss';
+import { useEffect, useState } from 'react';
+import { Loading } from 'src/components/Loading';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -21,8 +23,25 @@ export const Login = () => {
     setError,
     formState: { errors, isSubmitting }
   } = useForm<FormData>({ resolver: zodResolver(loginSchema) });
+  const [isLoading, setIsLoading] = useState(true);
 
+  const token = localStorage.getItem('accessToken');
+  const role = localStorage.getItem('userRole');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      if (role === 'user') {
+        navigate('/dashboard');
+        return;
+      }
+      navigate(`/dashboard-${role}`);
+      return;
+    }
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   const onSubmit = async (data: FormData) => {
     await loginSubmit(data, setError, navigate);

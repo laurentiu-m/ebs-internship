@@ -17,7 +17,10 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   const { isLoading, isError } = useQuery(['userToken', token], () => validUser(token), {
     retry: false,
     onError: (error) => {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('userRole');
       navigate('/error', { state: { errorMessage: error, buttonMessage: 'Login', navigate: '/login' } });
+      return;
     }
   });
 
@@ -25,7 +28,7 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
     if (!token) {
       navigate('/error', {
         state: {
-          errorMessage: 'Token is invalid or expired. Please log in again.',
+          errorMessage: 'Token is invalid or expired. Please login again.',
           buttonMessage: 'Login',
           navigate: '/login'
         }
@@ -34,10 +37,16 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
     }
 
     if (requiredRole !== userRole) {
-      navigate('/unauthorized');
+      navigate('/error', {
+        state: {
+          errorMessage: 'You are not authorized to enter this page.',
+          buttonMessage: 'Return Home',
+          navigate: '/login'
+        }
+      });
       return;
     }
-  });
+  }, []);
 
   if (isLoading) return <Loading />;
 
