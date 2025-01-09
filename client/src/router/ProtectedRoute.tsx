@@ -19,6 +19,16 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
       navigate('/login');
       return;
     }
+
+    if (requiredRole !== userRole) {
+      if (userRole === 'user') {
+        navigate('/dashboard');
+        return;
+      }
+
+      navigate(`/dashboard-${userRole}`);
+      return;
+    }
   });
 
   const { isLoading, isError } = useQuery(['userToken', token], () => api.users.validUser(token), {
