@@ -17,7 +17,14 @@
     // Absolute Path
     "baseUrl": ".",
     "paths": {
-      "@api/*": ["src/api/*"]
+      "@api": ["src/api/index"],
+      "@components/*": ["src/components/*"],
+      "@auth-components/*": ["src/features/auth/components/*"],
+      "@auth-utils/*": ["src/features/auth/utils/*"],
+      "@features/*": ["src/features/*"],
+      "@router/*": ["src/router/*"],
+      "@types": ["src/types/index"],
+      "@styles/*": ["src/styles/*"]
     },
 
     /* Linting */

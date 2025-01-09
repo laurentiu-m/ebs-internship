@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import validator from 'validator';
-import { registerSubmit } from '../utils/authUtils';
-import { FormInput } from '../components/FormInput';
-import { Select } from '../components/Select';
-import { Errors } from '../components/Errors';
-import '../index.scss';
+import { registerSubmit } from '@auth-utils/authUtils';
+import { FormInput } from '@auth-components/FormInput';
+import { Select } from '@auth-components/Select';
+import { Errors } from '@auth-components/Errors';
+import '@styles/index.scss';
 
 const registerSchema = z
   .object({

@@ -1,13 +1,14 @@
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSubmit } from '../utils/authUtils';
-import { FormInput } from '../components/FormInput';
-import { Errors } from '../components/Errors';
-import '../index.scss';
-import { useEffect, useState } from 'react';
-import { Loading } from 'src/components/Loading';
+import { loginSubmit } from '@auth-utils/authUtils';
+import { FormInput } from '@auth-components/FormInput';
+import { Errors } from '@auth-components/Errors';
+import { Loading } from '@components/Loading';
+import { ACCESS_TOKEN, USER_ROLE } from '@types';
+import '@styles/index.scss';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -25,8 +26,8 @@ export const Login = () => {
   } = useForm<FormData>({ resolver: zodResolver(loginSchema) });
   const [isLoading, setIsLoading] = useState(true);
 
-  const token = localStorage.getItem('accessToken');
-  const role = localStorage.getItem('userRole');
+  const token = localStorage.getItem(ACCESS_TOKEN);
+  const role = localStorage.getItem(USER_ROLE);
   const navigate = useNavigate();
 
   useEffect(() => {

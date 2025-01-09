@@ -1,5 +1,5 @@
 import api from './axios';
-import { User, UserLogin, UserRegister } from '../types/index';
+import { User, UserLogin, UserRegister } from '@types';
 
 export const getUsers = async (): Promise<User[]> => {
   try {

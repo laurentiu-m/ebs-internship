@@ -1,13 +1,13 @@
-import { loginUser, createUser } from '@api/users';
+import { loginUser, createUser } from '@api';
 import { AxiosError } from 'axios';
-import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm } from 'src/types';
+import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, ACCESS_TOKEN, USER_ROLE } from '@types';
 
 export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => {
   try {
     const response = await loginUser(data);
 
-    localStorage.setItem('accessToken', response.token);
-    localStorage.setItem('userRole', response.role);
+    localStorage.setItem(ACCESS_TOKEN, response.token);
+    localStorage.setItem(USER_ROLE, response.role);
 
     if (response.role === 'user') {
       navigate('/dashboard');
@@ -32,8 +32,8 @@ export const registerSubmit: UserRegisterSubmit = async (data, setError, navigat
   try {
     const response = await createUser(registerData);
 
-    localStorage.setItem('accessToken', response.token);
-    localStorage.setItem('userRole', response.role);
+    localStorage.setItem(ACCESS_TOKEN, response.token);
+    localStorage.setItem(USER_ROLE, response.role);
 
     if (response.role === 'user') {
       navigate('/dashboard');
