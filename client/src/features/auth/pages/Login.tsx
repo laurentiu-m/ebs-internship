@@ -7,8 +7,8 @@ import { loginSubmit } from '@auth-utils/authUtils';
 import { FormInput } from '@auth-components/FormInput';
 import { Errors } from '@auth-components/Errors';
 import { Loading } from '@components/Loading';
-import { ACCESS_TOKEN, USER_ROLE } from '@types';
-import '@styles/index.scss';
+import { ACCESS_TOKEN, Routes } from '@types';
+import '../index.scss';
 
 const loginSchema = z.object({
   email: z.string().nonempty('Please add your email').email('Invalid email'),
@@ -27,17 +27,11 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem(ACCESS_TOKEN);
-  const role = localStorage.getItem(USER_ROLE);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
-      if (role === 'user') {
-        navigate('/dashboard');
-        return;
-      }
-      navigate(`/dashboard-${role}`);
-      return;
+      navigate(Routes.Dashboard);
     }
     setIsLoading(false);
   }, []);

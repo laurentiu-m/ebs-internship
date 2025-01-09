@@ -7,7 +7,7 @@ import { registerSubmit } from '@auth-utils/authUtils';
 import { FormInput } from '@auth-components/FormInput';
 import { Select } from '@auth-components/Select';
 import { Errors } from '@auth-components/Errors';
-import '@styles/index.scss';
+import '../index.scss';
 
 const registerSchema = z
   .object({

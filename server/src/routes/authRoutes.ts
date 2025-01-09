@@ -52,29 +52,24 @@ router.post("/register", async (req: Request, res: Response) => {
     confirmPassword,
   }: RegisterUser = req.body;
 
-  if (
-    !email ||
-    !name ||
-    !password ||
-    !gender ||
-    !confirmPassword ||
-    !username ||
-    !phone ||
-    !language
-  ) {
-    res.status(404).json({
+  const missingFields = [
+    { field: "email", value: email },
+    { field: "name", value: name },
+    { field: "password", value: password },
+    { field: "gender", value: gender },
+    { field: "confirmPassword", value: confirmPassword },
+    { field: "username", value: username },
+    { field: "phone", value: phone },
+    { field: "language", value: language },
+  ].filter(({ value }) => !value);
+
+  if (missingFields.length > 0) {
+    res.status(400).json({
       error: "form_invalid",
-      fields: [
-        { field: "email", message: "Please complete the register form" },
-        { field: "firstName", message: "" },
-        { field: "lastName", message: "" },
-        { field: "password", message: "" },
-        { field: "gender", message: "" },
-        { field: "confirmPassword", message: "" },
-        { field: "username", message: "" },
-        { field: "phone", message: "" },
-        { field: "language", message: "" },
-      ],
+      fields: missingFields.map(({ field }) => ({
+        field,
+        message: `Please complete the ${field} field`,
+      })),
     });
     return;
   }
