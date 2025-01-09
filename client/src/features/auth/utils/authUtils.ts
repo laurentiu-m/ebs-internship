@@ -1,5 +1,4 @@
-import { api } from '@api/index';
-import { loginUser } from '@api/users';
+import { loginUser, createUser } from '@api/users';
 import { AxiosError } from 'axios';
 import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm } from 'src/types';
 
@@ -31,7 +30,7 @@ export const registerSubmit: UserRegisterSubmit = async (data, setError, navigat
   const registerData = { ...rest, name: `${firstName} ${lastName}` };
 
   try {
-    const response = await api.users.createUser(registerData);
+    const response = await createUser(registerData);
 
     localStorage.setItem('accessToken', response.token);
     localStorage.setItem('userRole', response.role);

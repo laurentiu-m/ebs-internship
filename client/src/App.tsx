@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 
 import { ProtectedRoute } from './router/ProtectedRoute';
 import { Loading } from './components/Loading';
+import { Unauthorized } from './components/Unauthorized';
+import { Error } from './components/Error';
 
 const Login = React.lazy(() => import('./features/auth/pages/Login').then((module) => ({ default: module.Login })));
 const Register = React.lazy(() =>
@@ -42,6 +44,8 @@ export const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="/unauthorized" element={<Unauthorized />} />
+            <Route path="/error" element={<Error />} />
           </Routes>
         </Suspense>
       </main>

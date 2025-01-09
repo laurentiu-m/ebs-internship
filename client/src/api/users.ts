@@ -43,8 +43,8 @@ export const validUser = async (token: string | null) => {
   try {
     const response = await api.post('/api/auth/valid', { token });
     return response.data;
-  } catch (error) {
-    throw error;
+  } catch (error: any) {
+    throw error.response.data.message || 'Something went wrong';
   }
 };
 

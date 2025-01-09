@@ -1,4 +1,4 @@
-import { api } from '@api/index';
+import { validUser } from '@api/users';
 import { useQuery } from '@tanstack/react-query';
 import { ReactNode, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,27 +14,28 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
   const userRole = localStorage.getItem('userRole');
   const navigate = useNavigate();
 
+  const { isLoading, isError } = useQuery(['userToken', token], () => validUser(token), {
+    retry: false,
+    onError: (error) => {
+      navigate('/error', { state: { errorMessage: error, buttonMessage: 'Login', navigate: '/login' } });
+    }
+  });
+
   useEffect(() => {
     if (!token) {
-      navigate('/login');
+      navigate('/error', {
+        state: {
+          errorMessage: 'Token is invalid or expired. Please log in again.',
+          buttonMessage: 'Login',
+          navigate: '/login'
+        }
+      });
       return;
     }
 
     if (requiredRole !== userRole) {
-      if (userRole === 'user') {
-        navigate('/dashboard');
-        return;
-      }
-
-      navigate(`/dashboard-${userRole}`);
+      navigate('/unauthorized');
       return;
-    }
-  });
-
-  const { isLoading, isError } = useQuery(['userToken', token], () => api.users.validUser(token), {
-    retry: false,
-    onError: () => {
-      navigate('/login');
     }
   });
 

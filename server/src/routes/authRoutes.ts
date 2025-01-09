@@ -148,19 +148,18 @@ router.post("/valid", (req: Request, res: Response) => {
 
   if (!token) {
     res.status(400).json({
-      message: "Token is invalid or expired. Please log in again",
+      message: "You are not login to access this page",
     });
     return;
   }
 
-  const decoded = jwt.verify(token, config.jwtSecret);
-
-  if (decoded) {
-    res.status(200).json({ message: "Token is valid" });
+  try {
+    const decoded = jwt.verify(token, config.jwtSecret);
+    res.status(200).json({ message: "Token is valid", decoded });
     return;
-  } else {
+  } catch (error) {
     res.status(400).json({
-      message: "Token is invalid or expired. Please log in again",
+      message: "Token is invalid or expired. Please log in again.",
     });
   }
 });
