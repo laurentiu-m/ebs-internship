@@ -24,7 +24,8 @@
       "@features/*": ["src/features/*"],
       "@router/*": ["src/router/*"],
       "@types": ["src/types/index"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@locales/*": ["src/locales/*"]
     },
 
     /* Linting */

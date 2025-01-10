@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,26 +10,30 @@ import { Select } from '@auth-components/Select';
 import { Errors } from '@auth-components/Errors';
 import '../index.scss';
 
-const registerSchema = z
-  .object({
-    firstName: z.string().nonempty('First name is required').min(2, 'First name must be at least 2 characters'),
-    lastName: z.string().nonempty('Last name is required').min(2, 'Last name must be at least 2 characters'),
-    username: z.string().nonempty('Username is required').min(4, 'Username must be at least 4 characters'),
-    email: z.string().nonempty('Please add your email').email('Invalid email address'),
-    phone: z.string().nonempty('Please add your phone number').refine(validator.isMobilePhone, 'Invalid phone number'),
-    gender: z.string().nonempty('Please select a gender'),
-    language: z.string().nonempty('Please select a language'),
-    password: z.string().nonempty('Password is required').min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string().nonempty('Confirm password is required')
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Password must match',
-    path: ['confirmPassword']
-  });
-
-type FormData = z.infer<typeof registerSchema>;
-
 export const Register = () => {
+  const { t } = useTranslation();
+  const registerSchema = z
+    .object({
+      firstName: z.string().nonempty(t('Register.error.firstName-empty')).min(2, t('Register.error.firstName-min')),
+      lastName: z.string().nonempty(t('Register.error.lastName-empty')).min(2, t('Register.error.lastName-min')),
+      username: z.string().nonempty(t('Register.error.username-empty')).min(4, t('Register.error.username-min')),
+      email: z.string().nonempty(t('Register.error.email-empty')).email(t('Register.error.email-invalid')),
+      phone: z
+        .string()
+        .nonempty(t('Register.error.phone-empty'))
+        .refine(validator.isMobilePhone, t('Register.error.phone-invalid')),
+      gender: z.string().nonempty(t('Register.error.gender-empty')),
+      language: z.string().nonempty(t('Register.error.language-empty')),
+      password: z.string().nonempty(t('Register.error.password-empty')).min(8, t('Register.error.password-min')),
+      confirmPassword: z.string().nonempty(t('Register.error.confirmPassword-empty'))
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t('Register.error.confirmPassword-empty'),
+      path: ['confirmPassword']
+    });
+
+  type FormData = z.infer<typeof registerSchema>;
+
   const {
     register,
     handleSubmit,
@@ -39,14 +44,14 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const genderOptions = [
-    { value: 'male', text: 'Male' },
-    { value: 'female', text: 'Female' },
-    { value: 'prefer not to say', text: 'Prefer Not to Say' }
+    { value: 'male', text: t('Register.form.gender.male') },
+    { value: 'female', text: t('Register.form.gender.female') },
+    { value: 'prefer not to say', text: t('Register.form.gender.preferNotToSay') }
   ];
 
   const languageOptions = [
-    { value: 'english', text: 'English' },
-    { value: 'romanian', text: 'Romana' }
+    { value: 'en', text: t('Register.form.language.english') },
+    { value: 'ro', text: t('Register.form.language.romanian') }
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -59,40 +64,76 @@ export const Register = () => {
 
   return (
     <div className="auth">
-      <h1 className="auth__header">Register</h1>
+      <h1 className="auth__header">{t('Register.heading')}</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
-        <FormInput name="firstName" type="text" register={register} placeholder="First Name" error={errors.firstName} />
-        <FormInput name="lastName" type="text" register={register} placeholder="Last Name" error={errors.lastName} />
-        <FormInput name="email" type="email" register={register} placeholder="Email" error={errors.email} />
-        <FormInput name="username" type="text" register={register} placeholder="Username" error={errors.username} />
-        <FormInput name="phone" type="text" register={register} placeholder="Phone" error={errors.phone} />
+        <FormInput
+          name="firstName"
+          type="text"
+          register={register}
+          placeholder={t('Register.form.firstName')}
+          error={errors.firstName}
+        />
+        <FormInput
+          name="lastName"
+          type="text"
+          register={register}
+          placeholder={t('Register.form.lastName')}
+          error={errors.lastName}
+        />
+        <FormInput
+          name="email"
+          type="email"
+          register={register}
+          placeholder={t('Register.form.email')}
+          error={errors.email}
+        />
+        <FormInput
+          name="username"
+          type="text"
+          register={register}
+          placeholder={t('Register.form.username')}
+          error={errors.username}
+        />
+        <FormInput
+          name="phone"
+          type="text"
+          register={register}
+          placeholder={t('Register.form.phone')}
+          error={errors.phone}
+        />
         <Select
           register={register}
           name="gender"
-          description="Select Gender"
+          description={t('Register.form.gender.default')}
           options={genderOptions}
           error={errors.gender}
         />
         <Select
           register={register}
           name="language"
-          description="Select Language"
+          description={t('Register.form.language.default')}
           options={languageOptions}
           error={errors.language}
         />
-        <FormInput name="password" type="password" register={register} placeholder="Password" error={errors.password} />
+        <FormInput
+          name="password"
+          type="password"
+          register={register}
+          placeholder={t('Register.form.password')}
+          error={errors.password}
+        />
         <FormInput
           name="confirmPassword"
           type="password"
           register={register}
-          placeholder="Confirm Password"
+          placeholder={t('Register.form.confirmPassword')}
           error={errors.confirmPassword}
         />
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value="Register" />
+        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('Register.form.submit')} />
         <Link to="/login" className="form__redirect">
-          Login
+          {t('Register.form.login')}
         </Link>
       </form>
 
