@@ -25,7 +25,11 @@ router.post("/login", (req: Request, res: Response) => {
   const user: User = users.find((user) => user.email === email);
 
   if (!user || user.password !== password) {
-    res.status(400).json({ message: "Invalid email or password" });
+    const invalidFields = [
+      { field: "email", message: "Invalid email or password" },
+      { field: "password", message: "" },
+    ];
+    res.status(400).json({ errors: invalidFields });
     return;
   }
 

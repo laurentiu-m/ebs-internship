@@ -1,6 +1,14 @@
 import { loginUser, createUser } from '@api';
 import { AxiosError } from 'axios';
-import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, ACCESS_TOKEN, USER_ROLE, Routes } from '@types';
+import {
+  UserLoginSubmit,
+  UserRegisterSubmit,
+  UserRegisterForm,
+  ACCESS_TOKEN,
+  USER_ROLE,
+  Routes,
+  UserLogin
+} from '@types';
 
 export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => {
   try {
@@ -12,11 +20,10 @@ export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => 
     navigate(Routes.Dashboard);
   } catch (err) {
     if (err instanceof AxiosError) {
-      setError('email', { type: 'server', message: err.response?.data.message });
-      setError('password', { type: 'server', message: '' });
-    } else {
-      setError('email', { type: 'server', message: 'Something went wrong' });
-      setError('password', { type: 'server', message: '' });
+      const errors = err.response?.data.errors;
+      errors.forEach(({ field, message }: { field: keyof UserLogin; message: string }) => {
+        setError(field, { type: 'server', message: message });
+      });
     }
   }
 };
