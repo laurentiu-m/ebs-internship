@@ -18,7 +18,7 @@
     "form": {
       "firstName": "First Name",
       "lastName": "Last Name",
-      "email": "email",
+      "email": "Email",
       "username": "Username",
       "phone": "Phone",
       "gender": {

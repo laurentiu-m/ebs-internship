@@ -9,6 +9,7 @@ import { FormInput } from '@auth-components/FormInput';
 import { Select } from '@auth-components/Select';
 import { Errors } from '@auth-components/Errors';
 import '../index.scss';
+import { LanguageSelector } from '@auth-components/LanguageSelector';
 
 export const Register = () => {
   const { t } = useTranslation();
@@ -64,6 +65,8 @@ export const Register = () => {
 
   return (
     <div className="auth">
+      <LanguageSelector />
+
       <h1 className="auth__header">{t('Register.heading')}</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

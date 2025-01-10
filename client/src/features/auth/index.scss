@@ -5,6 +5,19 @@
   @include mixins.flex(center, center, column);
   gap: 18px;
 
+  .language {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    &__select {
+      padding: 8px;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid white;
+      cursor: pointer;
+    }
+  }
+
   &__header {
     font-size: variables.$header;
     font-weight: variables.$font-bold;
@@ -23,6 +36,7 @@
       border-bottom: 1px solid variables.$white;
       padding: 10px 0px;
       outline: none;
+      cursor: pointer;
       transition: all 0.1s ease-in-out;
       &:focus {
         border-color: variables.$accent;
@@ -33,10 +47,6 @@
           border-color: variables.$error;
         }
       }
-    }
-
-    &__select {
-      cursor: pointer;
     }
 
     &__submit {

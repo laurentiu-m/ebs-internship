@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSubmit } from '@auth-utils/authUtils';
 import { FormInput } from '@auth-components/FormInput';
+import { LanguageSelector } from '@auth-components/LanguageSelector';
 import { Errors } from '@auth-components/Errors';
 import { Loading } from '@components/Loading';
 import { ACCESS_TOKEN, Routes } from '@types';
@@ -51,6 +52,7 @@ export const Login = () => {
 
   return (
     <div className="auth">
+      <LanguageSelector />
       <h1 className="auth__header">{t('Login.heading')}</h1>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
