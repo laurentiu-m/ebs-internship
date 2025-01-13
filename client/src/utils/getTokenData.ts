@@ -1,13 +1,9 @@
-import { ACCESS_TOKEN } from '@types';
+import { ACCESS_TOKEN } from '@src/types';
+import { JwtPayload } from '@src/types';
 import { jwtDecode } from 'jwt-decode';
-import { JwtPayload } from '@types';
 
 export const getTokenData = (): JwtPayload | null => {
   const token = localStorage.getItem(ACCESS_TOKEN);
   if (!token) return null;
-  try {
-    return jwtDecode(token);
-  } catch (error) {
-    return null;
-  }
+  return jwtDecode(token);
 };

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
 
-  const changeLanguage = (lang: string) => {
+  const onChangeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
@@ -11,7 +11,7 @@ export const LanguageSelector = () => {
     <div className="language">
       <select
         className="language__select"
-        onChange={(e) => changeLanguage(e.target.value)}
+        onChange={(e) => onChangeLanguage(e.target.value)}
         defaultValue={i18n.language}
       >
         <option value="en">English</option>

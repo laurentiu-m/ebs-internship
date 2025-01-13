@@ -1,4 +1,4 @@
-import { User, UserLogin, UserRegister } from '@src/types';
+import { AuthResponse, User, UserLogin, UserRegister } from '@src/types';
 
 import api from './axios';
 
@@ -14,13 +14,13 @@ export const users = {
   },
 
   create: async (userData: UserRegister): Promise<string> => {
-    const { data } = await api.post('/api/auth/register', userData);
-    return data;
+    const { data }: AuthResponse = await api.post('/api/auth/register', userData);
+    return data.token;
   },
 
-  login: async (userData: UserLogin) => {
-    const { data } = await api.post('/api/auth/login', userData);
-    return data;
+  login: async (userData: UserLogin): Promise<string> => {
+    const { data }: AuthResponse = await api.post('/api/auth/login', userData);
+    return data.token;
   },
 
   valid: async (token: string | null) => {

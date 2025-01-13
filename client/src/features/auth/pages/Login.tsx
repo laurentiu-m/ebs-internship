@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 
-import { Errors } from '@auth-components/Errors';
-import { FormInput } from '@auth-components/FormInput';
-import { LanguageSelector } from '@auth-components/LanguageSelector';
-import { loginSubmit } from '@auth-utils/authUtils';
-import { Loading } from '@components/Loading';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ACCESS_TOKEN, Routes } from '@types';
+import { Loading } from '@src/components';
+import { ACCESS_TOKEN, Routes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
+
+import { Errors } from '../components';
+import { FormInput } from '../components';
+import { LanguageSelector } from '../components';
+import { loginSubmit } from '../utils/authUtils';
+
 import '../index.scss';
 
 export const Login = () => {

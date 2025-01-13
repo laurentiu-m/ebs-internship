@@ -1,15 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
-import { registerSubmit } from '@auth-utils/authUtils';
-import { FormInput } from '@auth-components/FormInput';
-import { Select } from '@auth-components/Select';
-import { Errors } from '@auth-components/Errors';
+import { z } from 'zod';
+
+import { FormInput } from '../components';
+import { Select } from '../components';
+import { Errors } from '../components';
+import { LanguageSelector } from '../components';
+import { registerSubmit } from '../utils/authUtils';
 import '../index.scss';
-import { LanguageSelector } from '@auth-components/LanguageSelector';
 
 export const Register = () => {
   const { t } = useTranslation();

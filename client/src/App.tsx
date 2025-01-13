@@ -1,9 +1,10 @@
-import { Layout, NotFound } from '@src/components';
-import { Login, Register } from '@src/features/auth/pages';
 import { Dashboard } from '@src/features/dashboard/pages/Dashboard';
 import { ProtectedRoute } from '@src/router/ProtectedRoute';
 import { Routes, Roles } from '@src/types';
 import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';
+
+import { Layout, NotFound } from './components';
+import { Login, Register } from './features/auth/pages';
 const routesConfig = [
   {
     path: Routes.Dashboard,

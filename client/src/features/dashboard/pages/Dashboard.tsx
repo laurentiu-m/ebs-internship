@@ -1,5 +1,5 @@
-import { Roles } from '@types';
-import { getTokenData } from 'src/utils/getTokenData';
+import { Roles } from '@src/types';
+import { getTokenData } from '@src/utils/getTokenData';
 
 export const Dashboard = () => {
   const tokenData = getTokenData();
