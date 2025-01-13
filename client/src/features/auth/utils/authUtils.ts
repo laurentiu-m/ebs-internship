@@ -1,21 +1,12 @@
 import { loginUser, createUser } from '@api';
 import { AxiosError } from 'axios';
-import {
-  UserLoginSubmit,
-  UserRegisterSubmit,
-  UserRegisterForm,
-  ACCESS_TOKEN,
-  USER_ROLE,
-  Routes,
-  UserLogin
-} from '@types';
+import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, ACCESS_TOKEN, Routes, UserLogin } from '@types';
 
 export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => {
   try {
-    const { token, role } = await loginUser(data);
+    const { token } = await loginUser(data);
 
     localStorage.setItem(ACCESS_TOKEN, token);
-    localStorage.setItem(USER_ROLE, role);
 
     navigate(Routes.Dashboard);
   } catch (err) {
@@ -33,10 +24,9 @@ export const registerSubmit: UserRegisterSubmit = async (data, setError, navigat
   const registerData = { ...rest, name: `${firstName} ${lastName}` };
 
   try {
-    const { token, role } = await createUser(registerData);
+    const { token } = await createUser(registerData);
 
     localStorage.setItem(ACCESS_TOKEN, token);
-    localStorage.setItem(USER_ROLE, role);
 
     navigate(Routes.Dashboard);
   } catch (err) {

@@ -34,14 +34,16 @@ router.post("/login", (req: Request, res: Response) => {
   }
 
   const token = jwt.sign(
-    { userId: user.id, username: user.username, role: user.role },
+    {
+      userId: user.id,
+      role: user.role,
+      language: user.language,
+    },
     config.jwtSecret,
     { expiresIn: config.jwtExpiration }
   );
 
-  res
-    .status(200)
-    .json({ message: "You have login successfully", token, role: user.role });
+  res.status(200).json({ message: "You have login successfully", token });
 });
 
 router.post("/register", async (req: Request, res: Response) => {
@@ -135,7 +137,6 @@ router.post("/register", async (req: Request, res: Response) => {
     res.status(200).json({
       message: "You've been registered successfully",
       token,
-      role: user.role,
     });
   } catch (error) {
     res.status(500).json({ message: "An error occurred during registration" });
@@ -153,8 +154,8 @@ router.post("/valid", (req: Request, res: Response) => {
   }
 
   try {
-    const decoded = jwt.verify(token, config.jwtSecret);
-    res.status(200).json({ message: "Token is valid", decoded });
+    const decodedToken = jwt.verify(token, config.jwtSecret);
+    res.status(200).json({ message: "Token is valid", decodedToken });
     return;
   } catch (error) {
     res.status(400).json({

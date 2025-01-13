@@ -1,28 +1,18 @@
-import { Roles, USER_ROLE } from '@types';
-import { AdminDashboard } from './AdminDashboard';
-import { ModeratorDashboard } from './ModeratorDashboard';
-import { UserDashboard } from './UserDashboard';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Roles } from '@types';
+import { getTokenData } from 'src/utils/getTokenData';
 
 export const Dashboard = () => {
-  const userRole = localStorage.getItem(USER_ROLE);
-  const navigate = useNavigate();
+  const tokenData = getTokenData();
 
-  useEffect(() => {
-    if (!userRole) {
-      navigate('/login');
-    }
-  }, []);
+  if (!tokenData) return;
 
-  switch (userRole) {
-    case Roles.Admin:
-      return <AdminDashboard />;
-    case Roles.Moderator:
-      return <ModeratorDashboard />;
-    case Roles.User:
-      return <UserDashboard />;
-    default:
-      return;
-  }
+  return (
+    <div>
+      <h1>Dashboard</h1>
+
+      {Roles.Admin === tokenData.role && <h1>Welcome back, admin</h1>}
+      {Roles.Moderator === tokenData.role && <h1>Welcome back, moderator</h1>}
+      {Roles.User === tokenData.role && <h1>Welcome back, user</h1>}
+    </div>
+  );
 };
