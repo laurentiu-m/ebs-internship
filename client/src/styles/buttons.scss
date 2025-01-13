@@ -1,0 +1,13 @@
+@mixin button-style($background, $color, $width, $border) {
+  font-size: map-get($text-button, font-size);
+  font-weight: map-get($text-button, font-weight);
+  line-height: map-get($text-button, line-height);
+  text-transform: map-get($text-button, text-transform);
+  background: $background;
+  color: $color;
+  width: 180px;
+  height: 36px;
+  border: $border;
+  border-radius: 8px;
+  cursor: pointer;
+}

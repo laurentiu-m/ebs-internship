@@ -1,9 +1,0 @@
-{
-  "version": "0.2",
-  "ignorePaths": ["./client/src/locales/ro.json"],
-  "dictionaryDefinitions": [],
-  "dictionaries": [],
-  "words": [],
-  "ignoreWords": ["languagedetector"],
-  "import": []
-}

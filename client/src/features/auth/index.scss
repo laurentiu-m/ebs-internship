@@ -1,5 +1,6 @@
 @import '@styles/mixins.scss';
 @import '@styles/variables.scss';
+@import '@styles/buttons.scss';
 
 .auth {
   @include flex(center, center, column);
@@ -13,7 +14,7 @@
       padding: 8px;
       border: none;
       outline: none;
-      border-bottom: 1px solid $white;
+      border-bottom: 1px solid $primary-normal;
       cursor: pointer;
     }
   }
@@ -34,11 +35,13 @@
       width: 100%;
       background: none;
       border: none;
-      border-bottom: 1px solid $white;
+      border-bottom: 1px solid $primary-normal;
       padding: 10px 0px;
       outline: none;
-      cursor: pointer;
       transition: all 0.1s ease-in-out;
+      &::placeholder {
+        color: $text-secondary;
+      }
       &:focus {
         border-color: $primary-selected;
       }
@@ -51,26 +54,11 @@
     }
 
     &__submit {
-      width: 100%;
-      padding: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      background-color: $primary-normal;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.1s ease;
-      &:hover {
-        background-color: $primary-hover;
-      }
+      @include button-style($primary-normal, $white, 100%, none);
     }
 
     &__redirect {
-      text-decoration: none;
-      transition: color 0.1s ease;
-
-      &:hover {
-        color: $primary-normal;
-      }
+      @include button-style(transparent, $primary-normal, 100%, 1px solid $primary-normal);
     }
   }
 
