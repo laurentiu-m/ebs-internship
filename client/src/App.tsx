@@ -1,4 +1,4 @@
-import { Dashboard } from '@src/features/dashboard/pages/Dashboard';
+import { Dashboard } from '@src/layouts/dashboard/Dashboard';
 import { ProtectedRoute } from '@src/router/ProtectedRoute';
 import { Routes, Roles } from '@src/types';
 import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';

@@ -16,21 +16,21 @@ export const Register = () => {
   const { t } = useTranslation();
   const registerSchema = z
     .object({
-      firstName: z.string().nonempty(t('Register.error.firstName-empty')).min(2, t('Register.error.firstName-min')),
-      lastName: z.string().nonempty(t('Register.error.lastName-empty')).min(2, t('Register.error.lastName-min')),
-      username: z.string().nonempty(t('Register.error.username-empty')).min(4, t('Register.error.username-min')),
-      email: z.string().nonempty(t('Register.error.email-empty')).email(t('Register.error.email-invalid')),
+      firstName: z.string().nonempty(t('register.error.first_name_empty')).min(2, t('register.error.first_name_min')),
+      lastName: z.string().nonempty(t('register.error.last_name_empty')).min(2, t('register.error.last_name_min')),
+      username: z.string().nonempty(t('register.error.username_empty')).min(4, t('register.error.username_min')),
+      email: z.string().nonempty(t('register.error.email_empty')).email(t('register.error.email_invalid')),
       phone: z
         .string()
-        .nonempty(t('Register.error.phone-empty'))
-        .refine(validator.isMobilePhone, t('Register.error.phone-invalid')),
-      gender: z.string().nonempty(t('Register.error.gender-empty')),
-      language: z.string().nonempty(t('Register.error.language-empty')),
-      password: z.string().nonempty(t('Register.error.password-empty')).min(8, t('Register.error.password-min')),
-      confirmPassword: z.string().nonempty(t('Register.error.confirmPassword-empty'))
+        .nonempty(t('register.error.phone_empty'))
+        .refine(validator.isMobilePhone, t('register.error.phone_invalid')),
+      gender: z.string().nonempty(t('register.error.gender_empty')),
+      language: z.string().nonempty(t('register.error.language_empty')),
+      password: z.string().nonempty(t('register.error.password_empty')).min(8, t('register.error.password_min')),
+      confirmPassword: z.string().nonempty(t('register.error.confirm_password_empty'))
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: t('Register.error.confirmPassword-empty'),
+      message: t('register.error.confirm_password_invalid'),
       path: ['confirmPassword']
     });
 
@@ -46,14 +46,14 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const genderOptions = [
-    { value: 'male', text: t('Register.form.gender.male') },
-    { value: 'female', text: t('Register.form.gender.female') },
-    { value: 'prefer not to say', text: t('Register.form.gender.preferNotToSay') }
+    { value: 'male', text: t('register.form.gender.male') },
+    { value: 'female', text: t('register.form.gender.female') },
+    { value: 'prefer_not_to_say', text: t('register.form.gender.prefer_not_to_say') }
   ];
 
   const languageOptions = [
-    { value: 'en', text: t('Register.form.language.english') },
-    { value: 'ro', text: t('Register.form.language.romanian') }
+    { value: 'en', text: t('register.form.language.english') },
+    { value: 'ro', text: t('register.form.language.romanian') }
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -68,55 +68,55 @@ export const Register = () => {
     <div className="auth">
       <LanguageSelector />
 
-      <h1 className="auth__header">{t('Register.heading')}</h1>
+      <h1 className="auth__header">{t('register.heading')}</h1>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
         <FormInput
           name="firstName"
           type="text"
           register={register}
-          placeholder={t('Register.form.firstName')}
+          placeholder={t('register.form.first_name')}
           error={errors.firstName}
         />
         <FormInput
           name="lastName"
           type="text"
           register={register}
-          placeholder={t('Register.form.lastName')}
+          placeholder={t('register.form.last_name')}
           error={errors.lastName}
         />
         <FormInput
           name="email"
           type="email"
           register={register}
-          placeholder={t('Register.form.email')}
+          placeholder={t('register.form.email')}
           error={errors.email}
         />
         <FormInput
           name="username"
           type="text"
           register={register}
-          placeholder={t('Register.form.username')}
+          placeholder={t('register.form.username')}
           error={errors.username}
         />
         <FormInput
           name="phone"
           type="text"
           register={register}
-          placeholder={t('Register.form.phone')}
+          placeholder={t('register.form.phone')}
           error={errors.phone}
         />
         <Select
           register={register}
           name="gender"
-          description={t('Register.form.gender.default')}
+          description={t('register.form.gender.default')}
           options={genderOptions}
           error={errors.gender}
         />
         <Select
           register={register}
           name="language"
-          description={t('Register.form.language.default')}
+          description={t('register.form.language.default')}
           options={languageOptions}
           error={errors.language}
         />
@@ -124,20 +124,20 @@ export const Register = () => {
           name="password"
           type="password"
           register={register}
-          placeholder={t('Register.form.password')}
+          placeholder={t('register.form.password')}
           error={errors.password}
         />
         <FormInput
           name="confirmPassword"
           type="password"
           register={register}
-          placeholder={t('Register.form.confirmPassword')}
+          placeholder={t('register.form.confirm_password')}
           error={errors.confirmPassword}
         />
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('Register.form.submit')} />
+        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('register.form.submit')} />
         <Link to="/login" className="form__redirect">
-          {t('Register.form.login')}
+          {t('register.form.login')}
         </Link>
       </form>
 

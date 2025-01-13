@@ -1,5 +1,5 @@
 {
-  "Login": {
+  "login": {
     "heading": "Login",
     "form": {
       "email": "Email",
@@ -8,16 +8,16 @@
       "register": "Register"
     },
     "error": {
-      "email-empty": "Please add your email",
-      "email-invalid": "Invalid email",
-      "password-empty": "Please add your password"
+      "email_empty": "Please add your email",
+      "email_invalid": "Invalid email",
+      "password_empty": "Please add your password"
     }
   },
-  "Register": {
+  "register": {
     "heading": "Register",
     "form": {
-      "firstName": "First Name",
-      "lastName": "Last Name",
+      "first_name": "First Name",
+      "last_name": "Last Name",
       "email": "Email",
       "username": "Username",
       "phone": "Phone",
@@ -25,7 +25,7 @@
         "default": "Select Gender",
         "male": "Male",
         "female": "Female",
-        "preferNotToSay": "Prefer Not to Say"
+        "prefer_not_to_say": "Prefer Not to Say"
       },
       "language": {
         "default": "Select Language",
@@ -33,30 +33,30 @@
         "romanian": "Romanian"
       },
       "password": "Password",
-      "confirmPassword": "Confirm Password",
+      "confirm_password": "Confirm Password",
       "submit": "Register",
       "login": "Login"
     },
     "error": {
-      "firstName-empty": "First name is required",
-      "firstName-min": "First name must be at least 2 characters",
-      "lastName-empty": "Last Name is required",
-      "lastName-min": "Last name must be at least 2 characters",
-      "username-empty": "Username is required",
-      "username-min": "Username must be at least 4 characters",
-      "email-empty": "Please add your email",
-      "email-invalid": "Invalid email address",
-      "phone-empty": "Please add your phone number",
-      "phone-invalid": "Invalid phone number",
-      "gender-empty": "Please select a gender",
-      "language-empty": "Please select a language",
-      "password-empty": "Password is required",
-      "password-min": "Password must be at least 8 characters",
-      "confirmPassword-empty": "Confirm password is required",
-      "confirmPassword-invalid": "Password must match"
+      "first_name_empty": "First name is required",
+      "first_name_min": "First name must be at least 2 characters",
+      "last_name_empty": "Last Name is required",
+      "last_name_min": "Last name must be at least 2 characters",
+      "username_empty": "Username is required",
+      "username_min": "Username must be at least 4 characters",
+      "email_empty": "Please add your email",
+      "email_invalid": "Invalid email address",
+      "phone_empty": "Please add your phone number",
+      "phone_invalid": "Invalid phone number",
+      "gender_empty": "Please select a gender",
+      "language_empty": "Please select a language",
+      "password_empty": "Password is required",
+      "password_min": "Password must be at least 8 characters",
+      "confirm_password_empty": "Confirm password is required",
+      "confirm_password_invalid": "Password must match"
     }
   },
-  "notFound": {
+  "not_found": {
     "heading": "Page Not Found 404",
     "description": "The page you are looking for does not exist.",
     "button": "Return Home"

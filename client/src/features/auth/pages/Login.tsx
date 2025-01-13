@@ -19,8 +19,8 @@ export const Login = () => {
   const { t } = useTranslation();
 
   const loginSchema = z.object({
-    email: z.string().nonempty(t('Login.error.email-empty')).email(t('Login.error.email-invalid')),
-    password: z.string().nonempty(t('Login.error.password-empty'))
+    email: z.string().nonempty(t('login.error.email_empty')).email(t('login.error.email_invalid')),
+    password: z.string().nonempty(t('login.error.password_empty'))
   });
 
   type FormData = z.infer<typeof loginSchema>;
@@ -56,28 +56,28 @@ export const Login = () => {
   return (
     <div className="auth">
       <LanguageSelector />
-      <h1 className="auth__header">{t('Login.heading')}</h1>
+      <h1 className="auth__header">{t('login.heading')}</h1>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <FormInput
           name="email"
           type="email"
           register={register}
-          placeholder={t('Login.form.email')}
+          placeholder={t('login.form.email')}
           error={errors.email}
         />
         <FormInput
           name="password"
           type="password"
           register={register}
-          placeholder={t('Login.form.password')}
+          placeholder={t('login.form.password')}
           error={errors.password}
         />
 
-        <input disabled={isSubmitting} className="form__submit" type="submit" value={t('Login.form.submit')} />
+        <input disabled={isSubmitting} className="form__submit" type="submit" value={t('login.form.submit')} />
 
         <Link to="/register" className="form__redirect">
-          {t('Login.form.register')}
+          {t('login.form.register')}
         </Link>
       </form>
       {allErrors && <Errors allErrors={allErrors} />}

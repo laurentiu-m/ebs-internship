@@ -1,5 +1,5 @@
 {
-  "Login": {
+  "login": {
     "heading": "Autentificare",
     "form": {
       "email": "Email",
@@ -8,16 +8,16 @@
       "register": "Înregistrare"
     },
     "error": {
-      "email-empty": "Vă rugăm să adăugați email-ul",
-      "email-invalid": "Email invalid",
-      "password-empty": "Vă rugăm să adăugați parola"
+      "email_empty": "Vă rugăm să adăugați email-ul",
+      "email_invalid": "Email invalid",
+      "password_empty": "Vă rugăm să adăugați parola"
     }
   },
-  "Register": {
+  "register": {
     "heading": "Înregistrare",
     "form": {
-      "firstName": "Prenume",
-      "lastName": "Nume",
+      "first_name": "Prenume",
+      "last_name": "Nume",
       "email": "Email",
       "username": "Nume utilizator",
       "phone": "Telefon",
@@ -25,7 +25,7 @@
         "default": "Selectează genul",
         "male": "Masculin",
         "female": "Feminin",
-        "preferNotToSay": "Prefer să nu spun"
+        "prefer_not_to_say": "Prefer să nu spun"
       },
       "language": {
         "default": "Selectează limba",
@@ -33,30 +33,30 @@
         "romanian": "Română"
       },
       "password": "Parolă",
-      "confirmPassword": "Confirmați parola",
+      "confirm_password": "Confirmați parola",
       "submit": "Înregistrare",
       "login": "Autentificare"
     },
     "error": {
-      "firstName-empty": "Prenumele este obligatoriu",
-      "firstName-min": "Prenumele trebuie să aibă cel puțin 2 caractere",
-      "lastName-empty": "Numele este obligatoriu",
-      "lastName-min": "Numele trebuie să aibă cel puțin 2 caractere",
-      "username-empty": "Numele utilizatorului este obligatoriu",
-      "username-min": "Numele utilizatorului trebuie să aibă cel puțin 4 caractere",
-      "email-empty": "Vă rugăm să adăugați email-ul",
-      "email-invalid": "Adresa de email este invalidă",
-      "phone-empty": "Vă rugăm să adăugați numărul de telefon",
-      "phone-invalid": "Număr de telefon invalid",
-      "gender-empty": "Vă rugăm să selectați un gen",
-      "langauge-empty": "Vă rugăm să selectați o limbă",
-      "password-empty": "Parola este obligatorie",
-      "password-min": "Parola trebuie să aibă cel puțin 8 caractere",
-      "confirmPassword-empty": "Confirmarea parolei este obligatorie",
-      "confirmPassword-invalid": "Parola trebuie să coincidă"
+      "first_name_empty": "Prenumele este obligatoriu",
+      "first_name_min": "Prenumele trebuie să aibă cel puțin 2 caractere",
+      "last_name_empty": "Numele este obligatoriu",
+      "last_name_min": "Numele trebuie să aibă cel puțin 2 caractere",
+      "username_empty": "Numele utilizatorului este obligatoriu",
+      "username_min": "Numele utilizatorului trebuie să aibă cel puțin 4 caractere",
+      "email_empty": "Vă rugăm să adăugați email-ul",
+      "email_invalid": "Adresa de email este invalidă",
+      "phone_empty": "Vă rugăm să adăugați numărul de telefon",
+      "phone_invalid": "Număr de telefon invalid",
+      "gender_empty": "Vă rugăm să selectați un gen",
+      "language_empty": "Vă rugăm să selectați o limbă",
+      "password_empty": "Parola este obligatorie",
+      "password_min": "Parola trebuie să aibă cel puțin 8 caractere",
+      "confirm_password_empty": "Confirmarea parolei este obligatorie",
+      "confirm_password_invalid": "Parola trebuie să coincidă"
     }
   },
-  "notFound": {
+  "not_found": {
     "heading": "Pagina Nu A Fost Găsită 404",
     "description": "Pagina pe care o căutați nu există.",
     "button": "Întoarce-te Acasă"

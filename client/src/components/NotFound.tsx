@@ -7,10 +7,10 @@ export const NotFound = () => {
 
   return (
     <div>
-      <h1>{t('notFound.heading')}</h1>
-      <p>{t('notFound.description')}</p>
+      <h1>{t('not_found.heading')}</h1>
+      <p>{t('not_found.description')}</p>
       <Link to={Routes.Dashboard}>
-        <button>{t('notFound.button')}</button>
+        <button>{t('not_found.button')}</button>
       </Link>
     </div>
   );
