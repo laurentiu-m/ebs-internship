@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSubmit } from '@auth-utils/authUtils';
+
+import { Errors } from '@auth-components/Errors';
 import { FormInput } from '@auth-components/FormInput';
 import { LanguageSelector } from '@auth-components/LanguageSelector';
-import { Errors } from '@auth-components/Errors';
+import { loginSubmit } from '@auth-utils/authUtils';
 import { Loading } from '@components/Loading';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ACCESS_TOKEN, Routes } from '@types';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import { z } from 'zod';
 import '../index.scss';
 
 export const Login = () => {
@@ -38,7 +39,7 @@ export const Login = () => {
       navigate(Routes.Dashboard);
     }
     setIsLoading(false);
-  }, []);
+  }, [token, navigate]);
 
   if (isLoading) return <Loading />;
 
