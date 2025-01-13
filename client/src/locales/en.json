@@ -1,0 +1,64 @@
+{
+  "Login": {
+    "heading": "Login",
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "submit": "Login",
+      "register": "Register"
+    },
+    "error": {
+      "email-empty": "Please add your email",
+      "email-invalid": "Invalid email",
+      "password-empty": "Please add your password"
+    }
+  },
+  "Register": {
+    "heading": "Register",
+    "form": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "username": "Username",
+      "phone": "Phone",
+      "gender": {
+        "default": "Select Gender",
+        "male": "Male",
+        "female": "Female",
+        "preferNotToSay": "Prefer Not to Say"
+      },
+      "language": {
+        "default": "Select Language",
+        "english": "English",
+        "romanian": "Romanian"
+      },
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "submit": "Register",
+      "login": "Login"
+    },
+    "error": {
+      "firstName-empty": "First name is required",
+      "firstName-min": "First name must be at least 2 characters",
+      "lastName-empty": "Last Name is required",
+      "lastName-min": "Last name must be at least 2 characters",
+      "username-empty": "Username is required",
+      "username-min": "Username must be at least 4 characters",
+      "email-empty": "Please add your email",
+      "email-invalid": "Invalid email address",
+      "phone-empty": "Please add your phone number",
+      "phone-invalid": "Invalid phone number",
+      "gender-empty": "Please select a gender",
+      "language-empty": "Please select a language",
+      "password-empty": "Password is required",
+      "password-min": "Password must be at least 8 characters",
+      "confirmPassword-empty": "Confirm password is required",
+      "confirmPassword-invalid": "Password must match"
+    }
+  },
+  "notFound": {
+    "heading": "Page Not Found 404",
+    "description": "The page you are looking for does not exist.",
+    "button": "Return Home"
+  }
+}
