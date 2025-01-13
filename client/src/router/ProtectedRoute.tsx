@@ -13,7 +13,7 @@ export const ProtectedRoute = ({ element, requiredRoles }: ProtectedRouteProps) 
   const token = localStorage.getItem(ACCESS_TOKEN);
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery(['validToken', token], () => apiClient.users.valid(token), {
+  const { data, isLoading } = useQuery(['validToken', token], () => apiClient.users.valid(token), {
     retry: false,
     onError: () => {
       localStorage.removeItem(ACCESS_TOKEN);
@@ -24,13 +24,11 @@ export const ProtectedRoute = ({ element, requiredRoles }: ProtectedRouteProps) 
 
   if (isLoading) return <Loading />;
 
-  const userRole = data?.decodedToken.role;
+  const userRole = data?.role;
 
-  if (!requiredRoles.includes(userRole)) {
+  if (!userRole || !requiredRoles.includes(userRole)) {
     return <div>403 - You don't have access to this page</div>;
   }
 
-  if (!isError) {
-    return element;
-  }
+  return element;
 };

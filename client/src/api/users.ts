@@ -1,4 +1,4 @@
-import { AuthResponse, User, UserLogin, UserRegister } from '@src/types';
+import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse } from '@src/types';
 
 import api from './axios';
 
@@ -23,9 +23,9 @@ export const users = {
     return data.token;
   },
 
-  valid: async (token: string | null) => {
-    const { data } = await api.post('/api/auth/valid', { token });
-    return data;
+  valid: async (token: string | null): Promise<JwtPayload> => {
+    const { data }: ValidResponse = await api.post('/api/auth/valid', { token });
+    return data.decodedToken;
   },
 
   update: async (id: string, userData: UserRegister) => {
