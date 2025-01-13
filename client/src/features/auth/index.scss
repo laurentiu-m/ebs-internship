@@ -1,8 +1,8 @@
-@use '../../styles/mixins.scss';
-@use '../../styles/variables.scss';
+@import '@styles/mixins.scss';
+@import '@styles/variables.scss';
 
 .auth {
-  @include mixins.flex(center, center, column);
+  @include flex(center, center, column);
   gap: 18px;
 
   .language {
@@ -13,18 +13,19 @@
       padding: 8px;
       border: none;
       outline: none;
-      border-bottom: 1px solid white;
+      border-bottom: 1px solid $white;
       cursor: pointer;
     }
   }
 
   &__header {
-    font-size: variables.$header;
-    font-weight: variables.$font-bold;
+    font-size: map-get($h1, font-size);
+    font-weight: map-get($h1, font-weight);
+    line-height: map-get($h1, line-height);
   }
 
   .form {
-    @include mixins.flex(space-between, center, column);
+    @include flex(space-between, center, column);
     width: 400px;
     gap: 20px;
 
@@ -33,18 +34,18 @@
       width: 100%;
       background: none;
       border: none;
-      border-bottom: 1px solid variables.$white;
+      border-bottom: 1px solid $white;
       padding: 10px 0px;
       outline: none;
       cursor: pointer;
       transition: all 0.1s ease-in-out;
       &:focus {
-        border-color: variables.$accent;
+        border-color: $primary-selected;
       }
       &--error {
-        border-color: variables.$error;
+        border-color: $error-normal;
         &:focus {
-          border-color: variables.$error;
+          border-color: $error-normal;
         }
       }
     }
@@ -52,14 +53,14 @@
     &__submit {
       width: 100%;
       padding: 10px;
-      font-weight: variables.$font-semibold;
+      font-weight: 500;
       text-transform: uppercase;
-      background-color: variables.$accent;
+      background-color: $primary-normal;
       border: none;
       cursor: pointer;
       transition: background-color 0.1s ease;
       &:hover {
-        background-color: variables.$accenth-hover;
+        background-color: $primary-hover;
       }
     }
 
@@ -68,17 +69,17 @@
       transition: color 0.1s ease;
 
       &:hover {
-        color: variables.$accent;
+        color: $primary-normal;
       }
     }
   }
 
   .errors {
-    @include mixins.flex(center, center, column);
+    @include flex(center, center, column);
     gap: 4px;
     p {
-      font-size: variables.$text-sm;
-      color: variables.$error;
+      font-size: 14px;
+      color: $error-normal;
     }
   }
 }
