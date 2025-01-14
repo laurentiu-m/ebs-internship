@@ -27,7 +27,6 @@ export const Register = () => {
         .nonempty(t('register.error.phone_empty'))
         .refine(validator.isMobilePhone, t('register.error.phone_invalid')),
       gender: z.string().nonempty(t('register.error.gender_empty')),
-      language: z.string().nonempty(t('register.error.language_empty')),
       password: z.string().nonempty(t('register.error.password_empty')).min(8, t('register.error.password_min')),
       confirmPassword: z.string().nonempty(t('register.error.confirm_password_empty'))
     })
@@ -51,11 +50,6 @@ export const Register = () => {
     { value: 'male', text: t('register.form.gender.male') },
     { value: 'female', text: t('register.form.gender.female') },
     { value: 'prefer_not_to_say', text: t('register.form.gender.prefer_not_to_say') }
-  ];
-
-  const languageOptions = [
-    { value: 'en', text: t('register.form.language.english') },
-    { value: 'ro', text: t('register.form.language.romanian') }
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -120,13 +114,6 @@ export const Register = () => {
           description={t('register.form.gender.default')}
           options={genderOptions}
           error={errors.gender}
-        />
-        <Select
-          register={register}
-          name="language"
-          description={t('register.form.language.default')}
-          options={languageOptions}
-          error={errors.language}
         />
         <FormInput
           name="password"

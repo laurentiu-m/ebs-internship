@@ -47,15 +47,8 @@ router.post("/login", (req: Request, res: Response) => {
 });
 
 router.post("/register", async (req: Request, res: Response) => {
-  const {
-    name,
-    username,
-    email,
-    phone,
-    gender,
-    language,
-    password,
-  }: RegisterUser = req.body;
+  const { name, username, email, phone, gender, password }: RegisterUser =
+    req.body;
 
   const missingFields = [
     { field: "email", value: email },
@@ -64,7 +57,6 @@ router.post("/register", async (req: Request, res: Response) => {
     { field: "gender", value: gender },
     { field: "username", value: username },
     { field: "phone", value: phone },
-    { field: "language", value: language },
   ].filter(({ value }) => !value);
 
   if (missingFields.length > 0) {
@@ -111,7 +103,6 @@ router.post("/register", async (req: Request, res: Response) => {
       email,
       phone,
       gender,
-      language,
       password,
       role: "user",
     });

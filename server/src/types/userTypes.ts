@@ -36,6 +36,5 @@ export type RegisterUser = {
   name: string;
   password: string;
   gender: string;
-  language: string;
   phone: string;
 };

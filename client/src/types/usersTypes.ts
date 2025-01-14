@@ -23,7 +23,6 @@ export type User = {
     bs: string;
   };
   gender: string;
-  language: string;
   password: string;
   role: string;
 };
@@ -33,7 +32,6 @@ export type UserRegister = {
   username: string;
   email: string;
   gender: string;
-  language: string;
   phone: string;
   password: string;
 };
