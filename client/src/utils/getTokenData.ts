@@ -1,4 +1,4 @@
-import { ACCESS_TOKEN } from '@src/types';
+import { ACCESS_TOKEN } from '@src/app-constants';
 import { JwtPayload } from '@src/types';
 import { jwtDecode } from 'jwt-decode';
 
