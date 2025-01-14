@@ -1,59 +1,40 @@
+import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse } from '@src/types';
+
 import api from './axios';
-import { User, UserLogin, UserRegister } from '@types';
 
-export const getUsers = async (): Promise<User[]> => {
-  try {
-    const response = await api.get<User[]>('/users');
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch users', error);
-    throw error;
+export const users = {
+  getList: async (): Promise<User[]> => {
+    const { data } = await api.get<User[]>('/users');
+    return data;
+  },
+
+  getListById: async (id: number): Promise<User> => {
+    const { data } = await api.get<User>(`/users/${id}`);
+    return data;
+  },
+
+  create: async (userData: UserRegister): Promise<string> => {
+    const { data }: AuthResponse = await api.post('/api/auth/register', userData);
+    return data.token;
+  },
+
+  login: async (userData: UserLogin): Promise<string> => {
+    const { data }: AuthResponse = await api.post('/api/auth/login', userData);
+    return data.token;
+  },
+
+  valid: async (token: string | null): Promise<JwtPayload> => {
+    const { data }: ValidResponse = await api.post('/api/auth/valid', { token });
+    return data.decodedToken;
+  },
+
+  update: async (id: string, userData: UserRegister) => {
+    const { data } = await api.put(`/users/${id}`, userData);
+    return data;
+  },
+
+  delete: async (id: string) => {
+    const { data } = await api.delete(`/users/${id}`);
+    return data;
   }
-};
-
-export const getUserById = async (id: number): Promise<User> => {
-  try {
-    const response = await api.get<User>(`/users/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error('Failed to fetch the user', error);
-    throw error;
-  }
-};
-
-export const createUser = async (userData: UserRegister) => {
-  try {
-    const response = await api.post('/api/auth/register', userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const loginUser = async (userData: UserLogin) => {
-  try {
-    const response = await api.post('/api/auth/login', userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const validUser = async (token: string | null) => {
-  try {
-    const response = await api.post('/api/auth/valid', { token });
-    return response.data;
-  } catch (error: any) {
-    throw error.response.data.message || 'Something went wrong';
-  }
-};
-
-export const updateUser = async (id: string, data: UserRegister) => {
-  const response = await api.put(`/users/${id}`, data);
-  return response.data;
-};
-
-export const deleteUser = async (id: string) => {
-  const response = await api.delete(`/users/${id}`);
-  return response.data;
 };

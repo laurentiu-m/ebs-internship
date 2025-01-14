@@ -47,26 +47,16 @@ router.post("/login", (req: Request, res: Response) => {
 });
 
 router.post("/register", async (req: Request, res: Response) => {
-  const {
-    name,
-    username,
-    email,
-    phone,
-    gender,
-    language,
-    password,
-    confirmPassword,
-  }: RegisterUser = req.body;
+  const { name, username, email, phone, gender, password }: RegisterUser =
+    req.body;
 
   const missingFields = [
     { field: "email", value: email },
     { field: "name", value: name },
     { field: "password", value: password },
     { field: "gender", value: gender },
-    { field: "confirmPassword", value: confirmPassword },
     { field: "username", value: username },
     { field: "phone", value: phone },
-    { field: "language", value: language },
   ].filter(({ value }) => !value);
 
   if (missingFields.length > 0) {
@@ -106,16 +96,6 @@ router.post("/register", async (req: Request, res: Response) => {
     return;
   }
 
-  const checkPassword = password === confirmPassword;
-  if (!checkPassword) {
-    res.status(404).json({
-      field: "confirmPassword",
-      type: "confirmPassword_invalid",
-      message: "Confirm password must match with password",
-    });
-    return;
-  }
-
   try {
     const response = await axiosInstance.post("/users", {
       name,
@@ -123,7 +103,6 @@ router.post("/register", async (req: Request, res: Response) => {
       email,
       phone,
       gender,
-      language,
       password,
       role: "user",
     });

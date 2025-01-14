@@ -35,8 +35,6 @@ export type RegisterUser = {
   email: string;
   name: string;
   password: string;
-  confirmPassword: string;
   gender: string;
-  language: string;
   phone: string;
 };

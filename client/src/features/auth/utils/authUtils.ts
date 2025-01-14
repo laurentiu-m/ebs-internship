@@ -1,10 +1,10 @@
-import { loginUser, createUser } from '@api';
+import { apiClient } from '@src/api';
+import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, ACCESS_TOKEN, Routes, UserLogin } from '@src/types';
 import { AxiosError } from 'axios';
-import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, ACCESS_TOKEN, Routes, UserLogin } from '@types';
 
 export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => {
   try {
-    const { token } = await loginUser(data);
+    const token = await apiClient.users.login(data);
 
     localStorage.setItem(ACCESS_TOKEN, token);
 
@@ -19,12 +19,9 @@ export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => 
   }
 };
 
-export const registerSubmit: UserRegisterSubmit = async (data, setError, navigate) => {
-  const { firstName, lastName, ...rest } = data;
-  const registerData = { ...rest, name: `${firstName} ${lastName}` };
-
+export const registerSubmit: UserRegisterSubmit = async (registerData, setError, navigate) => {
   try {
-    const { token } = await createUser(registerData);
+    const token = await apiClient.users.create(registerData);
 
     localStorage.setItem(ACCESS_TOKEN, token);
 
