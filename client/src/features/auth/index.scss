@@ -65,11 +65,11 @@
     }
 
     &__submit {
-      @include button-style($primary-normal, $white, 100%, none);
+      @include button-style($primary-normal, $white, none);
     }
 
     &__redirect {
-      @include button-style(transparent, $primary-normal, 100%, 1px solid $primary-normal);
+      @include button-style(transparent, $primary-normal, 1px solid $primary-normal);
     }
   }
 
