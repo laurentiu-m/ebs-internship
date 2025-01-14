@@ -66,9 +66,14 @@ export const Register = () => {
 
   return (
     <div className="auth">
-      <LanguageSelector />
+      <div className="language">
+        <LanguageSelector />
+      </div>
 
-      <h1 className="auth__header">{t('register.heading')}</h1>
+      <div className="auth__header">
+        <h1>{t('register.heading')}</h1>
+        <p>{t('register.description')}</p>
+      </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
         <FormInput

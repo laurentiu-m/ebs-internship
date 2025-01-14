@@ -1,6 +1,6 @@
 @use '@styles//mixins.scss' as *;
 @use '@styles/variables' as *;
-@use '@styles/language-selector.scss' as *;
+@use '@styles/selectors.scss' as *;
 @use '@styles/buttons.scss' as *;
 @use '@styles/inputs.scss' as *;
 
@@ -13,7 +13,7 @@
     top: 3%;
     right: 3%;
     width: 110px;
-    @include language-selector-style();
+    @include selector-style();
   }
 
   &__header {

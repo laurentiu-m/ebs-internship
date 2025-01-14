@@ -18,20 +18,20 @@ export const LanguageSelector = () => {
 
   return (
     <div className="language">
-      <div className="language__dropdown">
+      <div className="dropdown">
         <div
-          className={`language__dropdown--toggle ${isDropdownOpen ? 'language__dropdown--toggle--active' : ''}`}
+          className={`dropdown__button ${isDropdownOpen ? 'dropdown__button--active' : ''}`}
           onClick={toggleDropdown}
         >
           <span>{i18n.language === 'en' ? 'English' : 'Română'}</span>
           <img src={`${isDropdownOpen ? arrow_drop_up : arrow_drop_down}`} alt="arrow-icon" />
         </div>
         {isDropdownOpen && (
-          <div className="language__options">
-            <a onClick={() => onChangeLanguage('en')} className="language__option">
+          <div className="dropdown__options">
+            <a onClick={() => onChangeLanguage('en')} className="option">
               English
             </a>
-            <a onClick={() => onChangeLanguage('ro')} className="language__option">
+            <a onClick={() => onChangeLanguage('ro')} className="option">
               Română
             </a>
           </div>

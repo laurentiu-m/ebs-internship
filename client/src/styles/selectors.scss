@@ -1,12 +1,12 @@
 @use './variables.scss' as *;
 @use './mixins.scss' as *;
 
-@mixin language-selector-style() {
-  &__dropdown {
+@mixin selector-style() {
+  .dropdown {
     position: relative;
     width: 100%;
 
-    &--toggle {
+    &__button {
       width: 100%;
       position: relative;
       @include flex(space-between, center, row);
@@ -20,7 +20,7 @@
       }
     }
 
-    .language__options {
+    &__options {
       width: 100%;
       position: absolute;
       left: 50%;
@@ -32,14 +32,11 @@
       border-radius: $border-radius;
       overflow: hidden;
 
-      .language__option {
+      a {
         width: 100%;
         padding: 8px;
         text-align: center;
         cursor: pointer;
-        transition:
-          background 0.15s ease,
-          color 0.15s ease;
         &:hover {
           background: $primary-hover;
           color: $background;
