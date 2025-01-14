@@ -25,12 +25,20 @@ router.post("/login", (req: Request, res: Response) => {
   const user: User = users.find((user) => user.email === email);
 
   if (!user || user.password !== password) {
-    res.status(400).json({ message: "Invalid email or password" });
+    const invalidFields = [
+      { field: "email", message: "Invalid email or password" },
+      { field: "password", message: "" },
+    ];
+    res.status(400).json({ errors: invalidFields });
     return;
   }
 
   const token = jwt.sign(
-    { userId: user.id, username: user.username },
+    {
+      userId: user.id,
+      role: user.role,
+      language: user.language,
+    },
     config.jwtSecret,
     { expiresIn: config.jwtExpiration }
   );
@@ -39,10 +47,26 @@ router.post("/login", (req: Request, res: Response) => {
 });
 
 router.post("/register", async (req: Request, res: Response) => {
-  const { username, email, name, password, phone }: RegisterUser = req.body;
+  const { name, username, email, phone, gender, password }: RegisterUser =
+    req.body;
 
-  if (!username || !email || !name || !password || !phone) {
-    res.status(404).json("Please complete the register form");
+  const missingFields = [
+    { field: "email", value: email },
+    { field: "name", value: name },
+    { field: "password", value: password },
+    { field: "gender", value: gender },
+    { field: "username", value: username },
+    { field: "phone", value: phone },
+  ].filter(({ value }) => !value);
+
+  if (missingFields.length > 0) {
+    res.status(400).json({
+      error: "form_invalid",
+      fields: missingFields.map(({ field }) => ({
+        field,
+        message: `Please complete the ${field} field`,
+      })),
+    });
     return;
   }
 
@@ -52,7 +76,11 @@ router.post("/register", async (req: Request, res: Response) => {
     (user) => user.email === email
   );
   if (checkEmail) {
-    res.status(404).json("Someone already has this email, please try another");
+    res.status(404).json({
+      field: "email",
+      type: "email_invalid",
+      message: "Someone already is using this email, please try another",
+    });
     return;
   }
 
@@ -60,24 +88,58 @@ router.post("/register", async (req: Request, res: Response) => {
     (user) => user.username === username
   );
   if (checkUsername) {
-    res
-      .status(404)
-      .json("Someone already has this username, please try another");
+    res.status(404).json({
+      field: "username",
+      type: "username_invalid",
+      message: "Someone already is using this username, please try another",
+    });
     return;
   }
 
   try {
-    await axiosInstance.post("/users", {
+    const response = await axiosInstance.post("/users", {
+      name,
       username,
       email,
-      name,
-      password,
       phone,
+      gender,
+      password,
+      role: "user",
     });
-    res.status(200).json("You've been registred successfully");
+
+    const user = response.data;
+    const token = jwt.sign(
+      { userId: user.id, username: user.username, role: user.role },
+      config.jwtSecret,
+      { expiresIn: config.jwtExpiration }
+    );
+    res.status(200).json({
+      message: "You've been registered successfully",
+      token,
+    });
   } catch (error) {
-    console.error("Something went wrong", error);
-    res.status(500).json("An error occurred during registration");
+    res.status(500).json({ message: "An error occurred during registration" });
+  }
+});
+
+router.post("/valid", (req: Request, res: Response) => {
+  const { token } = req.body;
+
+  if (!token) {
+    res.status(400).json({
+      message: "You are not login to access this page",
+    });
+    return;
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, config.jwtSecret);
+    res.status(200).json({ message: "Token is valid", decodedToken });
+    return;
+  } catch (error) {
+    res.status(400).json({
+      message: "Token is invalid or expired. Please log in again.",
+    });
   }
 });
 

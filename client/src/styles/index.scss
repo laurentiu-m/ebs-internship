@@ -1,14 +1,14 @@
-@use 'variables';
-@use 'mixins';
+@import 'variables';
+@import 'mixins';
 
 * {
   font-family: 'Poppins', serif;
-  font-size: variables.$text-base;
+  font-size: $text-base;
   line-height: 1.5;
-  font-weight: variables.$font-normal;
+  font-weight: $font-normal;
 
-  color: variables.$white;
-  background-color: variables.$background-dark;
+  color: $white;
+  background-color: $background-dark;
 
   box-sizing: border-box;
   margin: 0;
@@ -17,6 +17,39 @@
 
 .main-container {
   min-height: 100vh;
-  @include mixins.flex(center, center, column);
+  @include flex(center, center, column);
   padding-block: 50px;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid $white;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  &::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-bottom-color: $accent;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

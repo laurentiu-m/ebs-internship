@@ -1,71 +1,139 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { UserRegister } from '@src/types';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import validator from 'validator';
 import { z } from 'zod';
+
+import { FormInput, Select, Errors, LanguageSelector } from '../components';
+import { registerSubmit } from '../utils/authUtils';
+
 import '../index.scss';
 
-const registerSchema = z
-  .object({
-    firstName: z.string().min(2, 'First name is required'),
-    lastName: z.string().min(2, 'Last name is required'),
-    email: z.string().email('Invalid email address'),
-    selectedGender: z.string().nonempty('Please select a gender'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string()
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Password must match',
-    path: ['confirmPassword']
-  });
-
-type FormData = z.infer<typeof registerSchema>;
-
 export const Register = () => {
+  const { t } = useTranslation();
+  const registerSchema = z
+    .object({
+      firstName: z.string().nonempty(t('register.error.first_name_empty')).min(2, t('register.error.first_name_min')),
+      lastName: z.string().nonempty(t('register.error.last_name_empty')).min(2, t('register.error.last_name_min')),
+      username: z.string().nonempty(t('register.error.username_empty')).min(4, t('register.error.username_min')),
+      email: z.string().nonempty(t('register.error.email_empty')).email(t('register.error.email_invalid')),
+      phone: z
+        .string()
+        .nonempty(t('register.error.phone_empty'))
+        .refine(validator.isMobilePhone, t('register.error.phone_invalid')),
+      gender: z.string().nonempty(t('register.error.gender_empty')),
+      password: z.string().nonempty(t('register.error.password_empty')).min(8, t('register.error.password_min')),
+      confirmPassword: z.string().nonempty(t('register.error.confirm_password_empty'))
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t('register.error.confirm_password_invalid'),
+      path: ['confirmPassword']
+    });
+
+  type FormData = z.infer<typeof registerSchema>;
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-    reset
+    setError,
+    formState: { errors, isSubmitting }
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
 
-  const onSubmit = (data: FormData) => {
-    reset();
+  const navigate = useNavigate();
+
+  const genderOptions = [
+    { value: 'male', text: t('register.form.gender.male') },
+    { value: 'female', text: t('register.form.gender.female') },
+    { value: 'prefer_not_to_say', text: t('register.form.gender.prefer_not_to_say') }
+  ];
+
+  const onSubmit = async (data: FormData) => {
+    const { firstName, lastName, confirmPassword, ...rest } = data;
+    const registerData: UserRegister = {
+      ...rest,
+      name: `${firstName} ${lastName}`
+    };
+
+    registerSubmit(registerData, setError, navigate);
   };
+
+  const allErrors = Object.values(errors)
+    .map((error) => error.message)
+    .filter(Boolean);
 
   return (
     <div className="auth">
-      <h1 className="auth__header">Register</h1>
+      <LanguageSelector />
 
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
-        <input {...register('firstName')} type="text" className="form__input" placeholder="First Name" />
-        {errors.firstName && <p className="form__error">{`${errors.firstName.message}`}</p>}
-        <input {...register('lastName')} type="text" className="form__input" placeholder="Last Name" />
-        {errors.lastName && <p className="form__error">{`${errors.lastName.message}`}</p>}
-        <input {...register('email')} type="email" className="form__input" placeholder="Email" />
-        {errors.email && <p className="form__error">{`${errors.email.message}`}</p>}
-        <select {...register('selectedGender')} defaultValue="" className="form__select">
-          <option value="" disabled>
-            Select Gender
-          </option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="none">Prefer Not to Say</option>
-        </select>
-        {errors.selectedGender && <p className="form__error">{`${errors.selectedGender.message}`}</p>}
-        <input {...register('password')} type="password" className="form__input" placeholder="Password" />
-        {errors.password && <p className="form__error">{`${errors.password.message}`}</p>}
-        <input
-          {...register('confirmPassword')}
-          type="password"
-          className="form__input"
-          placeholder="Confirm Password"
+      <h1 className="auth__header">{t('register.heading')}</h1>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
+        <FormInput
+          name="firstName"
+          type="text"
+          register={register}
+          placeholder={t('register.form.first_name')}
+          error={errors.firstName}
         />
-        {errors.confirmPassword && <p className="form__error">{`${errors.confirmPassword.message}`}</p>}
-        <input disabled={isSubmitting} type="submit" className="form__submit" value="Register" />
+        <FormInput
+          name="lastName"
+          type="text"
+          register={register}
+          placeholder={t('register.form.last_name')}
+          error={errors.lastName}
+        />
+        <FormInput
+          name="email"
+          type="email"
+          register={register}
+          placeholder={t('register.form.email')}
+          error={errors.email}
+        />
+        <FormInput
+          name="username"
+          type="text"
+          register={register}
+          placeholder={t('register.form.username')}
+          error={errors.username}
+        />
+        <FormInput
+          name="phone"
+          type="text"
+          register={register}
+          placeholder={t('register.form.phone')}
+          error={errors.phone}
+        />
+        <Select
+          register={register}
+          name="gender"
+          description={t('register.form.gender.default')}
+          options={genderOptions}
+          error={errors.gender}
+        />
+        <FormInput
+          name="password"
+          type="password"
+          register={register}
+          placeholder={t('register.form.password')}
+          error={errors.password}
+        />
+        <FormInput
+          name="confirmPassword"
+          type="password"
+          register={register}
+          placeholder={t('register.form.confirm_password')}
+          error={errors.confirmPassword}
+        />
+
+        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('register.form.submit')} />
         <Link to="/login" className="form__redirect">
-          Login
+          {t('register.form.login')}
         </Link>
       </form>
+
+      {allErrors && <Errors allErrors={allErrors} />}
     </div>
   );
 };

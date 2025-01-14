@@ -1,0 +1,64 @@
+{
+  "login": {
+    "heading": "Autentificare",
+    "form": {
+      "email": "Email",
+      "password": "Parolă",
+      "submit": "Autentificare",
+      "register": "Înregistrare"
+    },
+    "error": {
+      "email_empty": "Vă rugăm să adăugați email-ul",
+      "email_invalid": "Email invalid",
+      "password_empty": "Vă rugăm să adăugați parola"
+    }
+  },
+  "register": {
+    "heading": "Înregistrare",
+    "form": {
+      "first_name": "Prenume",
+      "last_name": "Nume",
+      "email": "Email",
+      "username": "Nume utilizator",
+      "phone": "Telefon",
+      "gender": {
+        "default": "Selectează genul",
+        "male": "Masculin",
+        "female": "Feminin",
+        "prefer_not_to_say": "Prefer să nu spun"
+      },
+      "language": {
+        "default": "Selectează limba",
+        "english": "Engleză",
+        "romanian": "Română"
+      },
+      "password": "Parolă",
+      "confirm_password": "Confirmați parola",
+      "submit": "Înregistrare",
+      "login": "Autentificare"
+    },
+    "error": {
+      "first_name_empty": "Prenumele este obligatoriu",
+      "first_name_min": "Prenumele trebuie să aibă cel puțin 2 caractere",
+      "last_name_empty": "Numele este obligatoriu",
+      "last_name_min": "Numele trebuie să aibă cel puțin 2 caractere",
+      "username_empty": "Numele utilizatorului este obligatoriu",
+      "username_min": "Numele utilizatorului trebuie să aibă cel puțin 4 caractere",
+      "email_empty": "Vă rugăm să adăugați email-ul",
+      "email_invalid": "Adresa de email este invalidă",
+      "phone_empty": "Vă rugăm să adăugați numărul de telefon",
+      "phone_invalid": "Număr de telefon invalid",
+      "gender_empty": "Vă rugăm să selectați un gen",
+      "language_empty": "Vă rugăm să selectați o limbă",
+      "password_empty": "Parola este obligatorie",
+      "password_min": "Parola trebuie să aibă cel puțin 8 caractere",
+      "confirm_password_empty": "Confirmarea parolei este obligatorie",
+      "confirm_password_invalid": "Parola trebuie să coincidă"
+    }
+  },
+  "not_found": {
+    "heading": "Pagina Nu A Fost Găsită 404",
+    "description": "Pagina pe care o căutați nu există.",
+    "button": "Întoarce-te Acasă"
+  }
+}

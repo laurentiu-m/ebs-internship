@@ -1,5 +1,5 @@
-import * as users from './users';
+import { users } from './users';
 
-export const api = {
+export const apiClient = {
   users
 };

@@ -1,34 +1,40 @@
-import apiClient from './axios';
+import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse } from '@src/types';
 
-type userData = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  gender: string;
-  role: string;
-};
+import api from './axios';
 
-export const fetchUsers = async () => {
-  const response = await apiClient.get('/users');
-  return response.data;
-};
+export const users = {
+  getList: async (): Promise<User[]> => {
+    const { data } = await api.get<User[]>('/users');
+    return data;
+  },
 
-export const fetchUserId = async (id: string) => {
-  const response = await apiClient.get(`/users/${id}`);
-  return response.data;
-};
+  getListById: async (id: number): Promise<User> => {
+    const { data } = await api.get<User>(`/users/${id}`);
+    return data;
+  },
 
-export const createUser = async (data: userData) => {
-  const response = await apiClient.post('/users', data);
-  return response.data;
-};
+  create: async (userData: UserRegister): Promise<string> => {
+    const { data }: AuthResponse = await api.post('/api/auth/register', userData);
+    return data.token;
+  },
 
-export const updateUser = async (id: string, data: userData) => {
-  const response = await apiClient.put(`/users/${id}`, data);
-  return response.data;
-};
+  login: async (userData: UserLogin): Promise<string> => {
+    const { data }: AuthResponse = await api.post('/api/auth/login', userData);
+    return data.token;
+  },
 
-export const deleteUser = async (id: string) => {
-  const response = await apiClient.delete(`/users/${id}`);
-  return response.data;
+  valid: async (token: string | null): Promise<JwtPayload> => {
+    const { data }: ValidResponse = await api.post('/api/auth/valid', { token });
+    return data.decodedToken;
+  },
+
+  update: async (id: string, userData: UserRegister) => {
+    const { data } = await api.put(`/users/${id}`, userData);
+    return data;
+  },
+
+  delete: async (id: string) => {
+    const { data } = await api.delete(`/users/${id}`);
+    return data;
+  }
 };

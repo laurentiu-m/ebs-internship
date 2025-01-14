@@ -1,16 +1,37 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Dashboard } from '@src/layouts/dashboard/Dashboard';
+import { ProtectedRoute } from '@src/router/ProtectedRoute';
+import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';
 
-import { Login } from './features/auth/pages/Login';
-import { Register } from './features/auth/pages/Register';
+import { Roles, Routes } from './app-constants';
+import { Layout, NotFound } from './components';
+import { Login, Register } from './features/auth/pages';
+const routesConfig = [
+  {
+    path: Routes.Dashboard,
+    element: Dashboard,
+    requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
+  }
+];
 
 export const App = () => {
   return (
     <Router>
       <main className="main-container">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
+        <RouterPaths>
+          <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
+          <Route path={Routes.Login} element={<Login />} />
+          <Route path={Routes.Register} element={<Register />} />
+          <Route element={<Layout />}>
+            {routesConfig.map(({ path, element: Component, requiredRoles }) => (
+              <Route
+                key={path}
+                path={path}
+                element={<ProtectedRoute requiredRoles={requiredRoles} element={<Component />} />}
+              />
+            ))}
+            <Route path={Routes.NotFound} element={<NotFound />} />
+          </Route>
+        </RouterPaths>
       </main>
     </Router>
   );

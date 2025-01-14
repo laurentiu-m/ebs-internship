@@ -1,17 +1,30 @@
-@use '../../styles/mixins.scss';
-@use '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/variables.scss';
 
 .auth {
-  @include mixins.flex(center, center, column);
-  gap: 14px;
+  @include flex(center, center, column);
+  gap: 18px;
+
+  .language {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    &__select {
+      padding: 8px;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid white;
+      cursor: pointer;
+    }
+  }
 
   &__header {
-    font-size: variables.$header;
-    font-weight: variables.$font-bold;
+    font-size: $header;
+    font-weight: $font-bold;
   }
 
   .form {
-    @include mixins.flex(space-between, center, column);
+    @include flex(space-between, center, column);
     width: 400px;
     gap: 20px;
 
@@ -20,35 +33,33 @@
       width: 100%;
       background: none;
       border: none;
-      border-bottom: 1px solid variables.$white;
+      border-bottom: 1px solid $white;
       padding: 10px 0px;
       outline: none;
+      cursor: pointer;
       transition: all 0.1s ease-in-out;
       &:focus {
-        border-color: variables.$accent;
+        border-color: $accent;
       }
-    }
-
-    &__error {
-      font-size: variables.$text-sm;
-      color: variables.$error;
-    }
-
-    &__select {
-      cursor: pointer;
+      &--error {
+        border-color: $error;
+        &:focus {
+          border-color: $error;
+        }
+      }
     }
 
     &__submit {
       width: 100%;
       padding: 10px;
-      font-weight: variables.$font-semibold;
+      font-weight: $font-semibold;
       text-transform: uppercase;
-      background-color: variables.$accent;
+      background-color: $accent;
       border: none;
       cursor: pointer;
       transition: background-color 0.1s ease;
       &:hover {
-        background-color: variables.$accenth-hover;
+        background-color: $accenth-hover;
       }
     }
 
@@ -57,8 +68,17 @@
       transition: color 0.1s ease;
 
       &:hover {
-        color: variables.$accent;
+        color: $accent;
       }
+    }
+  }
+
+  .errors {
+    @include flex(center, center, column);
+    gap: 4px;
+    p {
+      font-size: $text-sm;
+      color: $error;
     }
   }
 }

@@ -19,6 +19,8 @@ export type User = {
     catchPhrase: string;
     bs: string;
   };
+  gender: string;
+  language: string;
   password: string;
   role: string;
 };
@@ -33,5 +35,6 @@ export type RegisterUser = {
   email: string;
   name: string;
   password: string;
+  gender: string;
   phone: string;
 };
