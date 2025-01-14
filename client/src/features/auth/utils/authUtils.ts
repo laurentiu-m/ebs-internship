@@ -19,10 +19,7 @@ export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => 
   }
 };
 
-export const registerSubmit: UserRegisterSubmit = async (data, setError, navigate) => {
-  const { firstName, lastName, ...rest } = data;
-  const registerData = { ...rest, name: `${firstName} ${lastName}` };
-
+export const registerSubmit: UserRegisterSubmit = async (registerData, setError, navigate) => {
   try {
     const token = await apiClient.users.create(registerData);
 

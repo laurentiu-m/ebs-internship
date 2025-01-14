@@ -55,7 +55,6 @@ router.post("/register", async (req: Request, res: Response) => {
     gender,
     language,
     password,
-    confirmPassword,
   }: RegisterUser = req.body;
 
   const missingFields = [
@@ -63,7 +62,6 @@ router.post("/register", async (req: Request, res: Response) => {
     { field: "name", value: name },
     { field: "password", value: password },
     { field: "gender", value: gender },
-    { field: "confirmPassword", value: confirmPassword },
     { field: "username", value: username },
     { field: "phone", value: phone },
     { field: "language", value: language },
@@ -102,16 +100,6 @@ router.post("/register", async (req: Request, res: Response) => {
       field: "username",
       type: "username_invalid",
       message: "Someone already is using this username, please try another",
-    });
-    return;
-  }
-
-  const checkPassword = password === confirmPassword;
-  if (!checkPassword) {
-    res.status(404).json({
-      field: "confirmPassword",
-      type: "confirmPassword_invalid",
-      message: "Confirm password must match with password",
     });
     return;
   }

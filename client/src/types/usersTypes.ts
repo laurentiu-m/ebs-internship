@@ -36,7 +36,6 @@ export type UserRegister = {
   language: string;
   phone: string;
   password: string;
-  confirmPassword: string;
 };
 
 export type UserRegisterForm = Omit<UserRegister, 'name'> & {
@@ -61,7 +60,7 @@ export type UserLoginSubmit = (
 ) => Promise<void>;
 
 export type UserRegisterSubmit = (
-  data: UserRegisterForm,
+  registerData: UserRegister,
   setError: UseFormSetError<UserRegisterForm>,
   navigate: NavigateFunction
 ) => Promise<void>;

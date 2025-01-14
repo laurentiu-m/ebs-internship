@@ -41,7 +41,13 @@ export default tseslint.config(
           }
         }
       ],
-      'no-console': ['warn', { allow: ['warn', 'error'] }]
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          ignoreRestSiblings: true
+        }
+      ]
     }
   }
 );

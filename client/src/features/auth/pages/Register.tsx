@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { UserRegister } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,6 +11,7 @@ import { Select } from '../components';
 import { Errors } from '../components';
 import { LanguageSelector } from '../components';
 import { registerSubmit } from '../utils/authUtils';
+
 import '../index.scss';
 
 export const Register = () => {
@@ -57,7 +59,13 @@ export const Register = () => {
   ];
 
   const onSubmit = async (data: FormData) => {
-    registerSubmit(data, setError, navigate);
+    const { firstName, lastName, confirmPassword, ...rest } = data;
+    const registerData: UserRegister = {
+      ...rest,
+      name: `${firstName} ${lastName}`
+    };
+
+    registerSubmit(registerData, setError, navigate);
   };
 
   const allErrors = Object.values(errors)
