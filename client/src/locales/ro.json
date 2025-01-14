@@ -1,6 +1,7 @@
 {
   "login": {
     "heading": "Autentificare",
+    "description": "Bine ai revenit! Te rog introdu detaliile tale.",
     "form": {
       "email": "Email",
       "password": "Parolă",

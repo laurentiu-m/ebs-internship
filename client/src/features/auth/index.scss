@@ -1,6 +1,7 @@
 @import '@styles/mixins.scss';
 @import '@styles/variables.scss';
 @import '@styles/buttons.scss';
+@import '@styles/inputs.scss';
 
 .auth {
   @include flex(center, center, column);
@@ -20,9 +21,16 @@
   }
 
   &__header {
-    font-size: map-get($h1, font-size);
-    font-weight: map-get($h1, font-weight);
-    line-height: map-get($h1, line-height);
+    text-align: center;
+    h1 {
+      font-size: map-get($h1, font-size);
+      font-weight: map-get($h1, font-weight);
+      line-height: map-get($h1, line-height);
+      color: $text-heading;
+    }
+    p {
+      color: $text-secondary;
+    }
   }
 
   .form {
@@ -30,7 +38,10 @@
     width: 400px;
     gap: 20px;
 
-    &__input,
+    &__input {
+      @include input-style;
+    }
+
     &__select {
       width: 100%;
       background: none;

@@ -1,6 +1,7 @@
 {
   "login": {
     "heading": "Login",
+    "description": "Welcome back! Please enter your details.",
     "form": {
       "email": "Email",
       "password": "Password",
