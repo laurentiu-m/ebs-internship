@@ -1,6 +1,6 @@
 import { apiClient } from '@src/api';
+import { ACCESS_TOKEN, Routes } from '@src/app-constants';
 import { Loading } from '@src/components';
-import { ACCESS_TOKEN, Routes } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 

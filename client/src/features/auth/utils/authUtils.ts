@@ -1,5 +1,6 @@
 import { apiClient } from '@src/api';
-import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, ACCESS_TOKEN, Routes, UserLogin } from '@src/types';
+import { ACCESS_TOKEN, Routes } from '@src/app-constants';
+import { UserLoginSubmit, UserRegisterSubmit, UserRegisterForm, UserLogin } from '@src/types';
 import { AxiosError } from 'axios';
 
 export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => {

@@ -1,4 +1,4 @@
-import { Routes } from '@src/types';
+import { Routes } from '@src/app-constants';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 

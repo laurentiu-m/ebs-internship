@@ -1,4 +1,4 @@
-import { Roles } from '@src/types';
+import { Roles } from '@src/app-constants';
 import { getTokenData } from '@src/utils/getTokenData';
 
 export const Dashboard = () => {
