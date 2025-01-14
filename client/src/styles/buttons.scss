@@ -1,3 +1,5 @@
+@use './variables.scss' as *;
+
 @mixin button-style($background, $color, $border) {
   font-size: map-get($text-button, font-size);
   font-weight: map-get($text-button, font-weight);

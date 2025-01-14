@@ -1,6 +1,5 @@
-@import 'variables';
-@import 'mixins';
-@import 'loader';
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
 
 * {
   font-family: 'Poppins', serif;

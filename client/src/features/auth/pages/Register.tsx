@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { LanguageSelector } from '@src/components';
 import { UserRegister } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import { z } from 'zod';
 
-import { FormInput, Select, Errors, LanguageSelector } from '../components';
+import { FormInput, Select, Errors } from '../components';
 import { registerSubmit } from '../utils/authUtils';
 
 import '../index.scss';

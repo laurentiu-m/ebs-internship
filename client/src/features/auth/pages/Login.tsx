@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
-import { Loading } from '@src/components';
+import { Loading, LanguageSelector } from '@src/components';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { Errors, FormInput, LanguageSelector } from '../components';
+import { Errors, FormInput } from '../components';
 import { loginSubmit } from '../utils/authUtils';
 
 import '../index.scss';
@@ -53,7 +53,9 @@ export const Login = () => {
 
   return (
     <div className="auth">
-      <LanguageSelector />
+      <div className="language">
+        <LanguageSelector />
+      </div>
 
       <div className="auth__header">
         <h1>{t('login.heading')}</h1>

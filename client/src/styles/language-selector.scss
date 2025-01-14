@@ -1,0 +1,50 @@
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
+
+@mixin language-selector-style() {
+  &__dropdown {
+    position: relative;
+    width: 100%;
+
+    &--toggle {
+      width: 100%;
+      position: relative;
+      @include flex(space-between, center, row);
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      padding: 8px;
+      cursor: pointer;
+      transition: border-color 0.15s ease;
+      &--active {
+        border-color: $primary-normal;
+      }
+    }
+
+    .language__options {
+      width: 100%;
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+      margin-top: 8px;
+      @include flex(space-between, center, column);
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      overflow: hidden;
+
+      .language__option {
+        width: 100%;
+        padding: 8px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          background 0.15s ease,
+          color 0.15s ease;
+        &:hover {
+          background: $primary-hover;
+          color: $background;
+        }
+      }
+    }
+  }
+}

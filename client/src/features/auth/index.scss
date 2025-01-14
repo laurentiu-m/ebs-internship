@@ -1,7 +1,8 @@
-@import '@styles/mixins.scss';
-@import '@styles/variables.scss';
-@import '@styles/buttons.scss';
-@import '@styles/inputs.scss';
+@use '@styles//mixins.scss' as *;
+@use '@styles/variables' as *;
+@use '@styles/language-selector.scss' as *;
+@use '@styles/buttons.scss' as *;
+@use '@styles/inputs.scss' as *;
 
 .auth {
   @include flex(center, center, column);
@@ -11,13 +12,8 @@
     position: absolute;
     top: 3%;
     right: 3%;
-    &__select {
-      padding: 8px;
-      border: none;
-      outline: none;
-      border-bottom: 1px solid $primary-normal;
-      cursor: pointer;
-    }
+    width: 110px;
+    @include language-selector-style();
   }
 
   &__header {
