@@ -6,10 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import { z } from 'zod';
 
-import { FormInput } from '../components';
-import { Select } from '../components';
-import { Errors } from '../components';
-import { LanguageSelector } from '../components';
+import { FormInput, Select, Errors, LanguageSelector } from '../components';
 import { registerSubmit } from '../utils/authUtils';
 
 import '../index.scss';
