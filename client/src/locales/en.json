@@ -3,10 +3,13 @@
     "heading": "Login",
     "description": "Welcome back! Please enter your details.",
     "form": {
-      "email": "Email",
-      "password": "Password",
+      "email": "Enter your email",
+      "password": "************",
       "submit": "Login",
-      "register": "Register"
+      "redirect": {
+        "title": "Don't have an account?",
+        "link": "Register"
+      }
     },
     "error": {
       "email_empty": "Please add your email",

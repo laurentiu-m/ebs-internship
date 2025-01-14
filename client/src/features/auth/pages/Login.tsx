@@ -78,9 +78,9 @@ export const Login = () => {
 
         <input disabled={isSubmitting} className="form__submit" type="submit" value={t('login.form.submit')} />
 
-        <Link to="/register" className="form__redirect">
-          {t('login.form.register')}
-        </Link>
+        <div className="form__redirect">
+          {t('login.form.redirect.title')} <Link to="/register">{t('login.form.redirect.link')}</Link>
+        </div>
       </form>
       {allErrors && <Errors allErrors={allErrors} />}
     </div>

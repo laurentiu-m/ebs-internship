@@ -69,7 +69,14 @@
     }
 
     &__redirect {
-      @include button-style(transparent, $primary-normal, 1px solid $primary-normal);
+      color: $text-secondary;
+      a {
+        color: $primary-normal;
+        text-decoration: none;
+        &:hover {
+          color: $primary-hover;
+        }
+      }
     }
   }
 

@@ -3,10 +3,13 @@
     "heading": "Autentificare",
     "description": "Bine ai revenit! Te rog introdu detaliile tale.",
     "form": {
-      "email": "Email",
-      "password": "Parolă",
+      "email": "Introdu adresa ta de email",
+      "password": "************",
       "submit": "Autentificare",
-      "register": "Înregistrare"
+      "redirect": {
+        "title": "Nu ai un cont?",
+        "link": "Înregistrează-te"
+      }
     },
     "error": {
       "email_empty": "Vă rugăm să adăugați email-ul",
