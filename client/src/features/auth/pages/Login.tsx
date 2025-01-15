@@ -2,16 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
-import { Loading, LanguageSelector } from '@src/components';
+import { Loading, FormInput } from '@src/components';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { Errors, FormInput } from '../components';
+import { Errors } from '../components';
 import { loginSubmit } from '../utils/authUtils';
-
-import '../index.scss';
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -52,11 +50,7 @@ export const Login = () => {
     .filter(Boolean);
 
   return (
-    <div className="auth">
-      <div className="language">
-        <LanguageSelector />
-      </div>
-
+    <>
       <div className="auth__header">
         <h1>{t('login.heading')}</h1>
         <p>{t('login.description')}</p>
@@ -85,6 +79,6 @@ export const Login = () => {
         </div>
       </form>
       {allErrors && <Errors allErrors={allErrors} />}
-    </div>
+    </>
   );
 };

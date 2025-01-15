@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LanguageSelector } from '@src/components';
+import { FormInput, FormSelect } from '@src/components';
 import { UserRegister } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import { z } from 'zod';
 
-import { FormInput, Select, Errors } from '../components';
+import { Errors } from '../components';
 import { registerSubmit } from '../utils/authUtils';
 
 import '../index.scss';
@@ -39,15 +39,16 @@ export const Register = () => {
     register,
     handleSubmit,
     setError,
+    control,
     formState: { errors, isSubmitting }
   } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
 
   const navigate = useNavigate();
 
   const genderOptions = [
-    { value: 'male', text: t('register.form.gender.male') },
-    { value: 'female', text: t('register.form.gender.female') },
-    { value: 'prefer_not_to_say', text: t('register.form.gender.prefer_not_to_say') }
+    { value: 'male', label: t('register.form.gender.male') },
+    { value: 'female', label: t('register.form.gender.female') },
+    { value: 'prefer_not_to_say', label: t('register.form.gender.prefer_not_to_say') }
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -65,11 +66,7 @@ export const Register = () => {
     .filter(Boolean);
 
   return (
-    <div className="auth">
-      <div className="language">
-        <LanguageSelector />
-      </div>
-
+    <>
       <div className="auth__header">
         <h1>{t('register.heading')}</h1>
         <p>{t('register.description')}</p>
@@ -111,12 +108,11 @@ export const Register = () => {
           placeholder={t('register.form.phone')}
           error={errors.phone}
         />
-        <Select
-          register={register}
+        <FormSelect
           name="gender"
-          description={t('register.form.gender.default')}
+          placeholder={t('register.form.gender.default')}
+          control={control}
           options={genderOptions}
-          error={errors.gender}
         />
         <FormInput
           name="password"
@@ -134,12 +130,12 @@ export const Register = () => {
         />
 
         <input disabled={isSubmitting} type="submit" className="form__submit" value={t('register.form.submit')} />
-        <Link to="/login" className="form__redirect">
-          {t('register.form.login')}
-        </Link>
+        <div className="form__redirect">
+          {t('register.form.redirect.title')} <Link to="/login">{t('register.form.redirect.link')}</Link>
+        </div>
       </form>
 
       {allErrors && <Errors allErrors={allErrors} />}
-    </div>
+    </>
   );
 };

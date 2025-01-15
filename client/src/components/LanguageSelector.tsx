@@ -1,42 +1,24 @@
-import { useState } from 'react';
-
-import arrow_drop_down from '@src/assets/icons/arrow_drop_down.svg';
-import arrow_drop_up from '@src/assets/icons/arrow_drop_up.svg';
 import { useTranslation } from 'react-i18next';
+
+import { SelectReact } from './SelectReact';
+
+const options = [
+  { value: 'en', label: 'English' },
+  { value: 'ro', label: 'Română' }
+];
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const onChangeLanguage = (lang: string) => {
+  const onChangeLanguage = (newValue: unknown) => {
+    const selectedValue = newValue as { value: string; label: string };
+    if (!selectedValue) return;
+    const lang = selectedValue.value;
+    if (i18n.language === lang) return;
     i18n.changeLanguage(lang);
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
   return (
-    <div className="language">
-      <div className="dropdown">
-        <div
-          className={`dropdown__button ${isDropdownOpen ? 'dropdown__button--active' : ''}`}
-          onClick={toggleDropdown}
-        >
-          <span>{i18n.language === 'en' ? 'English' : 'Română'}</span>
-          <img src={`${isDropdownOpen ? arrow_drop_up : arrow_drop_down}`} alt="arrow-icon" />
-        </div>
-        {isDropdownOpen && (
-          <div className="dropdown__options">
-            <a onClick={() => onChangeLanguage('en')} className="option">
-              English
-            </a>
-            <a onClick={() => onChangeLanguage('ro')} className="option">
-              Română
-            </a>
-          </div>
-        )}
-      </div>
-    </div>
+    <SelectReact options={options} defaultValue={i18n.language} placeholder="Language" onChange={onChangeLanguage} />
   );
 };

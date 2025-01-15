@@ -19,6 +19,7 @@
   },
   "register": {
     "heading": "Register",
+    "description": "Welcome! Please create your account.",
     "form": {
       "first_name": "First Name",
       "last_name": "Last Name",
@@ -31,15 +32,13 @@
         "female": "Female",
         "prefer_not_to_say": "Prefer Not to Say"
       },
-      "language": {
-        "default": "Select Language",
-        "english": "English",
-        "romanian": "Romanian"
-      },
       "password": "Password",
       "confirm_password": "Confirm Password",
       "submit": "Register",
-      "login": "Login"
+      "redirect": {
+        "title": "Already have an account?",
+        "link": "Login"
+      }
     },
     "error": {
       "first_name_empty": "First name is required",

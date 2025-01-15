@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 
 
 import { Roles, Routes } from './app-constants';
 import { Layout, NotFound } from './components';
+import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
 const routesConfig = [
   {
@@ -16,23 +17,23 @@ const routesConfig = [
 export const App = () => {
   return (
     <Router>
-      <main className="main-container">
-        <RouterPaths>
-          <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
+      <RouterPaths>
+        <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
+        <Route element={<LayoutAuth />}>
           <Route path={Routes.Login} element={<Login />} />
           <Route path={Routes.Register} element={<Register />} />
-          <Route element={<Layout />}>
-            {routesConfig.map(({ path, element: Component, requiredRoles }) => (
-              <Route
-                key={path}
-                path={path}
-                element={<ProtectedRoute requiredRoles={requiredRoles} element={<Component />} />}
-              />
-            ))}
-            <Route path={Routes.NotFound} element={<NotFound />} />
-          </Route>
-        </RouterPaths>
-      </main>
+        </Route>
+        <Route element={<Layout />}>
+          {routesConfig.map(({ path, element: Component, requiredRoles }) => (
+            <Route
+              key={path}
+              path={path}
+              element={<ProtectedRoute requiredRoles={requiredRoles} element={<Component />} />}
+            />
+          ))}
+          <Route path={Routes.NotFound} element={<NotFound />} />
+        </Route>
+      </RouterPaths>
     </Router>
   );
 };

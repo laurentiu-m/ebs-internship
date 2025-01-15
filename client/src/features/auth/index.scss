@@ -1,19 +1,20 @@
-@use '@styles//mixins.scss' as *;
+@use '@styles//mixins' as *;
 @use '@styles/variables' as *;
-@use '@styles/selectors.scss' as *;
-@use '@styles/buttons.scss' as *;
-@use '@styles/inputs.scss' as *;
+@use '@styles/colors' as *;
+@use '@styles/buttons' as *;
+@use '@styles/inputs' as *;
 
 .auth {
+  min-height: 100vh;
   @include flex(center, center, column);
+  padding-block: 50px;
   gap: 18px;
 
-  .language {
+  &__language {
     position: absolute;
     top: 3%;
     right: 3%;
-    width: 110px;
-    @include selector-style();
+    width: 140px;
   }
 
   &__header {
@@ -36,28 +37,6 @@
 
     &__input {
       @include input-style;
-    }
-
-    &__select {
-      width: 100%;
-      background: none;
-      border: none;
-      border-bottom: 1px solid $primary-normal;
-      padding: 10px 0px;
-      outline: none;
-      transition: all 0.1s ease-in-out;
-      &::placeholder {
-        color: $text-secondary;
-      }
-      &:focus {
-        border-color: $primary-selected;
-      }
-      &--error {
-        border-color: $error-normal;
-        &:focus {
-          border-color: $error-normal;
-        }
-      }
     }
 
     &__submit {

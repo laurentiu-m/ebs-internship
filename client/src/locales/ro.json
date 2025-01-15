@@ -19,6 +19,7 @@
   },
   "register": {
     "heading": "Înregistrare",
+    "description": "Bine ai venit! Te rog creează-ți contul.",
     "form": {
       "first_name": "Prenume",
       "last_name": "Nume",
@@ -31,15 +32,13 @@
         "female": "Feminin",
         "prefer_not_to_say": "Prefer să nu spun"
       },
-      "language": {
-        "default": "Selectează limba",
-        "english": "Engleză",
-        "romanian": "Română"
-      },
       "password": "Parolă",
       "confirm_password": "Confirmați parola",
       "submit": "Înregistrare",
-      "login": "Autentificare"
+      "redirect": {
+        "title": "Ai deja un cont?",
+        "link": "Autentificare"
+      }
     },
     "error": {
       "first_name_empty": "Prenumele este obligatoriu",
