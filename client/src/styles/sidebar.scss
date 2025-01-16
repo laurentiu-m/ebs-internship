@@ -1,0 +1,34 @@
+@use '@styles/variables' as *;
+@use '@styles/mixins' as *;
+@use '@styles/buttons' as *;
+
+@mixin sidebar-style {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include flex(flex-start, flex-start, column);
+    gap: 5rem;
+    padding: 32px;
+    height: 100%;
+    width: $sidebar-width;
+    background: $sidebar-background;
+
+    &__logo {
+      h1 {
+        font-size: map-get($h3, font-size);
+        color: white;
+      }
+    }
+
+    &__buttons {
+      @include flex(center, center, column);
+      width: 100%;
+      gap: 8px;
+    }
+
+    &__button {
+      @include button-sidebar-style;
+    }
+  }
+}

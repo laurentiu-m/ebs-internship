@@ -1,4 +1,5 @@
 @use './variables.scss' as *;
+@use './mixins.scss' as *;
 
 @mixin button-style($background, $color, $border) {
   font-size: map-get($text-button, font-size);
@@ -19,5 +20,36 @@
   }
   &:active {
     background: $primary-click;
+  }
+}
+
+@mixin button-sidebar-style {
+  @include flex(flex-start, center, row);
+  gap: 8px;
+  font-size: map-get($text-button, font-size);
+  font-weight: map-get($text-button, font-weight);
+  line-height: map-get($text-button, line-height);
+  text-transform: map-get($text-button, text-transform);
+  text-decoration: none;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: $white;
+  padding-inline: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &--active {
+    background: $sidebar-hover;
+  }
+
+  &:hover {
+    background: $sidebar-hover;
+  }
+
+  &:active {
+    background: $sidebar-clicked;
   }
 }

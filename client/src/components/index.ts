@@ -5,3 +5,4 @@ export * from './LanguageSelect';
 export * from './FormInput';
 export * from './FormSelect';
 export * from './CustomSelect';
+export * from './Sidebar';

@@ -1,0 +1,15 @@
+@use './variables.scss' as *;
+@use './sidebar.scss' as *;
+@use './mixins.scss' as *;
+
+.layout {
+  min-height: 100vh;
+
+  @include sidebar-style;
+
+  .main {
+    margin-left: $sidebar-width;
+    flex: 1;
+    @include flex(center, center, column);
+  }
+}

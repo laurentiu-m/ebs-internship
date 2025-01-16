@@ -67,7 +67,7 @@ export const Login = () => {
           type="password"
           label={t('login.form.password.label')}
           register={register}
-          placeholder={t('login.form.password.placeholder')}
+          placeholder="********"
           error={errors.password}
         />
 

@@ -9,6 +9,7 @@
   @include flex(center, center, column);
   padding-block: 40px;
   gap: 18px;
+  background-color: $background;
 
   &__language {
     position: absolute;
