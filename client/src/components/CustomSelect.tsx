@@ -2,17 +2,17 @@ import { FieldError } from 'react-hook-form';
 import Select, { ActionMeta, StylesConfig } from 'react-select';
 
 type SelectReactProps = {
-  placeholder: string;
+  placeholder?: string;
   defaultValue?: string;
   options: {
     value: string;
     label: string;
   }[];
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
   onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 };
 
-export const SelectReact = ({ placeholder, options, onChange, defaultValue, error }: SelectReactProps) => {
+export const CustomSelect = ({ placeholder, options, onChange, defaultValue, error }: SelectReactProps) => {
   const customStyles: StylesConfig = {
     container: (provided) => ({
       ...provided,

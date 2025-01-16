@@ -8,7 +8,6 @@
         "label": "Email"
       },
       "password": {
-        "placeholder": "************",
         "label": "Parolă"
       },
       "submit": "Autentificare",

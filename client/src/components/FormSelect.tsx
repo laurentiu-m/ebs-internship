@@ -1,4 +1,4 @@
-import { SelectReact } from '@src/components/SelectReact';
+import { CustomSelect } from '@src/components/CustomSelect';
 import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +36,7 @@ export const FormSelect = <T extends FieldValues>({
           name={name}
           control={control}
           render={({ field }) => (
-            <SelectReact
+            <CustomSelect
               placeholder={placeholder}
               options={options}
               error={error}

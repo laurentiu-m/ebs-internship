@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 
-import { SelectReact } from './SelectReact';
+import { CustomSelect } from './CustomSelect';
 
 const options = [
   { value: 'en', label: 'English' },
   { value: 'ro', label: 'Română' }
 ];
 
-export const LanguageSelector = () => {
+export const LanguageSelect = () => {
   const { i18n } = useTranslation();
 
   const onChangeLanguage = (newValue: unknown) => {
@@ -19,6 +19,6 @@ export const LanguageSelector = () => {
   };
 
   return (
-    <SelectReact options={options} defaultValue={i18n.language} placeholder="Language" onChange={onChangeLanguage} />
+    <CustomSelect options={options} defaultValue={i18n.language} placeholder="Language" onChange={onChangeLanguage} />
   );
 };
