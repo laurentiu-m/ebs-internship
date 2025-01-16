@@ -3,8 +3,14 @@
     "heading": "Login",
     "description": "Welcome back! Please enter your details.",
     "form": {
-      "email": "Enter your email",
-      "password": "************",
+      "email": {
+        "placeholder": "Enter your email",
+        "label": "Email"
+      },
+      "password": {
+        "placeholder": "************",
+        "label": "Password"
+      },
       "submit": "Login",
       "redirect": {
         "title": "Don't have an account?",
@@ -12,9 +18,11 @@
       }
     },
     "error": {
-      "email_empty": "Please add your email",
-      "email_invalid": "Invalid email",
-      "password_empty": "Please add your password"
+      "email_empty": "Please enter your email address.",
+      "email_invalid": "The email address you entered is not valid.",
+      "password_empty": "Please enter your password.",
+      "invalid_email_or_password": "Invalid email or password",
+      "none": ""
     }
   },
   "register": {
@@ -27,6 +35,7 @@
       "username": "Username",
       "phone": "Phone",
       "gender": {
+        "label": "Gender",
         "default": "Select Gender",
         "male": "Male",
         "female": "Female",
@@ -41,22 +50,24 @@
       }
     },
     "error": {
-      "first_name_empty": "First name is required",
-      "first_name_min": "First name must be at least 2 characters",
-      "last_name_empty": "Last Name is required",
-      "last_name_min": "Last name must be at least 2 characters",
-      "username_empty": "Username is required",
-      "username_min": "Username must be at least 4 characters",
-      "email_empty": "Please add your email",
-      "email_invalid": "Invalid email address",
-      "phone_empty": "Please add your phone number",
-      "phone_invalid": "Invalid phone number",
-      "gender_empty": "Please select a gender",
-      "language_empty": "Please select a language",
-      "password_empty": "Password is required",
-      "password_min": "Password must be at least 8 characters",
-      "confirm_password_empty": "Confirm password is required",
-      "confirm_password_invalid": "Password must match"
+      "first_name_empty": "First name is required.",
+      "first_name_min": "First name should be at least 2 characters long.",
+      "last_name_empty": "Last name is required.",
+      "last_name_min": "Last name should be at least 2 characters long.",
+      "username_empty": "Username is required.",
+      "username_min": "Username should be at least 4 characters long.",
+      "username_server": "This username is already taken. Please choose another.",
+      "email_empty": "Email is required.",
+      "email_invalid": "Enter a valid email address.",
+      "email_server": "This email is already registered. Try another one.",
+      "phone_empty": "Phone number is required.",
+      "phone_invalid": "Enter a valid phone number.",
+      "gender_empty": "Gender is required.",
+      "language_empty": "Select your preferred language.",
+      "password_empty": "Password is required.",
+      "password_min": "Password should be at least 8 characters long.",
+      "confirm_password_empty": "Confirm password is required.",
+      "confirm_password_invalid": "Passwords do not match."
     }
   },
   "not_found": {

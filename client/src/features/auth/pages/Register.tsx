@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import { z } from 'zod';
 
-import { Errors } from '../components';
 import { registerSubmit } from '../utils/authUtils';
 
 import '../index.scss';
@@ -16,21 +15,21 @@ export const Register = () => {
   const { t } = useTranslation();
   const registerSchema = z
     .object({
-      firstName: z.string().nonempty(t('register.error.first_name_empty')).min(2, t('register.error.first_name_min')),
-      lastName: z.string().nonempty(t('register.error.last_name_empty')).min(2, t('register.error.last_name_min')),
+      first_name: z.string().nonempty(t('register.error.first_name_empty')).min(2, t('register.error.first_name_min')),
+      last_name: z.string().nonempty(t('register.error.last_name_empty')).min(2, t('register.error.last_name_min')),
       username: z.string().nonempty(t('register.error.username_empty')).min(4, t('register.error.username_min')),
       email: z.string().nonempty(t('register.error.email_empty')).email(t('register.error.email_invalid')),
       phone: z
         .string()
         .nonempty(t('register.error.phone_empty'))
         .refine(validator.isMobilePhone, t('register.error.phone_invalid')),
-      gender: z.string().nonempty(t('register.error.gender_empty')),
+      gender: z.string().nonempty(),
       password: z.string().nonempty(t('register.error.password_empty')).min(8, t('register.error.password_min')),
-      confirmPassword: z.string().nonempty(t('register.error.confirm_password_empty'))
+      confirm_password: z.string().nonempty(t('register.error.confirm_password_empty'))
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine((data) => data.password === data.confirm_password, {
       message: t('register.error.confirm_password_invalid'),
-      path: ['confirmPassword']
+      path: ['confirm_password']
     });
 
   type FormData = z.infer<typeof registerSchema>;
@@ -52,18 +51,14 @@ export const Register = () => {
   ];
 
   const onSubmit = async (data: FormData) => {
-    const { firstName, lastName, confirmPassword, ...rest } = data;
+    const { first_name, last_name, confirm_password, ...rest } = data;
     const registerData: UserRegister = {
       ...rest,
-      name: `${firstName} ${lastName}`
+      name: `${first_name} ${last_name}`
     };
 
     registerSubmit(registerData, setError, navigate);
   };
-
-  const allErrors = Object.values(errors)
-    .map((error) => error.message)
-    .filter(Boolean);
 
   return (
     <>
@@ -74,29 +69,35 @@ export const Register = () => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
         <FormInput
-          name="firstName"
+          name="first_name"
           type="text"
+          label={t('register.form.first_name')}
           register={register}
           placeholder={t('register.form.first_name')}
-          error={errors.firstName}
+          error={errors.first_name}
         />
         <FormInput
-          name="lastName"
+          name="last_name"
           type="text"
+          label={t('register.form.last_name')}
           register={register}
           placeholder={t('register.form.last_name')}
-          error={errors.lastName}
+          error={errors.last_name}
         />
         <FormInput
           name="email"
+          context="register"
           type="email"
+          label={t('register.form.email')}
           register={register}
           placeholder={t('register.form.email')}
           error={errors.email}
         />
         <FormInput
           name="username"
+          context="register"
           type="text"
+          label={t('register.form.username')}
           register={register}
           placeholder={t('register.form.username')}
           error={errors.username}
@@ -104,29 +105,35 @@ export const Register = () => {
         <FormInput
           name="phone"
           type="text"
+          label={t('register.form.phone')}
           register={register}
           placeholder={t('register.form.phone')}
           error={errors.phone}
         />
         <FormSelect
+          context="register"
           name="gender"
+          label={t('register.form.gender.label')}
           placeholder={t('register.form.gender.default')}
           control={control}
           options={genderOptions}
+          error={errors.gender}
         />
         <FormInput
           name="password"
           type="password"
+          label={t('register.form.password')}
           register={register}
           placeholder={t('register.form.password')}
           error={errors.password}
         />
         <FormInput
-          name="confirmPassword"
+          name="confirm_password"
           type="password"
+          label={t('register.form.confirm_password')}
           register={register}
           placeholder={t('register.form.confirm_password')}
-          error={errors.confirmPassword}
+          error={errors.confirm_password}
         />
 
         <input disabled={isSubmitting} type="submit" className="form__submit" value={t('register.form.submit')} />
@@ -134,8 +141,6 @@ export const Register = () => {
           {t('register.form.redirect.title')} <Link to="/login">{t('register.form.redirect.link')}</Link>
         </div>
       </form>
-
-      {allErrors && <Errors allErrors={allErrors} />}
     </>
   );
 };

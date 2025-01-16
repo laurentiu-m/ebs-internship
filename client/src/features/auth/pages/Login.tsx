@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { Errors } from '../components';
 import { loginSubmit } from '../utils/authUtils';
 
 export const Login = () => {
@@ -45,10 +44,6 @@ export const Login = () => {
     await loginSubmit(data, setError, navigate);
   };
 
-  const allErrors = Object.values(errors)
-    .map((error) => error.message)
-    .filter(Boolean);
-
   return (
     <>
       <div className="auth__header">
@@ -58,17 +53,21 @@ export const Login = () => {
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <FormInput
+          context="login"
           name="email"
           type="email"
+          label={t('login.form.email.label')}
           register={register}
-          placeholder={t('login.form.email')}
+          placeholder={t('login.form.email.placeholder')}
           error={errors.email}
         />
         <FormInput
+          context="login"
           name="password"
           type="password"
+          label={t('login.form.password.label')}
           register={register}
-          placeholder={t('login.form.password')}
+          placeholder={t('login.form.password.placeholder')}
           error={errors.password}
         />
 
@@ -78,7 +77,6 @@ export const Login = () => {
           {t('login.form.redirect.title')} <Link to="/register">{t('login.form.redirect.link')}</Link>
         </div>
       </form>
-      {allErrors && <Errors allErrors={allErrors} />}
     </>
   );
 };

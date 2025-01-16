@@ -37,8 +37,8 @@ export type UserRegister = {
 };
 
 export type UserRegisterForm = Omit<UserRegister, 'name'> & {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
 };
 
 export type UserLogin = {

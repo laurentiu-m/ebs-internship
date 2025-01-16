@@ -7,7 +7,7 @@
 .auth {
   min-height: 100vh;
   @include flex(center, center, column);
-  padding-block: 50px;
+  padding-block: 40px;
   gap: 18px;
 
   &__language {
@@ -33,10 +33,30 @@
   .form {
     @include flex(space-between, center, column);
     width: 400px;
-    gap: 20px;
+    gap: 16px;
 
-    &__input {
-      @include input-style;
+    &__input,
+    &__select {
+      width: 100%;
+      &-wrapper {
+        width: 100%;
+        @include flex(center, flex-start, column);
+        gap: 6px;
+      }
+      &-label {
+        font-weight: map-get(map-get($text-body, font-weight), medium);
+      }
+      &-required {
+        color: $error-normal;
+      }
+      &-field {
+        @include input-style;
+      }
+      &-error {
+        font-size: map-get($text-caption, font-size);
+        line-height: map-get($text-caption, line-height);
+        color: $error-normal;
+      }
     }
 
     &__submit {
@@ -59,7 +79,6 @@
     @include flex(center, center, column);
     gap: 4px;
     p {
-      font-size: 14px;
       color: $error-normal;
     }
   }
