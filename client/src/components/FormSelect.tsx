@@ -28,7 +28,7 @@ export const FormSelect = <T extends FieldValues>({
   return (
     <div className="form__select">
       <div className="form__select-wrapper">
-        <label htmlFor={name} className="form__select-label">
+        <label className="form__select-label">
           {label}
           <span className="form__select-required">*</span>
         </label>

@@ -17,4 +17,7 @@
   &:hover {
     background: $primary-hover;
   }
+  &:active {
+    background: $primary-click;
+  }
 }

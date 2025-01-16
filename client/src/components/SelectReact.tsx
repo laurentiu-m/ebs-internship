@@ -18,22 +18,18 @@ export const SelectReact = ({ placeholder, options, onChange, defaultValue, erro
       ...provided,
       width: '100%'
     }),
-    control: (provided, state) => ({
+    control: (provided, { isFocused }) => ({
       ...provided,
-      position: 'relative',
       backgroundColor: 'white',
       borderWidth: '1px',
       borderStyle: 'solid',
-      borderColor: error ? 'red' : state.isFocused ? '#0057fc' : '#ced4da',
+      borderColor: error ? '#ff1f25' : isFocused ? '#0057fc' : '#ced4da',
       borderRadius: '8px',
       height: '49.6px',
       outline: 'none',
       boxShadow: 'none',
       overflow: 'hidden',
-      cursor: 'pointer',
-      '&:hover': {
-        backgroundColor: 'none'
-      }
+      cursor: 'pointer'
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
@@ -43,13 +39,13 @@ export const SelectReact = ({ placeholder, options, onChange, defaultValue, erro
       ...provided,
       display: 'none'
     }),
-    dropdownIndicator: (provided, state) => ({
+    dropdownIndicator: (provided, { selectProps }) => ({
       ...provided,
       backgroundColor: 'transparent',
       padding: '0 12px',
       '& svg': { fill: '#ced4da', backgroundColor: 'transparent' },
       transition: 'all .2s ease',
-      transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : ''
+      transform: selectProps.menuIsOpen ? 'rotate(180deg)' : ''
     }),
     placeholder: (provided) => ({
       ...provided,
@@ -59,17 +55,22 @@ export const SelectReact = ({ placeholder, options, onChange, defaultValue, erro
     menu: (provided) => ({
       ...provided,
       width: '100%',
+      marginTop: '-8px',
       backgroundColor: 'white',
-      border: '1px solid #ced4da',
-      borderRadius: '8px',
+      border: '1px solid #0057fc',
+      borderTop: 'none',
+      borderRadius: '0 0 8px 8px',
       boxShadow: 'none',
       overflow: 'hidden'
     }),
-    option: (provided, state) => ({
+    option: (provided, { isSelected, isFocused }) => ({
       ...provided,
-      background: state.isFocused ? '#0057fc' : 'transparent',
-      color: state.isFocused ? 'white' : '#343a40',
-      cursor: 'pointer'
+      backgroundColor: isSelected ? '#0057fc' : isFocused ? '#e9ecef' : 'transparent',
+      color: isSelected ? 'white' : isFocused ? '#343a40' : '#343a40',
+      cursor: 'pointer',
+      ':active': {
+        backgroundColor: isSelected ? '' : ''
+      }
     }),
     singleValue: (provided) => ({
       ...provided,
@@ -80,6 +81,11 @@ export const SelectReact = ({ placeholder, options, onChange, defaultValue, erro
       padding: '0 12px',
       color: '#343a40',
       backgroundColor: 'transparent'
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: '4px 0 0 0',
+      backgroundColor: 'white'
     })
   };
 

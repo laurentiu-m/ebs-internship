@@ -71,6 +71,9 @@
         &:hover {
           color: $primary-hover;
         }
+        &:active {
+          color: $primary-click;
+        }
       }
     }
   }
