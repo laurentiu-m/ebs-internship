@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomSelect } from './CustomSelect';
+import { Loading } from './Loading';
 
 export const UserSelect = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ export const UserSelect = () => {
   const tokenData = getTokenData();
 
   if (!tokenData) {
-    return;
+    return <Loading />;
   }
 
   const options = [

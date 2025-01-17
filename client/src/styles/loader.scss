@@ -1,12 +1,15 @@
 @use './variables.scss' as *;
 
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 80px;
+  height: 80px;
   border: 3px solid $text-disable;
   border-radius: 50%;
   display: inline-block;
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
@@ -17,8 +20,8 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 56px;
-  height: 56px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   border: 3px solid transparent;
   border-bottom-color: $primary-normal;
