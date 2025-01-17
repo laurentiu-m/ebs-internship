@@ -1,6 +1,7 @@
 @use './variables.scss' as *;
 @use './sidebar.scss' as *;
 @use './topbar.scss' as *;
+@use './not-found.scss' as *;
 @use './mixins.scss' as *;
 
 .layout {
@@ -8,10 +9,9 @@
 
   @include sidebar-style;
 
-  .main {
-    @include topbar-style;
+  &__main {
     margin-left: $sidebar-width;
-    @include flex(center, center, column);
-    gap: 16px;
+    @include topbar-style;
+    @include not-found-style;
   }
 }

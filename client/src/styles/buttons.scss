@@ -1,16 +1,18 @@
 @use './variables.scss' as *;
 @use './mixins.scss' as *;
 
-@mixin button-style($background, $color, $border) {
+@mixin button-style($width) {
   font-size: map-get($text-button, font-size);
   font-weight: map-get($text-button, font-weight);
   line-height: map-get($text-button, line-height);
   text-transform: map-get($text-button, text-transform);
-  background: $background;
-  color: $color;
-  width: 100%;
+  text-decoration: none;
+  text-align: center;
+  background: $primary-normal;
+  color: $white;
+  width: $width;
   padding: 10px;
-  border: $border;
+  border: none;
   border-radius: 8px;
   outline: none;
   cursor: pointer;

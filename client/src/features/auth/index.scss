@@ -22,7 +22,7 @@
     text-align: center;
     h1 {
       font-size: map-get($h1, font-size);
-      font-weight: map-get($h1, font-weight);
+      font-weight: map-get(map-get($h1, font-weight), medium);
       line-height: map-get($h1, line-height);
       color: $text-heading;
     }
@@ -61,7 +61,7 @@
     }
 
     &__submit {
-      @include button-style($primary-normal, $white, none);
+      @include button-style(100%);
     }
 
     &__redirect {

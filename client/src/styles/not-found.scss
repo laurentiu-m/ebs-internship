@@ -1,0 +1,39 @@
+@use './mixins.scss' as *;
+@use './variables.scss' as *;
+@use './buttons.scss' as *;
+
+@mixin not-found-style {
+  .not-found {
+    @include flex(center, center, column);
+    min-height: 65vh;
+    gap: 16px;
+
+    &__wrapper {
+      @include flex(center, center, column);
+    }
+
+    &__heading {
+      font-size: map-get($h1, font-size);
+      font-weight: map-get(map-get($h1, font-weight), bold);
+      line-height: map-get($h1, line-height);
+      color: $error-normal;
+    }
+
+    &__message {
+      font-size: map-get($h2, font-size);
+      font-weight: map-get($h2, font-weight);
+      line-height: map-get($h2, line-height);
+    }
+
+    &__description {
+      font-size: map-get($text-body, font-size);
+      font-weight: map-get(map-get($h6, font-weight), regular);
+      line-height: map-get($h6, line-height);
+      color: $text-secondary;
+    }
+
+    &__button {
+      @include button-style(130px);
+    }
+  }
+}

@@ -77,8 +77,7 @@
     "logout": "Deconectare"
   },
   "not_found": {
-    "heading": "Pagina Nu A Fost Găsită 404",
-    "description": "Pagina pe care o căutați nu există.",
-    "button": "Întoarce-te Acasă"
+    "message": "Pagina Nu A Fost Găsită",
+    "description": "Pagina pe care o căutați nu există."
   }
 }

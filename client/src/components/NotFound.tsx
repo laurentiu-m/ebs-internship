@@ -6,11 +6,15 @@ export const NotFound = () => {
   const { t } = useTranslation();
 
   return (
-    <div>
-      <h1>{t('not_found.heading')}</h1>
-      <p>{t('not_found.description')}</p>
-      <Link to={Routes.Dashboard}>
-        <button>{t('not_found.button')}</button>
+    <div className="not-found">
+      <div className="not-found__wrapper">
+        <h1 className="not-found__heading">404</h1>
+        <h2 className="not-found__message">{t('not_found.message')}</h2>
+        <p className="not-found__description">{t('not_found.description')}</p>
+      </div>
+
+      <Link to={Routes.Dashboard} className="not-found__button">
+        Dashboard
       </Link>
     </div>
   );
