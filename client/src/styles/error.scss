@@ -2,8 +2,8 @@
 @use './variables.scss' as *;
 @use './buttons.scss' as *;
 
-@mixin not-found-style {
-  .not-found {
+@mixin error-style {
+  .error {
     @include flex(center, center, column);
     min-height: 65vh;
     gap: 16px;

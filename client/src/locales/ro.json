@@ -76,8 +76,14 @@
   "topbar": {
     "logout": "Deconectare"
   },
-  "not_found": {
-    "message": "Pagina Nu A Fost Găsită",
-    "description": "Pagina pe care o căutați nu există."
+  "error": {
+    "403": {
+      "message": "Acces Interzis",
+      "description": "Nu aveți permisiunea de a vizualiza această pagină."
+    },
+    "404": {
+      "message": "Pagina Nu A Fost Găsită",
+      "description": "Pagina pe care o căutați nu există."
+    }
   }
 }

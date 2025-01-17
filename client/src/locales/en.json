@@ -76,8 +76,14 @@
   "topbar": {
     "logout": "Logout"
   },
-  "not_found": {
-    "message": "Page Not Found",
-    "description": "The page you are looking for does not exist."
+  "error": {
+    "403": {
+      "message": "Access Denied",
+      "description": "You do not have permission to view this page."
+    },
+    "404": {
+      "message": "Page Not Found",
+      "description": "The page you are looking for does not exist."
+    }
   }
 }

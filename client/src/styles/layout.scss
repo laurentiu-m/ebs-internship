@@ -1,7 +1,7 @@
 @use './variables.scss' as *;
 @use './sidebar.scss' as *;
 @use './topbar.scss' as *;
-@use './not-found.scss' as *;
+@use './error.scss' as *;
 @use './mixins.scss' as *;
 
 .layout {
@@ -12,6 +12,6 @@
   &__main {
     margin-left: $sidebar-width;
     @include topbar-style;
-    @include not-found-style;
+    @include error-style;
   }
 }

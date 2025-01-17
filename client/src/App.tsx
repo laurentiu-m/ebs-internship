@@ -3,7 +3,7 @@ import { ProtectedRoute } from '@src/router/ProtectedRoute';
 import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';
 
 import { Roles, Routes } from './app-constants';
-import { Layout, NotFound } from './components';
+import { Layout, Error } from './components';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
 const routesConfig = [
@@ -31,7 +31,7 @@ export const App = () => {
               element={<ProtectedRoute requiredRoles={requiredRoles} element={<Component />} />}
             />
           ))}
-          <Route path={Routes.NotFound} element={<NotFound />} />
+          <Route path={Routes.NotFound} element={<Error status_code="404" />} />
         </Route>
       </RouterPaths>
     </Router>
