@@ -1,11 +1,14 @@
 import { Dashboard } from '@src/layouts/dashboard/Dashboard';
-import { ProtectedRoute } from '@src/router/ProtectedRoute';
 import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';
 
 import { Roles, Routes } from './app-constants';
 import { Layout, Error } from './components';
+import { TokenProvider } from './contexts/TokenContext/TokenProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
+import { TokenAuth, RoleAccess } from './router';
+
+// Routes Config
 const routesConfig = [
   {
     path: Routes.Dashboard,
@@ -16,24 +19,29 @@ const routesConfig = [
 
 export const App = () => {
   return (
-    <Router>
-      <RouterPaths>
-        <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
-        <Route element={<LayoutAuth />}>
-          <Route path={Routes.Login} element={<Login />} />
-          <Route path={Routes.Register} element={<Register />} />
-        </Route>
-        <Route element={<Layout />}>
-          {routesConfig.map(({ path, element: Component, requiredRoles }) => (
-            <Route
-              key={path}
-              path={path}
-              element={<ProtectedRoute requiredRoles={requiredRoles} element={<Component />} />}
-            />
-          ))}
-          <Route path={Routes.NotFound} element={<Error status_code="404" />} />
-        </Route>
-      </RouterPaths>
-    </Router>
+    <TokenProvider>
+      <Router>
+        <RouterPaths>
+          {/* Auth */}
+          <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
+          <Route element={<LayoutAuth />}>
+            <Route path={Routes.Login} element={<Login />} />
+            <Route path={Routes.Register} element={<Register />} />
+          </Route>
+
+          {/* Main */}
+          <Route element={<TokenAuth element={<Layout />} />}>
+            {routesConfig.map(({ path, element: Component, requiredRoles }) => (
+              <Route
+                key={path}
+                path={path}
+                element={<RoleAccess requiredRoles={requiredRoles} element={<Component />} />}
+              />
+            ))}
+            <Route path={Routes.NotFound} element={<Error status_code="404" />} />
+          </Route>
+        </RouterPaths>
+      </Router>
+    </TokenProvider>
   );
 };
