@@ -1,20 +1,32 @@
 {
   "login": {
     "heading": "Autentificare",
+    "description": "Bine ai revenit! Te rog introdu detaliile tale.",
     "form": {
-      "email": "Email",
-      "password": "Parolă",
+      "email": {
+        "placeholder": "Introdu adresa ta de email",
+        "label": "Email"
+      },
+      "password": {
+        "label": "Parolă"
+      },
       "submit": "Autentificare",
-      "register": "Înregistrare"
+      "redirect": {
+        "title": "Nu ai un cont?",
+        "link": "Înregistrează-te"
+      }
     },
     "error": {
-      "email_empty": "Vă rugăm să adăugați email-ul",
-      "email_invalid": "Email invalid",
-      "password_empty": "Vă rugăm să adăugați parola"
+      "email_empty": "Vă rugăm să introduceți adresa de email.",
+      "email_invalid": "Adresa de email introdusă nu este validă.",
+      "password_empty": "Vă rugăm să introduceți parola.",
+      "invalid_email_or_password": "Email sau parolă invalide",
+      "none": ""
     }
   },
   "register": {
     "heading": "Înregistrare",
+    "description": "Bine ai venit! Te rog creează-ți contul.",
     "form": {
       "first_name": "Prenume",
       "last_name": "Nume",
@@ -22,43 +34,56 @@
       "username": "Nume utilizator",
       "phone": "Telefon",
       "gender": {
+        "label": "Gen",
         "default": "Selectează genul",
         "male": "Masculin",
         "female": "Feminin",
         "prefer_not_to_say": "Prefer să nu spun"
       },
-      "language": {
-        "default": "Selectează limba",
-        "english": "Engleză",
-        "romanian": "Română"
-      },
       "password": "Parolă",
       "confirm_password": "Confirmați parola",
       "submit": "Înregistrare",
-      "login": "Autentificare"
+      "redirect": {
+        "title": "Ai deja un cont?",
+        "link": "Autentificare"
+      }
     },
     "error": {
-      "first_name_empty": "Prenumele este obligatoriu",
-      "first_name_min": "Prenumele trebuie să aibă cel puțin 2 caractere",
-      "last_name_empty": "Numele este obligatoriu",
-      "last_name_min": "Numele trebuie să aibă cel puțin 2 caractere",
-      "username_empty": "Numele utilizatorului este obligatoriu",
-      "username_min": "Numele utilizatorului trebuie să aibă cel puțin 4 caractere",
-      "email_empty": "Vă rugăm să adăugați email-ul",
-      "email_invalid": "Adresa de email este invalidă",
-      "phone_empty": "Vă rugăm să adăugați numărul de telefon",
-      "phone_invalid": "Număr de telefon invalid",
-      "gender_empty": "Vă rugăm să selectați un gen",
-      "language_empty": "Vă rugăm să selectați o limbă",
-      "password_empty": "Parola este obligatorie",
-      "password_min": "Parola trebuie să aibă cel puțin 8 caractere",
-      "confirm_password_empty": "Confirmarea parolei este obligatorie",
-      "confirm_password_invalid": "Parola trebuie să coincidă"
+      "first_name_empty": "Prenumele este obligatoriu.",
+      "first_name_min": "Prenumele trebuie să aibă cel puțin 2 caractere.",
+      "last_name_empty": "Numele de familie este obligatoriu.",
+      "last_name_min": "Numele de familie trebuie să aibă cel puțin 2 caractere.",
+      "username_empty": "Numele de utilizator este obligatoriu.",
+      "username_min": "Numele de utilizator trebuie să aibă cel puțin 4 caractere.",
+      "username_server": "Acest nume de utilizator este deja folosit. Alegeți altul.",
+      "email_empty": "Adresa de email este obligatorie.",
+      "email_invalid": "Introduceți o adresă de email validă.",
+      "email_server": "Această adresă de email este deja înregistrată. Încercați alta.",
+      "phone_empty": "Numărul de telefon este obligatoriu.",
+      "phone_invalid": "Introduceți un număr de telefon valid.",
+      "gender_empty": "Selectarea genului este obligatorie.",
+      "language_empty": "Selectați limba preferată.",
+      "password_empty": "Parola este obligatorie.",
+      "password_min": "Parola trebuie să aibă cel puțin 8 caractere.",
+      "confirm_password_empty": "Confirmarea parolei este obligatorie.",
+      "confirm_password_invalid": "Parolele nu se potrivesc."
     }
   },
-  "not_found": {
-    "heading": "Pagina Nu A Fost Găsită 404",
-    "description": "Pagina pe care o căutați nu există.",
-    "button": "Întoarce-te Acasă"
+  "sidebar": {
+    "users": "utilizatori",
+    "posts": "postări"
+  },
+  "topbar": {
+    "logout": "Deconectare"
+  },
+  "error": {
+    "403": {
+      "message": "Acces Interzis",
+      "description": "Nu aveți permisiunea de a vizualiza această pagină."
+    },
+    "404": {
+      "message": "Pagina Nu A Fost Găsită",
+      "description": "Pagina pe care o căutați nu există."
+    }
   }
 }

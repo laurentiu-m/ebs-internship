@@ -13,8 +13,8 @@ export const loginSubmit: UserLoginSubmit = async (data, setError, navigate) => 
   } catch (err) {
     if (err instanceof AxiosError) {
       const errors = err.response?.data.errors;
-      errors.forEach(({ field, message }: { field: keyof UserLogin; message: string }) => {
-        setError(field, { type: 'server', message: message });
+      errors.forEach(({ field, messageKey }: { field: keyof UserLogin; messageKey: string }) => {
+        setError(field, { type: 'server', message: messageKey });
       });
     }
   }
@@ -38,7 +38,7 @@ export const registerSubmit: UserRegisterSubmit = async (registerData, setError,
         return;
       }
 
-      setError(errData.field, { type: errData.type, message: errData.message });
+      setError(errData.field, { type: errData.type, message: errData.messageKey });
     }
   }
 };

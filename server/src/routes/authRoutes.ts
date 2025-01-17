@@ -26,8 +26,11 @@ router.post("/login", (req: Request, res: Response) => {
 
   if (!user || user.password !== password) {
     const invalidFields = [
-      { field: "email", message: "Invalid email or password" },
-      { field: "password", message: "" },
+      {
+        field: "email",
+        messageKey: "invalid_email_or_password",
+      },
+      { field: "password", messageKey: "none" },
     ];
     res.status(400).json({ errors: invalidFields });
     return;
@@ -36,6 +39,7 @@ router.post("/login", (req: Request, res: Response) => {
   const token = jwt.sign(
     {
       userId: user.id,
+      username: user.username,
       role: user.role,
       language: user.language,
     },
@@ -64,7 +68,7 @@ router.post("/register", async (req: Request, res: Response) => {
       error: "form_invalid",
       fields: missingFields.map(({ field }) => ({
         field,
-        message: `Please complete the ${field} field`,
+        messageKey: `${field}_empty`,
       })),
     });
     return;
@@ -78,8 +82,8 @@ router.post("/register", async (req: Request, res: Response) => {
   if (checkEmail) {
     res.status(404).json({
       field: "email",
-      type: "email_invalid",
-      message: "Someone already is using this email, please try another",
+      type: "server",
+      messageKey: "email_server",
     });
     return;
   }
@@ -90,8 +94,8 @@ router.post("/register", async (req: Request, res: Response) => {
   if (checkUsername) {
     res.status(404).json({
       field: "username",
-      type: "username_invalid",
-      message: "Someone already is using this username, please try another",
+      type: "server",
+      messageKey: "username_server",
     });
     return;
   }

@@ -1,0 +1,17 @@
+@use './variables.scss' as *;
+@use './sidebar.scss' as *;
+@use './topbar.scss' as *;
+@use './error.scss' as *;
+@use './mixins.scss' as *;
+
+.layout {
+  min-height: 100vh;
+
+  @include sidebar-style;
+
+  &__main {
+    margin-left: $sidebar-width;
+    @include topbar-style;
+    @include error-style;
+  }
+}

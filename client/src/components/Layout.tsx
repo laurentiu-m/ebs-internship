@@ -1,11 +1,17 @@
 import { Outlet } from 'react-router-dom';
 
+import { Sidebar, Topbar } from './';
+
+import '@styles/layout.scss';
+
 export const Layout = () => {
   return (
-    <main>
-      <nav>topbar</nav>
-      <header>sidebar</header>
-      <Outlet />
-    </main>
+    <div className="layout">
+      <Sidebar />
+      <main className="layout__main">
+        <Topbar />
+        <Outlet />
+      </main>
+    </div>
   );
 };

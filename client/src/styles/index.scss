@@ -1,55 +1,15 @@
-@import 'variables';
-@import 'mixins';
+@use './variables.scss' as *;
+@use './mixins.scss' as *;
 
 * {
   font-family: 'Poppins', serif;
-  font-size: $text-base;
-  line-height: 1.5;
-  font-weight: $font-normal;
+  font-size: map-get($text-body, font-size);
+  line-height: map-get($text-body, line-height);
+  font-weight: map-get(map-get($text-body, font-weight), regular);
 
-  color: $white;
-  background-color: $background-dark;
+  color: $text-normal;
 
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-.main-container {
-  min-height: 100vh;
-  @include flex(center, center, column);
-  padding-block: 50px;
-}
-
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 3px solid $white;
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-  &::after {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-bottom-color: $accent;
-  }
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }

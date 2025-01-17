@@ -8,6 +8,8 @@ export enum Routes {
   Login = '/login',
   Register = '/register',
   Dashboard = '/dashboard',
+  Users = '/users',
+  Posts = '/posts',
   Error = '/error',
   NotFound = '*'
 }

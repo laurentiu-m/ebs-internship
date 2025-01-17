@@ -1,6 +1,6 @@
 import { apiClient } from '@src/api';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
-import { Loading } from '@src/components';
+import { Error, Loading } from '@src/components';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ export const ProtectedRoute = ({ element, requiredRoles }: ProtectedRouteProps) 
   const userRole = data?.role;
 
   if (!userRole || !requiredRoles.includes(userRole)) {
-    return <div>403 - You don't have access to this page</div>;
+    return <Error status_code="403" />;
   }
 
   return element;

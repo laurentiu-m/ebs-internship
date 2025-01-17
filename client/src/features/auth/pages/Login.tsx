@@ -2,16 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
-import { Loading } from '@src/components';
+import { Loading, FormInput } from '@src/components';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-import { Errors, FormInput, LanguageSelector } from '../components';
 import { loginSubmit } from '../utils/authUtils';
-
-import '../index.scss';
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -47,38 +44,39 @@ export const Login = () => {
     await loginSubmit(data, setError, navigate);
   };
 
-  const allErrors = Object.values(errors)
-    .map((error) => error.message)
-    .filter(Boolean);
-
   return (
-    <div className="auth">
-      <LanguageSelector />
-      <h1 className="auth__header">{t('login.heading')}</h1>
+    <>
+      <div className="auth__header">
+        <h1>{t('login.heading')}</h1>
+        <p>{t('login.description')}</p>
+      </div>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <FormInput
+          context="login"
           name="email"
           type="email"
+          label={t('login.form.email.label')}
           register={register}
-          placeholder={t('login.form.email')}
+          placeholder={t('login.form.email.placeholder')}
           error={errors.email}
         />
         <FormInput
+          context="login"
           name="password"
           type="password"
+          label={t('login.form.password.label')}
           register={register}
-          placeholder={t('login.form.password')}
+          placeholder="********"
           error={errors.password}
         />
 
         <input disabled={isSubmitting} className="form__submit" type="submit" value={t('login.form.submit')} />
 
-        <Link to="/register" className="form__redirect">
-          {t('login.form.register')}
-        </Link>
+        <div className="form__redirect">
+          {t('login.form.redirect.title')} <Link to="/register">{t('login.form.redirect.link')}</Link>
+        </div>
       </form>
-      {allErrors && <Errors allErrors={allErrors} />}
-    </div>
+    </>
   );
 };
