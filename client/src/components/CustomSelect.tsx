@@ -2,7 +2,7 @@ import { FieldError } from 'react-hook-form';
 import Select, { ActionMeta, StylesConfig } from 'react-select';
 
 type SelectReactProps = {
-  placeholder?: string;
+  placeholder?: string | JSX.Element;
   defaultValue?: string;
   options: {
     value: string;
@@ -18,18 +18,21 @@ export const CustomSelect = ({ placeholder, options, onChange, defaultValue, err
       ...provided,
       width: '100%'
     }),
-    control: (provided, { isFocused }) => ({
+    control: (provided, { selectProps }) => ({
       ...provided,
       backgroundColor: 'white',
       borderWidth: '1px',
       borderStyle: 'solid',
-      borderColor: error ? '#ff1f25' : isFocused ? '#0057fc' : '#ced4da',
+      borderColor: error ? '#ff1f25' : selectProps.menuIsOpen ? '#0057fc' : '#ced4da',
       borderRadius: '8px',
-      height: '49.6px',
+      paddingBlock: '12px',
       outline: 'none',
       boxShadow: 'none',
       overflow: 'hidden',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        borderColor: error ? '#ff1f25' : selectProps.menuIsOpen ? '#0057fc' : '#ced4da'
+      }
     }),
     indicatorsContainer: (provided) => ({
       ...provided,
@@ -57,28 +60,35 @@ export const CustomSelect = ({ placeholder, options, onChange, defaultValue, err
       width: '100%',
       marginTop: '-8px',
       backgroundColor: 'white',
-      border: '1px solid #0057fc',
+      border: `1px solid ${error ? '#ff1f25' : '#0057fc'}`,
       borderTop: 'none',
       borderRadius: '0 0 8px 8px',
       boxShadow: 'none',
       overflow: 'hidden'
     }),
-    option: (provided, { isSelected, isFocused }) => ({
+    option: (provided) => ({
       ...provided,
-      backgroundColor: isSelected ? '#0057fc' : isFocused ? '#e9ecef' : 'transparent',
-      color: isSelected ? 'white' : isFocused ? '#343a40' : '#343a40',
+      fontSize: '14px',
+      backgroundColor: 'transparent',
+      color: '#343a40',
       cursor: 'pointer',
+      transition: 'all 0.1s ease',
+      ':hover': {
+        backgroundColor: '#0057fc',
+        color: 'white'
+      },
       ':active': {
-        backgroundColor: isSelected ? '' : ''
+        backgroundColor: ''
       }
     }),
     singleValue: (provided) => ({
       ...provided,
+      fontSize: '14px',
       backgroundColor: 'transparent'
     }),
     valueContainer: (provided) => ({
       ...provided,
-      padding: '0 12px',
+      padding: '0 0 0 12px',
       color: '#343a40',
       backgroundColor: 'transparent'
     }),

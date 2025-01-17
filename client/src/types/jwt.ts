@@ -4,4 +4,5 @@ export type JwtPayload = {
   language: string;
   role: string;
   userId: number;
+  username: string;
 };

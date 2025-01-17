@@ -69,6 +69,13 @@
       "confirm_password_invalid": "Parolele nu se potrivesc."
     }
   },
+  "sidebar": {
+    "users": "utilizatori",
+    "posts": "postări"
+  },
+  "topbar": {
+    "logout": "Deconectare"
+  },
   "not_found": {
     "heading": "Pagina Nu A Fost Găsită 404",
     "description": "Pagina pe care o căutați nu există.",

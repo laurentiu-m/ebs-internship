@@ -3,16 +3,18 @@ import '@src/styles/sidebar.scss';
 import home_icon from '@src/assets/icons/home_icon.svg';
 import posts_icon from '@src/assets/icons/posts_icon.svg';
 import users_icon from '@src/assets/icons/users_icon.svg';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
-const buttonsConfig = [
-  { text: 'dashboard', icon: home_icon, link: Routes.Dashboard },
-  { text: 'users', icon: users_icon, link: Routes.Users },
-  { text: 'posts', icon: posts_icon, link: Routes.Posts }
-];
-
 export const Sidebar = () => {
+  const { t } = useTranslation();
   const { pathname } = useLocation();
+
+  const buttonsConfig = [
+    { text: 'dashboard', icon: home_icon, link: Routes.Dashboard },
+    { text: t('sidebar.users'), icon: users_icon, link: Routes.Users },
+    { text: t('sidebar.posts'), icon: posts_icon, link: Routes.Posts }
+  ];
 
   return (
     <div className="sidebar">

@@ -6,3 +6,4 @@ export * from './FormInput';
 export * from './FormSelect';
 export * from './CustomSelect';
 export * from './Sidebar';
+export * from './Topbar';
