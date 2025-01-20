@@ -13,10 +13,10 @@
     height: 100%;
     width: $sidebar-width;
     background: $sidebar-background;
-    transition: width 0.6s ease;
+    transition: width $sidebar-close-transition ease;
 
     &--closed {
-      width: 112px;
+      width: $sidebar-width-closed;
     }
 
     &__header {

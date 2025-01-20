@@ -1,20 +1,19 @@
-import { useState } from 'react';
-
 import { Routes } from '@src/app-constants';
 import '@src/styles/sidebar.scss';
 import home_icon from '@src/assets/icons/home_icon.svg';
 import posts_icon from '@src/assets/icons/posts_icon.svg';
 import users_icon from '@src/assets/icons/users_icon.svg';
+import { useAppContext } from '@src/hooks/useAppContext';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
 import { ArrowSidebar } from './ArrowSidebar';
 
 export const Sidebar = () => {
+  const { isSidebarClosed, toggleSidebar } = useAppContext();
+
   const { t } = useTranslation();
   const { pathname } = useLocation();
-
-  const [isClosed, setIsClosed] = useState(false);
 
   const buttonsConfig = [
     { text: 'dashboard', icon: home_icon, link: Routes.Dashboard },
@@ -23,14 +22,14 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className={`sidebar ${isClosed ? 'sidebar--closed' : ''}`}>
+    <div className={`sidebar ${isSidebarClosed ? 'sidebar--closed' : ''}`}>
       <div className="sidebar__header">
-        <div className={`logo ${isClosed ? 'logo--closed' : ''}`}>
+        <div className={`logo ${isSidebarClosed ? 'logo--closed' : ''}`}>
           <h1>Logo.</h1>
         </div>
 
-        <div className={`toggle ${isClosed ? 'toggle--rotated' : ''}`} onClick={() => setIsClosed(!isClosed)}>
-          <ArrowSidebar styleClass={`icon ${isClosed ? 'icon--closed' : ''}`} />
+        <div className={`toggle ${isSidebarClosed ? 'toggle--rotated' : ''}`} onClick={toggleSidebar}>
+          <ArrowSidebar styleClass={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
         </div>
       </div>
 
@@ -42,7 +41,7 @@ export const Sidebar = () => {
             to={button.link}
           >
             <img src={button.icon} alt={`button-${button.text}`} />
-            <p className={`text ${isClosed ? 'text--closed' : ''}`}>{button.text}</p>
+            <p className={`text ${isSidebarClosed ? 'text--closed' : ''}`}>{button.text}</p>
           </Link>
         ))}
       </div>
