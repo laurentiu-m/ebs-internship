@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Routes } from '@src/app-constants';
 import '@src/styles/sidebar.scss';
 import home_icon from '@src/assets/icons/home_icon.svg';
@@ -6,9 +8,13 @@ import users_icon from '@src/assets/icons/users_icon.svg';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
+import { ArrowSidebar } from './ArrowSidebar';
+
 export const Sidebar = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+
+  const [isClosed, setIsClosed] = useState(false);
 
   const buttonsConfig = [
     { text: 'dashboard', icon: home_icon, link: Routes.Dashboard },
@@ -17,9 +23,15 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="sidebar">
-      <div className="sidebar__logo">
-        <h1>Logo.</h1>
+    <div className={`sidebar ${isClosed ? 'sidebar--closed' : ''}`}>
+      <div className="sidebar__header">
+        <div className={`logo ${isClosed ? 'logo--closed' : ''}`}>
+          <h1>Logo.</h1>
+        </div>
+
+        <div className={`toggle ${isClosed ? 'toggle--rotated' : ''}`} onClick={() => setIsClosed(!isClosed)}>
+          <ArrowSidebar styleClass={`icon ${isClosed ? 'icon--closed' : ''}`} />
+        </div>
       </div>
 
       <div className="sidebar__buttons">
@@ -30,7 +42,7 @@ export const Sidebar = () => {
             to={button.link}
           >
             <img src={button.icon} alt={`button-${button.text}`} />
-            {button.text}
+            {isClosed ? '' : button.text}
           </Link>
         ))}
       </div>

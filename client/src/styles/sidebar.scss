@@ -13,11 +13,61 @@
     height: 100%;
     width: $sidebar-width;
     background: $sidebar-background;
+    transition: width 0.6s ease;
 
-    &__logo {
-      h1 {
-        font-size: map-get($h3, font-size);
-        color: white;
+    &--closed {
+      width: 112px;
+    }
+
+    &__header {
+      position: relative;
+      width: 100%;
+      @include flex(space-between, center, row);
+
+      .toggle {
+        position: absolute;
+        right: 0;
+        @include flex(center, center, row);
+        background: $sidebar-background;
+        border: 1px solid $sidebar-hover;
+        border-radius: $border-radius;
+        padding: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease-out;
+
+        &:hover {
+          border-color: $sidebar-hover;
+          background: $sidebar-hover;
+        }
+
+        &:active {
+          background-color: $sidebar-clicked;
+        }
+
+        .icon {
+          fill: $white;
+          transition: transform 0.3s ease;
+          &--closed {
+            transform: scaleX(-1);
+          }
+        }
+      }
+
+      .logo {
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 0.3s ease-in-out,
+          visibility 0.3s ease-in-out;
+        h1 {
+          font-size: map-get($h3, font-size);
+          color: white;
+        }
+
+        &--closed {
+          opacity: 0;
+          visibility: hidden;
+        }
       }
     }
 
