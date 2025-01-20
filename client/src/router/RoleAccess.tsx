@@ -1,5 +1,5 @@
 import { Error, Loading } from '@src/components';
-import { useTokenContext } from '@src/hooks/useTokenContext';
+import { useAppContext } from '@src/hooks/useAppContext';
 
 type RoleAccessProps = {
   element: JSX.Element;
@@ -7,7 +7,7 @@ type RoleAccessProps = {
 };
 
 export const RoleAccess = ({ element, requiredRoles }: RoleAccessProps) => {
-  const { tokenData } = useTokenContext();
+  const { tokenData } = useAppContext();
 
   if (!tokenData) {
     return <Loading />;

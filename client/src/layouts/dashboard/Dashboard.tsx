@@ -1,9 +1,9 @@
 import { Roles } from '@src/app-constants';
 import { Loading } from '@src/components';
-import { useTokenContext } from '@src/hooks/useTokenContext';
+import { useAppContext } from '@src/hooks/useAppContext';
 
 export const Dashboard = () => {
-  const { tokenData } = useTokenContext();
+  const { tokenData } = useAppContext();
 
   if (!tokenData) {
     return <Loading />;
