@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { apiClient } from '@src/api';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
 import { Loading } from '@src/components';
@@ -15,17 +17,22 @@ export const TokenAuth = ({ element }: TokenAuthProps) => {
   const { setTokenData } = useTokenContext();
   const navigate = useNavigate();
 
-  const { isLoading } = useQuery(['validToken', token], () => apiClient.users.valid(token), {
-    retry: false,
-    onError: () => {
+  const { data, isSuccess, isError, isLoading } = useQuery({
+    queryKey: ['validToken', token],
+    queryFn: () => apiClient.users.valid(token),
+    retry: false
+  });
+
+  useEffect(() => {
+    if (isError) {
       localStorage.clear();
       navigate(Routes.Login);
-      return;
-    },
-    onSuccess: (data) => {
+    }
+
+    if (isSuccess) {
       setTokenData(data);
     }
-  });
+  }, [isError, isSuccess, navigate, data, setTokenData]);
 
   if (isLoading) return <Loading />;
 
