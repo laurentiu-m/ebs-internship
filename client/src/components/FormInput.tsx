@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { FieldError, FieldValues, UseFormRegister, Path } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -33,7 +34,7 @@ export const FormInput = <T extends FieldValues>({
           id={name}
           type={type}
           placeholder={placeholder}
-          className={`form__input-field ${error ? 'form__input-field--error' : ''}`}
+          className={cn('form__input-field', { 'form__input-field--error': error })}
         />
       </div>
       {error && (

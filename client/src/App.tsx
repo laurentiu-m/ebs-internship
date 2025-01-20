@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 
 
 import { Roles, Routes } from './app-constants';
 import { Layout, Error, Loading } from './components';
-import { TokenProvider } from './contexts/TokenContext/TokenProvider';
+import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
 import { TokenAuth, RoleAccess } from './router';
@@ -21,7 +21,7 @@ const routesConfig = [
 
 export const App = () => {
   return (
-    <TokenProvider>
+    <AppProvider>
       <Suspense fallback={<Loading />}>
         <Router>
           <RouterPaths>
@@ -46,6 +46,6 @@ export const App = () => {
           </RouterPaths>
         </Router>
       </Suspense>
-    </TokenProvider>
+    </AppProvider>
   );
 };

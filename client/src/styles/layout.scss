@@ -13,5 +13,10 @@
     margin-left: $sidebar-width;
     @include topbar-style;
     @include error-style;
+    transition: margin $sidebar-close-transition ease;
+
+    &--sidebar-closed {
+      margin-left: 112px;
+    }
   }
 }
