@@ -2,12 +2,13 @@ export const ArrowSidebar = ({ styleClass }: { styleClass: string }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`${styleClass}`}
+      className={styleClass}
       height="24px"
       viewBox="0 -960 960 960"
       width="24px"
+      fill="#FFFFFF"
     >
-      <path d="M640-200 200-480l440-280v560Zm-80-280Zm0 134v-268L350-480l210 134Z" />
+      <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
     </svg>
   );
 };

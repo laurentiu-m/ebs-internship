@@ -7,3 +7,5 @@ export * from './FormSelect';
 export * from './CustomSelect';
 export * from './Sidebar';
 export * from './Topbar';
+export * from './UserSelect';
+export * from './ArrowSidebar';
