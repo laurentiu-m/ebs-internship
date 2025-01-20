@@ -1,0 +1,43 @@
+@use '@styles/variables.scss' as *;
+@use '@styles/mixins.scss' as *;
+
+.dashboard {
+  @include flex(flex-start, flex-start, column);
+  gap: 32px;
+  padding-bottom: 72px;
+  padding-inline: 32px;
+
+  &__header {
+    font-size: map-get($h1, font-size);
+    font-weight: map-get(map-get($h1, font-weight), medium);
+    line-height: map-get($h1, line-height);
+    color: $text-heading;
+  }
+
+  &__stats {
+    width: 100%;
+    @include flex(center, center, row);
+    gap: 32px;
+
+    .stats {
+      @include flex(flex-start, flex-start, column);
+      gap: 16px;
+      width: 250px;
+      border: 1px solid black;
+      border-radius: $border-radius;
+      padding: 16px;
+
+      &__title {
+        font-size: map-get($text-caption, font-size);
+        font-weight: map-get(map-get($text-caption, font-weight), regular);
+        line-height: map-get($text-caption, line-height);
+      }
+
+      &__result {
+        font-size: map-get($h4, font-size);
+        font-weight: map-get(map-get($h4, font-weight), medium);
+        line-height: map-get($h4, line-height);
+      }
+    }
+  }
+}

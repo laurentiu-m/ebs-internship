@@ -13,6 +13,26 @@ export const users = {
     return data;
   },
 
+  getTotalUsers: async () => {
+    const { headers } = await api.get('/users?_page=1&_limit=1');
+    return headers['x-total-count'];
+  },
+
+  getAdminCount: async () => {
+    const { data } = await api.get('/users?role=admin');
+    return data.length;
+  },
+
+  getModeratorCount: async () => {
+    const { data } = await api.get('/users?role=moderator');
+    return data.length;
+  },
+
+  getUserCount: async () => {
+    const { data } = await api.get('/users?role=user');
+    return data.length;
+  },
+
   create: async (userData: UserRegister): Promise<string> => {
     const { data }: AuthResponse = await api.post('/api/auth/register', userData);
     return data.token;

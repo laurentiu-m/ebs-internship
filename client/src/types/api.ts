@@ -14,6 +14,7 @@ export type ValidResponse = {
       language: string;
       role: string;
       userId: number;
+      username: string;
     };
   };
 };
