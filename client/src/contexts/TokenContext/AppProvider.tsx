@@ -8,7 +8,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [isSidebarClosed, setIsSidebarClosed] = useState(false);
 
-  const onToggleSidebar = () => setIsSidebarClosed(!isSidebarClosed);
+  const onToggleSidebar = () => setIsSidebarClosed((prev) => !prev);
 
   return (
     <AppContext.Provider value={{ tokenData, setTokenData, isSidebarClosed, onToggleSidebar }}>
