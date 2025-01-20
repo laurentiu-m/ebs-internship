@@ -42,7 +42,7 @@ export const Sidebar = () => {
             to={button.link}
           >
             <img src={button.icon} alt={`button-${button.text}`} />
-            {isClosed ? '' : button.text}
+            <p className={`text ${isClosed ? 'text--closed' : ''}`}>{button.text}</p>
           </Link>
         ))}
       </div>
