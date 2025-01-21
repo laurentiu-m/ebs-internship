@@ -16,27 +16,30 @@
 
   &__stats {
     width: 100%;
-    @include flex(center, center, row);
-    gap: 32px;
+    @include flex(flex-start, center, row);
+    gap: 16px;
 
-    .stats {
+    .stat {
       @include flex(flex-start, flex-start, column);
       gap: 16px;
       width: 250px;
-      border: 1px solid black;
+      border: 1px solid $border-color;
       border-radius: $border-radius;
+      background: white;
       padding: 16px;
 
       &__title {
         font-size: map-get($text-caption, font-size);
-        font-weight: map-get(map-get($text-caption, font-weight), regular);
+        font-weight: map-get(map-get($text-caption, font-weight), medium);
         line-height: map-get($text-caption, line-height);
+        color: $text-secondary;
       }
 
       &__result {
         font-size: map-get($h4, font-size);
         font-weight: map-get(map-get($h4, font-weight), medium);
         line-height: map-get($h4, line-height);
+        color: $primary-normal;
       }
     }
   }

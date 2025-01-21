@@ -1,19 +1,64 @@
+import { apiClient } from '@src/api';
+import { Roles } from '@src/app-constants';
 import { Loading } from '@src/components';
-import { useQuery } from '@tanstack/react-query';
+import { useAppContext } from '@src/hooks/useAppContext';
 
-type StatsComponentProps = {
-  title: string;
-  queryKey: string[];
-  fetchFunction: () => Promise<string>;
-};
+import { StatItem } from './StatItem';
 
-export const StatsComponent = ({ title, queryKey, fetchFunction }: StatsComponentProps) => {
-  const { data, isLoading } = useQuery({ queryKey: queryKey, queryFn: fetchFunction });
-  if (isLoading) return <Loading />;
+const statsConfig = [
+  {
+    title: 'Total Users',
+    queryKey: ['total_users'],
+    fetchFunction: () => apiClient.users.getTotalUsers(),
+    requiredRoles: [Roles.Admin]
+  },
+  {
+    title: 'Total Admins',
+    queryKey: ['total_admins'],
+    fetchFunction: () => apiClient.users.getAdminCount(),
+    requiredRoles: [Roles.Admin]
+  },
+  {
+    title: 'Total Moderators',
+    queryKey: ['total_moderators'],
+    fetchFunction: () => apiClient.users.getModeratorCount(),
+    requiredRoles: [Roles.Admin]
+  },
+  {
+    title: 'Total of Regular Users',
+    queryKey: ['total_user'],
+    fetchFunction: () => apiClient.users.getUserCount(),
+    requiredRoles: [Roles.Admin]
+  },
+  {
+    title: 'Total Posts',
+    queryKey: ['total_posts'],
+    fetchFunction: () => apiClient.posts.getTotalPosts(),
+    requiredRoles: [Roles.Admin]
+  }
+];
+
+export const StatsComponent = () => {
+  const { tokenData } = useAppContext();
+
+  if (!tokenData) {
+    return <Loading />;
+  }
+
+  const { role } = tokenData;
+
   return (
-    <div className="stats">
-      <h3 className="stats__title">{title}</h3>
-      <h2 className="stats__result">{data}</h2>
+    <div className="dashboard__stats">
+      {statsConfig
+        .filter((stats) => stats.requiredRoles.includes(role as Roles))
+        .map((stats) => (
+          <StatItem
+            key={stats.title}
+            title={stats.title}
+            queryKey={stats.queryKey}
+            fetchFunction={stats.fetchFunction}
+          />
+        ))}
     </div>
   );
 };
