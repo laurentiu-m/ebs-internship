@@ -1,5 +1,6 @@
 @use '@styles/variables.scss' as *;
 @use '@styles/mixins.scss' as *;
+@use '@styles/charts.scss' as *;
 
 .dashboard {
   @include flex(flex-start, flex-start, column);
@@ -41,6 +42,16 @@
         line-height: map-get($h4, line-height);
         color: $primary-normal;
       }
+    }
+  }
+
+  &__charts {
+    width: 100%;
+    @include flex(center, center, row);
+    gap: 32px;
+
+    .bar-chart {
+      @include bar-chart-style();
     }
   }
 }

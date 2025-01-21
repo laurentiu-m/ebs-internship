@@ -7,16 +7,18 @@ import { BarChartComponent } from './BarChartComponent';
 
 const barChartsConfig = [
   {
+    title: 'Users with the Most Posts',
     queryKey: 'top_users',
     axisKey: { yKey: 'postCount', xKey: 'userId' },
-    tooltip: { xKey: 'User ID:', yKey: 'posts' },
+    tooltip: { xKey: 'UserId', yKey: 'Posts' },
     fetchFunction: () => apiClient.users.getTopUsers(),
     requiredRoles: [Roles.Admin, Roles.Moderator]
   },
   {
+    title: 'Most Commented Posts',
     queryKey: 'top_posts',
     axisKey: { yKey: 'commentCount', xKey: 'postId' },
-    tooltip: { xKey: 'Post ID:', yKey: 'comments' },
+    tooltip: { xKey: 'PostId', yKey: 'Comments' },
     fetchFunction: () => apiClient.posts.getTopPosts(),
     requiredRoles: [Roles.Admin, Roles.Moderator]
   }
@@ -30,12 +32,13 @@ export const ChartsComponent = () => {
   const { role } = tokenData;
 
   return (
-    <div className="charts">
+    <div className="dashboard__charts">
       {barChartsConfig
         .filter(({ requiredRoles }) => requiredRoles.includes(role as Roles))
-        .map(({ queryKey, axisKey, fetchFunction, tooltip }) => (
+        .map(({ title, queryKey, axisKey, fetchFunction, tooltip }) => (
           <BarChartComponent
             key={queryKey}
+            title={title}
             queryKey={queryKey}
             axisKey={axisKey}
             tooltip={tooltip}
