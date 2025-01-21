@@ -33,6 +33,11 @@ export const users = {
     return data.length;
   },
 
+  getTopUsers: async () => {
+    const { data } = await api.get('/api/charts/top-users');
+    return data;
+  },
+
   create: async (userData: UserRegister): Promise<string> => {
     const { data }: AuthResponse = await api.post('/api/auth/register', userData);
     return data.token;

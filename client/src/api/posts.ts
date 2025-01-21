@@ -4,5 +4,10 @@ export const posts = {
   getTotalPosts: async () => {
     const { headers } = await api.get('/posts?_page=1&_limit=1');
     return headers['x-total-count'];
+  },
+
+  getTopPosts: async () => {
+    const { data } = await api.get('/api/charts/top-posts');
+    return data;
   }
 };

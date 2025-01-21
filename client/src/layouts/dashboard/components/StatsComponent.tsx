@@ -35,6 +35,12 @@ const statsConfig = [
     queryKey: ['total_posts'],
     fetchFunction: () => apiClient.posts.getTotalPosts(),
     requiredRoles: [Roles.Admin]
+  },
+  {
+    title: 'Total Comments',
+    queryKey: ['total_comments'],
+    fetchFunction: () => apiClient.comments.getTotalComments(),
+    requiredRoles: [Roles.Admin]
   }
 ];
 
