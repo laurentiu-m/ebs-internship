@@ -8,6 +8,7 @@ import { Layout, Error, Loading } from './components';
 import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
+import { Users } from './features/users/Users';
 import { TokenAuth, RoleAccess } from './router';
 
 // Routes Config
@@ -16,6 +17,11 @@ const routesConfig = [
     path: Routes.Dashboard,
     element: Dashboard,
     requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
+  },
+  {
+    path: Routes.Users,
+    element: Users,
+    requiredRoles: [Roles.Admin]
   }
 ];
 

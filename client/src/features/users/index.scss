@@ -1,0 +1,16 @@
+@use '@styles/variables.scss' as *;
+@use '@styles/mixins.scss' as *;
+
+.users {
+  @include flex(flex-start, flex-start, column);
+  gap: 32px;
+  padding-bottom: 72px;
+  padding-inline: 32px;
+
+  &__header {
+    font-size: map-get($h1, font-size);
+    font-weight: map-get(map-get($h1, font-weight), medium);
+    line-height: map-get($h1, line-height);
+    color: $text-heading;
+  }
+}
