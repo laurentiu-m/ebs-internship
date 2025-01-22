@@ -1,21 +1,13 @@
-import { Roles } from '@src/app-constants';
-import { Loading } from '@src/components';
-import { useAppContext } from '@src/hooks/useAppContext';
+import { ChartsComponent, StatsComponent } from './components/';
+import './index.scss';
 
 export const Dashboard = () => {
-  const { tokenData } = useAppContext();
-
-  if (!tokenData) {
-    return <Loading />;
-  }
-
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className="dashboard">
+      <h1 className="dashboard__header">Dashboard</h1>
 
-      {Roles.Admin === tokenData.role && <h1>Welcome back, admin</h1>}
-      {Roles.Moderator === tokenData.role && <h1>Welcome back, moderator</h1>}
-      {Roles.User === tokenData.role && <h1>Welcome back, user</h1>}
+      <StatsComponent />
+      <ChartsComponent />
     </div>
   );
 };
