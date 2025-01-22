@@ -47,11 +47,18 @@
 
   &__charts {
     width: 100%;
-    @include flex(center, center, row);
+    height: 500;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-rows: repeat(2, 1fr); /* 2 rows */
     gap: 32px;
 
     .bar-chart {
       @include bar-chart-style();
+    }
+
+    .pie-chart {
+      @include pie-chart-style();
     }
   }
 }

@@ -57,7 +57,7 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
                 fill: '#e9ecef'
               }}
             />
-            <Bar dataKey={axisKey.yKey} className="bar" radius={[4, 4, 4, 4]} />
+            <Bar dataKey={axisKey.yKey} radius={4} />
           </BarChart>
         </ResponsiveContainer>
       </div>

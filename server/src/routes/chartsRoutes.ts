@@ -46,4 +46,19 @@ router.get("/top-posts", (req: Request, res: Response) => {
   res.json(topPosts);
 });
 
+router.get("/gender-count", (req: Request, res: Response) => {
+  const users = db.get("users").value();
+
+  const { female, male, prefer_not_to_say } = users.reduce((acc, user) => {
+    acc[user.gender] = (acc[user.gender] || 0) + 1;
+    return acc;
+  }, {});
+
+  res.json([
+    { name: "female", value: female },
+    { name: "male", value: male },
+    { name: "prefer_not_to_say", value: prefer_not_to_say },
+  ]);
+});
+
 export default router;

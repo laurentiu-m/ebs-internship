@@ -38,6 +38,11 @@ export const users = {
     return data;
   },
 
+  getGenderCount: async () => {
+    const { data } = await api.get('/api/charts/gender-count');
+    return data;
+  },
+
   create: async (userData: UserRegister): Promise<string> => {
     const { data }: AuthResponse = await api.post('/api/auth/register', userData);
     return data.token;
