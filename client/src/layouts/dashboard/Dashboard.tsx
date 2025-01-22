@@ -1,5 +1,4 @@
-import { ChartsComponent } from './components/ChartsComponent';
-import { StatsComponent } from './components/StatsComponent';
+import { ChartsComponent, StatsComponent } from './components/';
 import './index.scss';
 
 export const Dashboard = () => {
