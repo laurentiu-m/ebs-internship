@@ -10,11 +10,11 @@ type BarChartProps = {
   fetchFunction: () => Promise<undefined>;
 };
 
-interface CustomTooltipProps {
+type CustomTooltipProps = {
   active?: boolean;
   payload?: { value: number; name: string }[];
   label?: string | number;
-}
+};
 
 export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
