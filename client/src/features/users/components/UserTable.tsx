@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { apiClient } from '@src/api';
+import { Routes } from '@src/app-constants';
 import { Loading, Table } from '@src/components';
 import { UserTable as UserTableTypes } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
@@ -110,7 +111,11 @@ export const UserTable = () => {
 
   return (
     <div className="users__table">
-      <Table table={table} state={{ globalFilter, setGlobalFilter }} />
+      <Table
+        table={table}
+        state={{ globalFilter, setGlobalFilter }}
+        header={{ title: 'Add User', link: Routes.UsersCreate }}
+      />
     </div>
   );
 };

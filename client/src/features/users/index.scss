@@ -1,6 +1,7 @@
 @use '@styles/variables.scss' as *;
 @use '@styles/mixins.scss' as *;
 @use '@styles/table.scss' as *;
+@use '@styles/form' as *;
 
 .users {
   @include flex(flex-start, flex-start, column);
@@ -19,4 +20,22 @@
     width: 100%;
     @include table-style();
   }
+}
+
+.users-create {
+  padding-bottom: 32px;
+  @include flex(center, center, column);
+  gap: 16px;
+
+  &__header {
+    text-align: center;
+    .title {
+      font-size: map-get($h1, font-size);
+      font-weight: map-get(map-get($h1, font-weight), medium);
+      line-height: map-get($h1, line-height);
+      color: $text-heading;
+    }
+  }
+
+  @include form-style(500px);
 }

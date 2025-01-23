@@ -66,4 +66,4 @@ export type UserRegisterSubmit = (
   registerData: UserRegister,
   setError: UseFormSetError<UserRegisterForm>,
   navigate: NavigateFunction
-) => Promise<void>;
+) => Promise<void | boolean>;

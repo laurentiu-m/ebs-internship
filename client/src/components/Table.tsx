@@ -2,23 +2,27 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { UserTable } from '@src/types';
 import { flexRender, Table as TableTypes } from '@tanstack/react-table';
+import { Link } from 'react-router-dom';
 
 import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
 
 type TableProps = {
   table: TableTypes<UserTable>;
-  state?: {
+  state: {
     globalFilter: string | null;
     setGlobalFilter: Dispatch<SetStateAction<string | null>>;
   };
+  header: { title: string; link: string };
 };
 
-export const Table = ({ table, state }: TableProps) => {
+export const Table = ({ table, state, header }: TableProps) => {
   return (
     <div className="table">
       <div className="table__header">
-        <button className="button">Add User</button>
+        <Link to={header.link} className="button">
+          {header.title}
+        </Link>
 
         <input
           value={state?.globalFilter || ''}

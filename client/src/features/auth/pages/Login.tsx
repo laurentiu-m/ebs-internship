@@ -47,8 +47,8 @@ export const Login = () => {
   return (
     <>
       <div className="auth__header">
-        <h1>{t('login.heading')}</h1>
-        <p>{t('login.description')}</p>
+        <h1 className="title">{t('login.heading')}</h1>
+        <p className="description">{t('login.description')}</p>
       </div>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
