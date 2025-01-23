@@ -13,4 +13,8 @@
     line-height: map-get($h1, line-height);
     color: $text-heading;
   }
+
+  &__table {
+    width: 100%;
+  }
 }

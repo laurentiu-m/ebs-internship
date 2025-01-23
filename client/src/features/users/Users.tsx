@@ -6,7 +6,9 @@ export const Users = () => {
     <div className="users">
       <h1 className="users__header">Users</h1>
 
-      <Table />
+      <div className="users__table">
+        <Table />
+      </div>
     </div>
   );
 };

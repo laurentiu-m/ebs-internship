@@ -18,6 +18,9 @@ import {
 import { Filter } from './Filter';
 import { Loading } from './Loading';
 import '@src/styles/table.scss';
+import Placeholder from 'node_modules/react-select/dist/declarations/src/components/Placeholder';
+import cn from 'classnames';
+import { ArrowSidebar } from './ArrowSidebar';
 
 type Person = {
   id: number;
@@ -40,7 +43,10 @@ export const Table = () => {
 
   const columns = [
     columnHelper.accessor('id', {
-      enableGlobalFilter: false
+      enableGlobalFilter: false,
+      meta: {
+        className: 'center start'
+      }
     }),
     columnHelper.accessor('name', {
       header: 'Name'
@@ -56,19 +62,23 @@ export const Table = () => {
       enableSorting: false
     }),
     columnHelper.accessor('gender', {
-      header: 'Gender',
+      header: undefined,
       filterFn: exactTextFilter,
       meta: {
-        filterVariant: 'select'
+        filterVariant: 'select',
+        placeholder: 'Gender',
+        className: 'select-head'
       },
       enableSorting: false,
       enableGlobalFilter: false
     }),
     columnHelper.accessor('role', {
-      header: 'Role',
+      header: undefined,
       filterFn: exactTextFilter,
       meta: {
-        filterVariant: 'select'
+        filterVariant: 'select',
+        placeholder: 'Roles',
+        className: 'select-head end'
       },
       enableSorting: false,
       enableGlobalFilter: false
@@ -103,39 +113,45 @@ export const Table = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="p-2">
-      <div>
+    <div className="table">
+      <div className="table__header">
+        <button className="button">Add User</button>
+
         <input
           value={globalFilter || ''}
+          className="input"
           onChange={(e) => setGlobalFilter(e.target.value || null)}
           placeholder="Search..."
         />
       </div>
+
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr className="head-style" key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} colSpan={header.colSpan}>
+                <th key={header.id} colSpan={header.colSpan} className={header.column.columnDef.meta?.className ?? ''}>
                   {header.isPlaceholder ? null : (
                     <>
-                      <div
-                        {...{
-                          className: header.column.getCanSort() ? 'cursor-pointer select-none' : '',
-                          onClick: header.column.getToggleSortingHandler()
-                        }}
-                      >
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                          asc: ' 🔼',
-                          desc: ' 🔽'
-                        }[header.column.getIsSorted() as string] ?? null}
-                      </div>
-                      {header.column.getCanFilter() ? (
+                      {header.column.columnDef.header != null ? (
+                        <div
+                          {...{
+                            className: 'text',
+                            onClick: header.column.getToggleSortingHandler()
+                          }}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {{
+                            asc: ' 🔼',
+                            desc: ' 🔽'
+                          }[header.column.getIsSorted() as string] || null}
+                        </div>
+                      ) : null}
+                      {header.column.getCanFilter() && (
                         <div>
                           <Filter column={header.column} />
                         </div>
-                      ) : null}
+                      )}
                     </>
                   )}
                 </th>
@@ -144,11 +160,15 @@ export const Table = () => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => {
+          {table.getRowModel().rows.map((row, index) => {
             return (
-              <tr key={row.id}>
+              <tr key={row.id} style={{ backgroundColor: `${index % 2 !== 0 ? 'white' : '#f8f9fa'}` }}>
                 {row.getVisibleCells().map((cell) => {
-                  return <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>;
+                  return (
+                    <td key={cell.id} className={cell.column.columnDef.meta?.className || ''}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  );
                 })}
               </tr>
             );
@@ -157,43 +177,39 @@ export const Table = () => {
       </table>
 
       {/* Pagination */}
-      <div className="h-2" />
-      <div className="flex items-center gap-2">
-        <button className="border rounded p-1" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
-          {'<<'}
-        </button>
-        <button
-          className="border rounded p-1"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
-        <button className="border rounded p-1" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-          {'>'}
-        </button>
-        <button className="border rounded p-1" onClick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
-          {'>>'}
-        </button>
-        <span className="flex items-center gap-1">
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} - {table.getState().pagination.pageSize} of{' '}
-            {table.getPageCount().toLocaleString()}
-          </strong>
-        </span>
-        <select
-          value={table.getState().pagination.pageSize}
-          onChange={(e) => {
-            table.setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
+      <div className="table__pagination">
+        <div className="pages">
+          {table.getState().pagination.pageIndex + 1} - {table.getState().pagination.pageSize} of{' '}
+          {table.getPageCount().toLocaleString()}
+        </div>
+
+        <div className="active">
+          <div className="active__buttons">
+            <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+              <ArrowSidebar styleClass={cn('icon', { 'icon--disabled': !table.getCanPreviousPage() })} />
+            </button>
+            <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+              <ArrowSidebar styleClass={cn('icon icon--right', { 'icon--disabled': !table.getCanNextPage() })} />
+            </button>
+          </div>
+
+          <div className="active__select">
+            <p>Rows per page:</p>
+
+            <select
+              value={table.getState().pagination.pageSize}
+              onChange={(e) => {
+                table.setPageSize(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  {pageSize}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
     </div>
   );
