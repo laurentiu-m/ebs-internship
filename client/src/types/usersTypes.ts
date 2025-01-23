@@ -36,6 +36,11 @@ export type UserRegister = {
   password: string;
 };
 
+export type UserTable = Omit<UserRegister, 'password'> & {
+  id: number;
+  role: string;
+};
+
 export type UserRegisterForm = Omit<UserRegister, 'name'> & {
   first_name: string;
   last_name: string;

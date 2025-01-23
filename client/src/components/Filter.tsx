@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 
+import { UserTable } from '@src/types';
 import { Column } from '@tanstack/react-table';
 
-export const Filter = ({ column }: { column: Column<any, unknown> }) => {
+export const Filter = ({ column }: { column: Column<UserTable, unknown> }) => {
   const columnFilterValue = column.getFilterValue();
   const { filterVariant, placeholder } = column.columnDef.meta ?? {};
 

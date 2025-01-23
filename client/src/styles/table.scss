@@ -3,131 +3,133 @@
 @use './buttons.scss' as *;
 @use './inputs.scss' as *;
 
-.table {
-  @include flex(center, flex-start, column);
-  gap: 16px;
+@mixin table-style {
+  .table {
+    @include flex(center, flex-start, column);
+    gap: 16px;
 
-  &__header {
-    @include flex(space-between, center, row);
-    width: 100%;
+    &__header {
+      @include flex(space-between, center, row);
+      width: 100%;
 
-    .button {
-      @include button-style(100px);
+      .button {
+        @include button-style(100px);
+      }
+
+      .input {
+        @include input-style();
+        width: 300px;
+      }
     }
 
-    .input {
-      @include input-style();
-      width: 300px;
-    }
-  }
+    table {
+      width: 100%;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      border-spacing: 0;
+      border-collapse: separate;
+      padding: 16px;
+      background: $white;
+      overflow: hidden;
 
-  table {
-    width: 100%;
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-    border-spacing: 0;
-    border-collapse: separate;
-    padding: 16px;
-    background: $white;
-    overflow: hidden;
+      thead {
+        .select-head {
+          select {
+            width: 100px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-size: map-get($text-caption, font-size);
+            font-weight: map-get(map-get($text-caption, font-weight), medium);
+            line-height: map-get($text-caption, line-height);
+            color: $text-secondary;
+          }
+        }
 
-    thead {
-      .select-head {
-        select {
-          width: 100px;
+        .center {
           text-align: center;
-          border: none;
-          background: transparent;
-          font-size: map-get($text-caption, font-size);
-          font-weight: map-get(map-get($text-caption, font-weight), medium);
-          line-height: map-get($text-caption, line-height);
-          color: $text-secondary;
         }
-      }
 
-      .center {
-        text-align: center;
-      }
-
-      th {
-        font-size: map-get($text-caption, font-size);
-        text-align: left;
-        margin: 0;
-        padding: 16px 24px;
-
-        .text {
+        th {
           font-size: map-get($text-caption, font-size);
-          font-weight: map-get(map-get($text-caption, font-weight), medium);
-          line-height: map-get($text-caption, line-height);
-          color: $text-secondary;
-        }
-      }
-    }
+          text-align: left;
+          margin: 0;
+          padding: 16px 24px;
 
-    tbody {
-      .select-head,
-      .center {
-        text-align: center;
-      }
-      .start {
-        border-radius: $border-radius 0 0 $border-radius;
-      }
-      .end {
-        border-radius: 0 $border-radius $border-radius 0;
-      }
-
-      td {
-        padding: 16px 24px;
-      }
-    }
-  }
-
-  &__pagination {
-    width: 100%;
-    @include flex(space-between, center, row);
-
-    .pages {
-      font-size: map-get($text-caption, font-size);
-      font-weight: map-get(map-get($text-caption, font-weight), medium);
-      line-height: map-get($text-caption, line-height);
-      color: $text-secondary;
-    }
-
-    .active {
-      @include flex(center, center, row);
-      gap: 32px;
-
-      &__buttons {
-        @include flex(center, center, row);
-        gap: 8px;
-
-        button {
-          @include flex(center, center, row);
-          width: 30px;
-          height: 30px;
-          background: $primary-normal;
-          border: none;
-          border-radius: $border-radius;
-          cursor: pointer;
-
-          .icon {
-            font-size: 24px;
-            fill: $white;
-
-            &--right {
-              rotate: (180deg);
-            }
-
-            &--disabled {
-              fill: $text-disable;
-            }
+          .text {
+            font-size: map-get($text-caption, font-size);
+            font-weight: map-get(map-get($text-caption, font-weight), medium);
+            line-height: map-get($text-caption, line-height);
+            color: $text-secondary;
           }
         }
       }
 
-      &__select {
+      tbody {
+        .select-head,
+        .center {
+          text-align: center;
+        }
+        .start {
+          border-radius: $border-radius 0 0 $border-radius;
+        }
+        .end {
+          border-radius: 0 $border-radius $border-radius 0;
+        }
+
+        td {
+          padding: 16px 24px;
+        }
+      }
+    }
+
+    &__pagination {
+      width: 100%;
+      @include flex(space-between, center, row);
+
+      .pages {
+        font-size: map-get($text-caption, font-size);
+        font-weight: map-get(map-get($text-caption, font-weight), medium);
+        line-height: map-get($text-caption, line-height);
+        color: $text-secondary;
+      }
+
+      .active {
         @include flex(center, center, row);
-        gap: 8px;
+        gap: 32px;
+
+        &__buttons {
+          @include flex(center, center, row);
+          gap: 8px;
+
+          button {
+            @include flex(center, center, row);
+            width: 30px;
+            height: 30px;
+            background: $primary-normal;
+            border: none;
+            border-radius: $border-radius;
+            cursor: pointer;
+
+            .icon {
+              font-size: 24px;
+              fill: $white;
+
+              &--right {
+                rotate: (180deg);
+              }
+
+              &--disabled {
+                fill: $text-disable;
+              }
+            }
+          }
+        }
+
+        &__select {
+          @include flex(center, center, row);
+          gap: 8px;
+        }
       }
     }
   }

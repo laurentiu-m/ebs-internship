@@ -8,7 +8,7 @@ import { Layout, Error, Loading } from './components';
 import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
-import { Users } from './features/users/Users';
+import { Users } from './features/users/pages/Users';
 import { TokenAuth, RoleAccess } from './router';
 
 // Routes Config
