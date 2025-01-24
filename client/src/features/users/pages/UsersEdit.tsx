@@ -38,8 +38,8 @@ export const UsersEdit = () => {
     <div className="users-edit">
       <UserForm
         mainClass="users-edit"
-        header={{ title: `Edit User ${id}`, description: '' }}
-        submitButton="Edit"
+        header={`users.title-edit`}
+        submitButton="form.button.edit"
         submitFunction={editUser}
         userId={id}
         initialValues={formData}

@@ -18,6 +18,7 @@ import {
   Row,
   RowData
 } from '@tanstack/react-table';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 declare module '@tanstack/react-table' {
@@ -31,6 +32,7 @@ declare module '@tanstack/react-table' {
 }
 
 export const UserTable = () => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -66,31 +68,31 @@ export const UserTable = () => {
       enableGlobalFilter: false,
       meta: { className: 'center start' }
     }),
-    columnHelper.accessor('name', { header: 'Name' }),
-    columnHelper.accessor('username', { header: 'Username' }),
+    columnHelper.accessor('name', { header: t('form.label.name') }),
+    columnHelper.accessor('username', { header: t('form.label.username') }),
     columnHelper.accessor('email', { header: 'Email' }),
-    columnHelper.accessor('phone', { header: 'Phone', enableSorting: false }),
+    columnHelper.accessor('phone', { header: t('form.label.phone'), enableSorting: false }),
     columnHelper.accessor('gender', {
       header: undefined,
       filterFn: exactTextFilter,
-      meta: { filterVariant: 'select', placeholder: 'Gender', className: 'select-head' },
+      meta: { filterVariant: 'select', placeholder: t('form.label.gender.label'), className: 'select-head' },
       enableSorting: false,
       enableGlobalFilter: false
     }),
     columnHelper.accessor('role', {
       header: undefined,
       filterFn: exactTextFilter,
-      meta: { filterVariant: 'select', placeholder: 'Roles', className: 'select-head' },
+      meta: { filterVariant: 'select', placeholder: t('form.label.roles'), className: 'select-head' },
       enableSorting: false,
       enableGlobalFilter: false
     }),
     columnHelper.display({
       id: 'actions',
-      header: 'Options',
+      header: t('table.options'),
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>Edit</Link>
+          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
           <button className="options__button" onClick={() => handleDelete(row.original.id)}>
             Delete
           </button>
@@ -121,7 +123,7 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: 'Add User', link: Routes.UsersCreate }}
+        header={{ title: t('table.button-users'), link: Routes.UsersCreate }}
       />
     </div>
   );

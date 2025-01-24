@@ -1,6 +1,7 @@
 import { UserTable } from '@src/types';
 import { Table } from '@tanstack/react-table';
 import cn from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 import { ArrowSidebar } from './ArrowSidebar';
 
@@ -9,10 +10,12 @@ type TableProps = {
 };
 
 export const TablePagination = ({ table }: TableProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="table__pagination">
       <div className="pages">
-        {table.getState().pagination.pageIndex + 1} - {table.getState().pagination.pageSize} of{' '}
+        {table.getState().pagination.pageIndex + 1} - {table.getState().pagination.pageSize} {t('table.page')}{' '}
         {table.getPageCount().toLocaleString()}
       </div>
 
@@ -27,7 +30,7 @@ export const TablePagination = ({ table }: TableProps) => {
         </div>
 
         <div className="active__select">
-          <p>Rows per page:</p>
+          <p>{t('table.rows')}</p>
 
           <select
             value={table.getState().pagination.pageSize}

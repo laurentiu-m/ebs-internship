@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { UserTable } from '@src/types';
 import { flexRender, Table as TableTypes } from '@tanstack/react-table';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Filter } from './Filter';
@@ -17,6 +18,8 @@ type TableProps = {
 };
 
 export const Table = ({ table, state, header }: TableProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="table">
       <div className="table__header">
@@ -28,7 +31,7 @@ export const Table = ({ table, state, header }: TableProps) => {
           value={state?.globalFilter || ''}
           className="input"
           onChange={(e) => state?.setGlobalFilter(e.target.value || null)}
-          placeholder="Search..."
+          placeholder={t('table.search')}
         />
       </div>
 

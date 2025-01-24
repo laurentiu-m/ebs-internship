@@ -7,8 +7,8 @@ export const UsersCreate = () => {
     <div className="users-create">
       <UserForm
         mainClass="users-create"
-        header={{ title: 'Create User', description: '' }}
-        submitButton="Create"
+        header="users.title-create"
+        submitButton="form.button.create"
         submitFunction={createUser}
       />
     </div>

@@ -28,9 +28,9 @@ export const Register = () => {
   const navigate = useNavigate();
 
   const genderOptions = [
-    { value: Genders.Male, label: t('register.form.gender.male') },
-    { value: Genders.Female, label: t('register.form.gender.female') },
-    { value: Genders.PreferNotToSay, label: t('register.form.gender.prefer_not_to_say') }
+    { value: Genders.Male, label: t('form.label.gender.male') },
+    { value: Genders.Female, label: t('form.label.gender.female') },
+    { value: Genders.PreferNotToSay, label: t('form.label.gender.prefer_not_to_say') }
   ];
 
   const onSubmit = async (data: FormData) => {
@@ -46,58 +46,55 @@ export const Register = () => {
   return (
     <>
       <div className={`auth__header`}>
-        <h1 className="title">{t('register.heading')}</h1>
-        <p className="description">{t('register.description')}</p>
+        <h1 className="title">{t('form.register.title')}</h1>
+        <p className="description">{t('form.register.description')}</p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
         <FormInput
           name="first_name"
           type="text"
-          label={t('register.form.first_name')}
+          label={t('form.label.first_name')}
           register={register}
-          placeholder={t('register.form.first_name')}
+          placeholder={t('form.label.first_name')}
           error={errors.first_name}
         />
         <FormInput
           name="last_name"
           type="text"
-          label={t('register.form.last_name')}
+          label={t('form.label.last_name')}
           register={register}
-          placeholder={t('register.form.last_name')}
+          placeholder={t('form.label.last_name')}
           error={errors.last_name}
         />
         <FormInput
           name="email"
-          context="register"
           type="email"
-          label={t('register.form.email')}
+          label="Email"
           register={register}
-          placeholder={t('register.form.email')}
+          placeholder="Email"
           error={errors.email}
         />
         <FormInput
           name="username"
-          context="register"
           type="text"
-          label={t('register.form.username')}
+          label={t('form.label.username')}
           register={register}
-          placeholder={t('register.form.username')}
+          placeholder={t('form.label.username')}
           error={errors.username}
         />
         <FormInput
           name="phone"
           type="text"
-          label={t('register.form.phone')}
+          label={t('form.label.phone')}
           register={register}
-          placeholder={t('register.form.phone')}
+          placeholder={t('form.label.phone')}
           error={errors.phone}
         />
         <FormSelect
-          context="register"
           name="gender"
-          label={t('register.form.gender.label')}
-          placeholder={t('register.form.gender.default')}
+          label={t('form.label.gender.label')}
+          placeholder={t('form.label.gender.default')}
           control={control}
           options={genderOptions}
           error={errors.gender}
@@ -105,24 +102,24 @@ export const Register = () => {
         <FormInput
           name="password"
           type="password"
-          label={t('register.form.password')}
+          label={t('form.label.password')}
           register={register}
-          placeholder={t('register.form.password')}
+          placeholder={t('form.label.password')}
           error={errors.password}
         />
         <FormInput
           name="confirm_password"
           type="password"
-          label={t('register.form.confirm_password')}
+          label={t('form.label.confirm_password')}
           register={register}
-          placeholder={t('register.form.confirm_password')}
+          placeholder={t('form.label.confirm_password')}
           error={errors.confirm_password}
         />
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t(`register.form.submit`)} />
+        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('form.register.submit')} />
 
         <div className="form__redirect">
-          {t('register.form.redirect.title')} <Link to="/login">{t('register.form.redirect.link')}</Link>
+          {t('form.redirect.title-register')} <Link to="/login">{t('form.login.title')}</Link>
         </div>
       </form>
     </>

@@ -3,7 +3,6 @@ import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-f
 import { useTranslation } from 'react-i18next';
 
 type SelectProps<T extends FieldValues> = {
-  context?: string;
   name: Path<T>;
   label: string;
   options: {
@@ -17,7 +16,6 @@ type SelectProps<T extends FieldValues> = {
 };
 
 export const FormSelect = <T extends FieldValues>({
-  context,
   name,
   label,
   options,
@@ -51,7 +49,7 @@ export const FormSelect = <T extends FieldValues>({
           )}
         />
       </div>
-      {error && <p className="form__select-error">{t(`${context}.error.${name}_empty`)}</p>}
+      {error && <p className="form__select-error">{t(`error.${name}_empty`)}</p>}
     </div>
   );
 };

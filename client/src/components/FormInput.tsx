@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 type InputProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
   name: Path<T>;
-  context?: string;
   type: string;
   label: string;
   placeholder: string;
@@ -15,7 +14,6 @@ type InputProps<T extends FieldValues> = {
 export const FormInput = <T extends FieldValues>({
   register,
   name,
-  context,
   type,
   label,
   placeholder,
@@ -38,9 +36,7 @@ export const FormInput = <T extends FieldValues>({
         />
       </div>
       {error && (
-        <p className="form__input-error">
-          {error?.type === 'server' ? t(`${context}.error.${error?.message}`) : error?.message}
-        </p>
+        <p className="form__input-error">{error?.type === 'server' ? t(`error.${error?.message}`) : error?.message}</p>
       )}
     </div>
   );

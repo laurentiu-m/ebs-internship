@@ -45,34 +45,32 @@ export const Login = () => {
   return (
     <>
       <div className="auth__header">
-        <h1 className="title">{t('login.heading')}</h1>
-        <p className="description">{t('login.description')}</p>
+        <h1 className="title">{t('form.login.title')}</h1>
+        <p className="description">{t('form.login.description')}</p>
       </div>
 
       <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
         <FormInput
-          context="login"
           name="email"
           type="email"
-          label={t('login.form.email.label')}
+          label="Email"
           register={register}
-          placeholder={t('login.form.email.placeholder')}
+          placeholder={t('form.login.label')}
           error={errors.email}
         />
         <FormInput
-          context="login"
           name="password"
           type="password"
-          label={t('login.form.password.label')}
+          label={t('form.label.password')}
           register={register}
           placeholder="********"
           error={errors.password}
         />
 
-        <input disabled={isSubmitting} className="form__submit" type="submit" value={t('login.form.submit')} />
+        <input disabled={isSubmitting} className="form__submit" type="submit" value={t('form.login.submit')} />
 
         <div className="form__redirect">
-          {t('login.form.redirect.title')} <Link to="/register">{t('login.form.redirect.link')}</Link>
+          {t('form.redirect.title-login')} <Link to="/register">{t('form.register.title')}</Link>
         </div>
       </form>
     </>

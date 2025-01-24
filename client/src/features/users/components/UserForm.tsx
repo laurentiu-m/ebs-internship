@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 type UserFormProps = {
   mainClass: string;
-  header: { title: string; description: string };
+  header: string;
   submitButton: string;
   submitFunction: UserFormSubmit;
   initialValues?: UserFormTypes;
@@ -36,9 +36,9 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, init
   });
 
   const genderOptions = [
-    { value: Genders.Male, label: t('register.form.gender.male') },
-    { value: Genders.Female, label: t('register.form.gender.female') },
-    { value: Genders.PreferNotToSay, label: t('register.form.gender.prefer_not_to_say') }
+    { value: Genders.Male, label: t('form.label.gender.male') },
+    { value: Genders.Female, label: t('form.label.gender.female') },
+    { value: Genders.PreferNotToSay, label: t('form.label.gender.prefer_not_to_say') }
   ];
 
   const roleOptions = [
@@ -69,58 +69,54 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, init
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{t(header?.title)}</h1>
-        <p className="description">{t(header?.description)}</p>
+        <h1 className="title">{t(header)}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
         <FormInput
           name="first_name"
           type="text"
-          label={t('register.form.first_name')}
+          label={t('form.label.first_name')}
           register={register}
-          placeholder={t('register.form.first_name')}
+          placeholder={t('form.label.first_name')}
           error={errors.first_name}
         />
         <FormInput
           name="last_name"
           type="text"
-          label={t('register.form.last_name')}
+          label={t('form.label.last_name')}
           register={register}
-          placeholder={t('register.form.last_name')}
+          placeholder={t('form.label.last_name')}
           error={errors.last_name}
         />
         <FormInput
           name="email"
-          context="register"
           type="email"
-          label={t('register.form.email')}
+          label="Email"
           register={register}
-          placeholder={t('register.form.email')}
+          placeholder="Email"
           error={errors.email}
         />
         <FormInput
           name="username"
-          context="register"
           type="text"
-          label={t('register.form.username')}
+          label={t('form.label.username')}
           register={register}
-          placeholder={t('register.form.username')}
+          placeholder={t('form.label.username')}
           error={errors.username}
         />
         <FormInput
           name="phone"
           type="text"
-          label={t('register.form.phone')}
+          label={t('form.label.phone')}
           register={register}
-          placeholder={t('register.form.phone')}
+          placeholder={t('form.label.phone')}
           error={errors.phone}
         />
         <FormSelect
-          context="register"
           name="gender"
-          label={t('register.form.gender.label')}
-          placeholder={t('register.form.gender.default')}
+          label={t('form.label.gender.label')}
+          placeholder={t('form.label.gender.label')}
           control={control}
           options={genderOptions}
           defaultValue={initialValues?.gender}
@@ -128,10 +124,9 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, init
         />
 
         <FormSelect
-          context="register"
           name="role"
-          label="Select Role"
-          placeholder={t('register.form.gender.default')}
+          label={t('form.label.roles')}
+          placeholder={t('form.label.roles-placeholder')}
           control={control}
           options={roleOptions}
           defaultValue={initialValues?.role}
@@ -141,17 +136,17 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, init
         <FormInput
           name="password"
           type="password"
-          label={t('register.form.password')}
+          label={t('form.label.password')}
           register={register}
-          placeholder={t('register.form.password')}
+          placeholder={t('form.label.password')}
           error={errors.password}
         />
         <FormInput
           name="confirm_password"
           type="password"
-          label={t('register.form.confirm_password')}
+          label={t('form.label.confirm_password')}
           register={register}
-          placeholder={t('register.form.confirm_password')}
+          placeholder={t('form.label.confirm_password')}
           error={errors.confirm_password}
         />
 
