@@ -36,6 +36,38 @@ export type UserRegister = {
   password: string;
 };
 
+export type UserEdit = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  gender: string;
+  phone: string;
+  role: string;
+  password: string;
+};
+
+export type UserCreate = {
+  name: string;
+  username: string;
+  email: string;
+  gender: string;
+  phone: string;
+  password: string;
+};
+
+export type UserFormTypes = {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  gender: string;
+  phone: string;
+  role: string;
+  password: string;
+  confirm_password: string;
+};
+
 export type UserTable = Omit<UserRegister, 'password'> & {
   id: number;
   role: string;
@@ -44,6 +76,12 @@ export type UserTable = Omit<UserRegister, 'password'> & {
 export type UserRegisterForm = Omit<UserRegister, 'name'> & {
   first_name: string;
   last_name: string;
+};
+
+export type UserCreateForm = {
+  first_name: string;
+  last_name: string;
+  role: string;
 };
 
 export type UserLogin = {
@@ -66,4 +104,10 @@ export type UserRegisterSubmit = (
   registerData: UserRegister,
   setError: UseFormSetError<UserRegisterForm>,
   navigate: NavigateFunction
+) => Promise<void>;
+
+export type UserFormSubmit = (
+  registerData: UserCreate,
+  setError: UseFormSetError<UserCreateForm>,
+  userId?: string
 ) => Promise<void | boolean>;

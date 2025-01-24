@@ -18,6 +18,7 @@ import {
   Row,
   RowData
 } from '@tanstack/react-table';
+import { Link } from 'react-router-dom';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -89,7 +90,7 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <button className={`${row.original.id}`}>Edit</button>
+          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>Edit</Link>
           <button className="options__button" onClick={() => handleDelete(row.original.id)}>
             Delete
           </button>

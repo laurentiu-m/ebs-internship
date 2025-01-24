@@ -1,42 +1,27 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Genders, Roles } from '@src/app-constants';
 import { FormInput, FormSelect } from '@src/components';
-import { UserRegister, UserRegisterSubmit } from '@src/types';
+import { getUsersSchema } from '@src/schemas/';
+import { UserCreate, UserFormSubmit, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
-import validator from 'validator';
 import { z } from 'zod';
 
-type RegisterProps = {
+type UserFormProps = {
   mainClass: string;
   header: { title: string; description: string };
   submitButton: string;
-  submitFunction: UserRegisterSubmit;
-  showRedirect: boolean;
+  submitFunction: UserFormSubmit;
+  initialValues?: UserFormTypes;
+  userId?: string;
 };
 
-export const UserForm = ({ mainClass, header, submitButton, submitFunction, showRedirect }: RegisterProps) => {
+export const UserForm = ({ mainClass, header, submitButton, submitFunction, initialValues, userId }: UserFormProps) => {
   const { t } = useTranslation();
-  const registerSchema = z
-    .object({
-      first_name: z.string().nonempty(t('register.error.first_name_empty')).min(2, t('register.error.first_name_min')),
-      last_name: z.string().nonempty(t('register.error.last_name_empty')).min(2, t('register.error.last_name_min')),
-      username: z.string().nonempty(t('register.error.username_empty')).min(4, t('register.error.username_min')),
-      email: z.string().nonempty(t('register.error.email_empty')).email(t('register.error.email_invalid')),
-      phone: z
-        .string()
-        .nonempty(t('register.error.phone_empty'))
-        .refine(validator.isMobilePhone, t('register.error.phone_invalid')),
-      gender: z.string().nonempty(),
-      password: z.string().nonempty(t('register.error.password_empty')).min(8, t('register.error.password_min')),
-      confirm_password: z.string().nonempty(t('register.error.confirm_password_empty'))
-    })
-    .refine((data) => data.password === data.confirm_password, {
-      message: t('register.error.confirm_password_invalid'),
-      path: ['confirm_password']
-    });
 
-  type FormData = z.infer<typeof registerSchema>;
+  const schema = getUsersSchema(t);
+
+  type FormData = z.infer<typeof schema>;
 
   const {
     register,
@@ -45,26 +30,40 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, show
     setError,
     control,
     formState: { errors, isSubmitting }
-  } = useForm<FormData>({ resolver: zodResolver(registerSchema) });
-
-  const navigate = useNavigate();
+  } = useForm<z.infer<typeof schema>>({
+    resolver: zodResolver(schema),
+    defaultValues: initialValues
+  });
 
   const genderOptions = [
-    { value: 'male', label: t('register.form.gender.male') },
-    { value: 'female', label: t('register.form.gender.female') },
-    { value: 'prefer_not_to_say', label: t('register.form.gender.prefer_not_to_say') }
+    { value: Genders.Male, label: t('register.form.gender.male') },
+    { value: Genders.Female, label: t('register.form.gender.female') },
+    { value: Genders.PreferNotToSay, label: t('register.form.gender.prefer_not_to_say') }
+  ];
+
+  const roleOptions = [
+    { value: Roles.Admin, label: 'Admin' },
+    { value: Roles.Moderator, label: 'Moderator' },
+    { value: Roles.User, label: 'User' }
   ];
 
   const onSubmit = async (data: FormData) => {
     const { first_name, last_name, confirm_password, ...rest } = data;
-    const registerData: UserRegister = {
+    const registerData: UserCreate = {
       ...rest,
       name: `${first_name} ${last_name}`
     };
 
-    const success = await submitFunction(registerData, setError, navigate);
+    if (initialValues) {
+      const hasChanged = Object.entries(data).some(
+        ([key, value]) => initialValues[key as keyof UserFormTypes] !== value
+      );
 
-    if (success) reset();
+      if (!hasChanged) return;
+    }
+
+    const resetForm = await submitFunction(registerData, setError, userId);
+    if (resetForm) reset();
   };
 
   return (
@@ -124,8 +123,21 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, show
           placeholder={t('register.form.gender.default')}
           control={control}
           options={genderOptions}
+          defaultValue={initialValues?.gender}
           error={errors.gender}
         />
+
+        <FormSelect
+          context="register"
+          name="role"
+          label="Select Role"
+          placeholder={t('register.form.gender.default')}
+          control={control}
+          options={roleOptions}
+          defaultValue={initialValues?.role}
+          error={errors.role}
+        />
+
         <FormInput
           name="password"
           type="password"
@@ -144,11 +156,6 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, show
         />
 
         <input disabled={isSubmitting} type="submit" className="form__submit" value={t(submitButton)} />
-        {showRedirect && (
-          <div className="form__redirect">
-            {t('register.form.redirect.title')} <Link to="/login">{t('register.form.redirect.link')}</Link>
-          </div>
-        )}
       </form>
     </>
   );

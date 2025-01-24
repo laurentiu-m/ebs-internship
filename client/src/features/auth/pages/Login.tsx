@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
 import { Loading, FormInput } from '@src/components';
+import { getLoginSchema } from '@src/schemas';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,19 +14,16 @@ import { loginSubmit } from '../utils/authUtils';
 export const Login = () => {
   const { t } = useTranslation();
 
-  const loginSchema = z.object({
-    email: z.string().nonempty(t('login.error.email_empty')).email(t('login.error.email_invalid')),
-    password: z.string().nonempty(t('login.error.password_empty'))
-  });
+  const schema = getLoginSchema(t);
 
-  type FormData = z.infer<typeof loginSchema>;
+  type FormData = z.infer<typeof schema>;
 
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting }
-  } = useForm<FormData>({ resolver: zodResolver(loginSchema) });
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
   const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem(ACCESS_TOKEN);

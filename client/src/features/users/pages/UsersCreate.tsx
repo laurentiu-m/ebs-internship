@@ -1,5 +1,4 @@
-import { UserForm } from '@src/components/UserForm';
-
+import { UserForm } from '../components';
 import { createUser } from '../utils/userUtils';
 import '../index.scss';
 
@@ -11,7 +10,6 @@ export const UsersCreate = () => {
         header={{ title: 'Create User', description: '' }}
         submitButton="Create"
         submitFunction={createUser}
-        showRedirect={false}
       />
     </div>
   );

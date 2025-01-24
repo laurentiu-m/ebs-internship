@@ -11,6 +11,7 @@ type SelectProps<T extends FieldValues> = {
     label: string;
   }[];
   placeholder: string;
+  defaultValue?: string;
   control: Control<T>;
   error: FieldError | undefined;
 };
@@ -22,6 +23,7 @@ export const FormSelect = <T extends FieldValues>({
   options,
   placeholder,
   control,
+  defaultValue,
   error
 }: SelectProps<T>) => {
   const { t } = useTranslation();
@@ -40,6 +42,7 @@ export const FormSelect = <T extends FieldValues>({
               placeholder={placeholder}
               options={options}
               error={error}
+              defaultValue={defaultValue}
               onChange={(newValue) => {
                 const selectedValue = newValue as { value: string; label: string };
                 field.onChange(selectedValue ? selectedValue.value : undefined);
