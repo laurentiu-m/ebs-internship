@@ -69,7 +69,12 @@ export const Table = ({ table, state, header }: TableProps) => {
         <tbody>
           {table.getRowModel().rows.map((row, index) => {
             return (
-              <tr key={row.id} style={{ backgroundColor: `${index % 2 !== 0 ? 'white' : '#f8f9fa'}` }}>
+              <tr
+                key={row.id}
+                style={{
+                  backgroundColor: `${index % 2 !== 0 ? 'white' : '#f8f9fa'}`
+                }}
+              >
                 {row.getVisibleCells().map((cell) => {
                   return (
                     <td key={cell.id} className={cell.column.columnDef.meta?.className || ''}>

@@ -63,8 +63,7 @@ export const users = {
     return data;
   },
 
-  delete: async (id: string) => {
-    const { data } = await api.delete(`/users/${id}`);
-    return data;
+  delete: async (id: number) => {
+    await api.delete(`/users/${id}`);
   }
 };
