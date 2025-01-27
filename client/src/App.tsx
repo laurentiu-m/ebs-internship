@@ -8,6 +8,7 @@ import { Layout, Error, Loading } from './components';
 import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
+import { Posts } from './features/posts/pages/Posts';
 import { Users, UsersCreate, UsersEdit } from './features/users/pages';
 import { TokenAuth, RoleAccess } from './router';
 
@@ -24,7 +25,8 @@ const routesConfig = [
     requiredRoles: [Roles.Admin]
   },
   { path: Routes.UsersCreate, element: UsersCreate, requiredRoles: [Roles.Admin] },
-  { path: Routes.UsersEdit, element: UsersEdit, requiredRoles: [Roles.Admin] }
+  { path: Routes.UsersEdit, element: UsersEdit, requiredRoles: [Roles.Admin] },
+  { path: Routes.Posts, element: Posts, requiredRoles: [Roles.Admin, Roles.Moderator] }
 ];
 
 export const App = () => {

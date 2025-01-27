@@ -58,11 +58,11 @@ export const users = {
     return data.decodedToken;
   },
 
-  update: async (userId: string, userData: UserRegister) => {
+  update: async (userId: string, userData: UserRegister): Promise<void> => {
     await api.put(`/api/users/edit/${userId}`, userData);
   },
 
-  delete: async (id: number) => {
+  delete: async (id: number): Promise<void> => {
     await api.delete(`/users/${id}`);
   }
 };

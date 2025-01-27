@@ -1,15 +1,14 @@
-import { UserTable } from '@src/types';
 import { Table } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
 import { ArrowSidebar } from './ArrowSidebar';
 
-type TableProps = {
-  table: Table<UserTable>;
+type TableProps<TData> = {
+  table: Table<TData>;
 };
 
-export const TablePagination = ({ table }: TableProps) => {
+export const TablePagination = <TData,>({ table }: TableProps<TData>) => {
   const { t } = useTranslation();
 
   return (
