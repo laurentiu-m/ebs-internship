@@ -61,4 +61,19 @@ router.get("/gender-count", (req: Request, res: Response) => {
   ]);
 });
 
+router.get("/roles-count", (req: Request, res: Response) => {
+  const users = db.get("users").value();
+
+  const {admin, moderator, user} = users.reduce((acc, user) => {
+    acc[user.role] = (acc[user.role] || 0) + 1;
+    return acc;
+  }, {});
+
+  res.json([
+    {name: "admin", value: admin},
+    {name: "moderator", value: moderator},
+    {name: "user", value: user}
+  ])
+})
+
 export default router;

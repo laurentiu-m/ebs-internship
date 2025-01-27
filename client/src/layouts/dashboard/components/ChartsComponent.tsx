@@ -32,6 +32,13 @@ const pieChartsConfig = [
     fetchFunction: () => apiClient.users.getGenderCount(),
     colors: ['#0088FE', '#00C49F', '#FFBB28'],
     requiredRoles: [Roles.Admin]
+  },
+  {
+    title: 'Roles Distribution of Users',
+    queryKey: 'roles_number',
+    fetchFunction: () => apiClient.users.getRolesCount(),
+    colors: ['#0088FE', '#00C49F', '#FFBB28'],
+    requiredRoles: [Roles.Admin]
   }
 ];
 
