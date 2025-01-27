@@ -8,7 +8,7 @@ export const posts = {
     return data;
   },
 
-  getListById: async (id: string) => {
+  getById: async (id: string) => {
     const { data } = await api.get(`/posts/${id}`);
     return data;
   },

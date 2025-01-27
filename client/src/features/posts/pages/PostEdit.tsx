@@ -12,7 +12,7 @@ export const PostEdit = () => {
 
   const { data, isLoading } = useQuery<Posts>({
     queryKey: [`edit_post_${id}`],
-    queryFn: () => apiClient.posts.getListById(id || '')
+    queryFn: () => apiClient.posts.getById(id || '')
   });
 
   if (isLoading) return <Loading />;
