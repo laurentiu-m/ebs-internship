@@ -53,7 +53,8 @@ export const PostsTable = () => {
       } else {
         return apiClient.posts.getList();
       }
-    }
+    },
+    enabled: !!userRole && !!userId
   });
 
   const deletePostMutation = useMutation({
