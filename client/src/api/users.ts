@@ -8,7 +8,7 @@ export const users = {
     return data;
   },
 
-  getListById: async (id: number): Promise<User | UserEdit> => {
+  getById: async (id: number): Promise<User | UserEdit> => {
     const { data } = await api.get<User | UserEdit>(`/users/${id}`);
     return data;
   },
