@@ -70,7 +70,7 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
+          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
           <button className="options__button" onClick={() => handleDelete(row.original.id)}>
             Delete
           </button>
@@ -98,7 +98,11 @@ export const PostsTable = () => {
 
   return (
     <div className="posts__table">
-      <Table table={table} state={{ globalFilter, setGlobalFilter }} header={{ title: 'Posts', link: '' }} />
+      <Table
+        table={table}
+        state={{ globalFilter, setGlobalFilter }}
+        header={{ title: 'Create Post', link: Routes.PostsCreate }}
+      />
     </div>
   );
 };

@@ -12,6 +12,8 @@ export enum Routes {
   UsersCreate = '/users/create',
   UsersEdit = '/users/:id/edit',
   Posts = '/posts',
+  PostsCreate = '/posts/create',
+  PostsEdit = '/posts/:id/edit',
   Error = '/error',
   NotFound = '*'
 }

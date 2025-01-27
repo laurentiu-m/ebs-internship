@@ -1,4 +1,4 @@
-import { Posts, TopPosts } from '@src/types';
+import { PostCreate, Posts, TopPosts } from '@src/types';
 
 import api from './axios';
 
@@ -18,7 +18,11 @@ export const posts = {
     return data;
   },
 
-  delete: async (id: number): Promise<void> => {
+  create: async (data: PostCreate) => {
+    await api.post('/posts', data);
+  },
+
+  delete: async (id: number) => {
     await api.delete(`/posts/${id}`);
   }
 };

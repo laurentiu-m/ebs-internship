@@ -22,8 +22,8 @@
   }
 }
 
-.users-create,
-.users-edit {
+.posts-create,
+.posts-edit {
   padding-bottom: 32px;
   @include flex(center, center, column);
   gap: 16px;

@@ -5,6 +5,12 @@ export type Posts = {
   body: string;
 };
 
+export type PostForm = Omit<Posts, 'id' | 'userId'>;
+
+export type PostCreate = Omit<Posts, 'id'>;
+
+export type PostFormSubmit = (postData: PostCreate) => Promise<void | boolean>;
+
 export type TopPosts = {
   postId: number;
   commentCount: number;

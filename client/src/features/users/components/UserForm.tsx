@@ -30,7 +30,7 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, init
     setError,
     control,
     formState: { errors, isSubmitting }
-  } = useForm<z.infer<typeof schema>>({
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: initialValues
   });
