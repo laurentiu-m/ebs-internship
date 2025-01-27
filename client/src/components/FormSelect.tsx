@@ -3,7 +3,6 @@ import { Control, Controller, FieldError, FieldValues, Path } from 'react-hook-f
 import { useTranslation } from 'react-i18next';
 
 type SelectProps<T extends FieldValues> = {
-  context?: string;
   name: Path<T>;
   label: string;
   options: {
@@ -11,17 +10,18 @@ type SelectProps<T extends FieldValues> = {
     label: string;
   }[];
   placeholder: string;
+  defaultValue?: string;
   control: Control<T>;
   error: FieldError | undefined;
 };
 
 export const FormSelect = <T extends FieldValues>({
-  context,
   name,
   label,
   options,
   placeholder,
   control,
+  defaultValue,
   error
 }: SelectProps<T>) => {
   const { t } = useTranslation();
@@ -40,6 +40,7 @@ export const FormSelect = <T extends FieldValues>({
               placeholder={placeholder}
               options={options}
               error={error}
+              defaultValue={defaultValue}
               onChange={(newValue) => {
                 const selectedValue = newValue as { value: string; label: string };
                 field.onChange(selectedValue ? selectedValue.value : undefined);
@@ -48,7 +49,7 @@ export const FormSelect = <T extends FieldValues>({
           )}
         />
       </div>
-      {error && <p className="form__select-error">{t(`${context}.error.${name}_empty`)}</p>}
+      {error && <p className="form__select-error">{t(`error.${name}_empty`)}</p>}
     </div>
   );
 };

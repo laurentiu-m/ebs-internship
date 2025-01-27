@@ -1,38 +1,35 @@
 {
-  "login": {
-    "heading": "Login",
-    "description": "Welcome back! Please enter your details.",
-    "form": {
-      "email": {
-        "placeholder": "Enter your email",
-        "label": "Email"
-      },
-      "password": {
-        "label": "Password"
-      },
-      "submit": "Login",
-      "redirect": {
-        "title": "Don't have an account?",
-        "link": "Register"
-      }
+  "form": {
+    "login": {
+      "title": "Login",
+      "description": "Welcome back! Please enter your details.",
+      "label": "Enter your email address",
+      "submit": "Login"
     },
-    "error": {
-      "email_empty": "Please enter your email address.",
-      "email_invalid": "The email address you entered is not valid.",
-      "password_empty": "Please enter your password.",
-      "invalid_email_or_password": "Invalid email or password",
-      "none": ""
-    }
-  },
-  "register": {
-    "heading": "Register",
-    "description": "Welcome! Please create your account.",
-    "form": {
+    "register": {
+      "title": "Register",
+      "description": "Welcome! Please create your account.",
+      "submit": "Register"
+    },
+
+    "redirect": {
+      "title-login": "Don't have an account?",
+      "title-register": "Already have an account?"
+    },
+
+    "button": {
+      "create": "Create",
+      "edit": "Edit"
+    },
+
+    "label": {
+      "name": "Name",
       "first_name": "First Name",
       "last_name": "Last Name",
-      "email": "Email",
       "username": "Username",
       "phone": "Phone",
+      "roles": "Roles",
+      "roles-placeholder": "Select Role",
       "gender": {
         "label": "Gender",
         "default": "Select Gender",
@@ -42,41 +39,59 @@
       },
       "password": "Password",
       "confirm_password": "Confirm Password",
-      "submit": "Register",
       "redirect": {
         "title": "Already have an account?",
         "link": "Login"
       }
-    },
-    "error": {
-      "first_name_empty": "First name is required.",
-      "first_name_min": "First name should be at least 2 characters long.",
-      "last_name_empty": "Last name is required.",
-      "last_name_min": "Last name should be at least 2 characters long.",
-      "username_empty": "Username is required.",
-      "username_min": "Username should be at least 4 characters long.",
-      "username_server": "This username is already taken. Please choose another.",
-      "email_empty": "Email is required.",
-      "email_invalid": "Enter a valid email address.",
-      "email_server": "This email is already registered. Try another one.",
-      "phone_empty": "Phone number is required.",
-      "phone_invalid": "Enter a valid phone number.",
-      "gender_empty": "Gender is required.",
-      "language_empty": "Select your preferred language.",
-      "password_empty": "Password is required.",
-      "password_min": "Password should be at least 8 characters long.",
-      "confirm_password_empty": "Confirm password is required.",
-      "confirm_password_invalid": "Passwords do not match."
     }
   },
+
   "sidebar": {
-    "users": "users",
-    "posts": "posts"
+    "users": "Users",
+    "posts": "Posts"
   },
+
   "topbar": {
     "logout": "Logout"
   },
+
+  "users": {
+    "title-create": "Create User",
+    "title-edit": "Edit User"
+  },
+
+  "table": {
+    "button-users": "Add User",
+    "search": "Search...",
+    "rows": "Rows per page:",
+    "page": "of",
+    "options": "Options",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+
   "error": {
+    "first_name_empty": "First name is required.",
+    "first_name_min": "First name should be at least 2 characters long.",
+    "last_name_empty": "Last name is required.",
+    "last_name_min": "Last name should be at least 2 characters long.",
+    "username_empty": "Username is required.",
+    "username_min": "Username should be at least 4 characters long.",
+    "username_server": "This username is already taken. Please choose another.",
+    "email_empty": "Email is required.",
+    "email_invalid": "Enter a valid email address.",
+    "email_server": "This email is already registered. Try another one.",
+    "phone_empty": "Phone number is required.",
+    "phone_invalid": "Enter a valid phone number.",
+    "gender_empty": "Gender is required.",
+    "role_empty": "Role is required",
+    "language_empty": "Select your preferred language.",
+    "password_empty": "Password is required.",
+    "invalid_email_or_password": "Invalid email or password",
+    "password_min": "Password should be at least 8 characters long.",
+    "confirm_password_empty": "Confirm password is required.",
+    "confirm_password_invalid": "Passwords do not match.",
+    "none": "",
     "403": {
       "message": "Access Denied",
       "description": "You do not have permission to view this page."

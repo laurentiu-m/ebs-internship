@@ -9,3 +9,6 @@ export * from './Sidebar';
 export * from './Topbar';
 export * from './UserSelect';
 export * from './ArrowSidebar';
+export * from './Table';
+export * from './TablePagination';
+export * from './Filter';

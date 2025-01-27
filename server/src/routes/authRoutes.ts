@@ -51,7 +51,7 @@ router.post("/login", (req: Request, res: Response) => {
 });
 
 router.post("/register", async (req: Request, res: Response) => {
-  const { name, username, email, phone, gender, password }: RegisterUser =
+  const { name, username, email, phone, gender, password, role }: RegisterUser =
     req.body;
 
   const missingFields = [
@@ -108,7 +108,7 @@ router.post("/register", async (req: Request, res: Response) => {
       phone,
       gender,
       password,
-      role: "user",
+      role: role || "user",
     });
 
     const user = response.data;

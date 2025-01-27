@@ -37,4 +37,5 @@ export type RegisterUser = {
   password: string;
   gender: string;
   phone: string;
+  role?: string;
 };

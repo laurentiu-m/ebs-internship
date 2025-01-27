@@ -3,12 +3,13 @@
 @use '@styles/colors' as *;
 @use '@styles/buttons' as *;
 @use '@styles/inputs' as *;
+@use '@styles/form' as *;
 
 .auth {
   min-height: 100vh;
   @include flex(center, center, column);
-  padding-block: 40px;
-  gap: 18px;
+  gap: 16px;
+  padding-block: 32px;
   background-color: $background;
 
   &__language {
@@ -20,64 +21,18 @@
 
   &__header {
     text-align: center;
-    h1 {
+    .title {
       font-size: map-get($h1, font-size);
       font-weight: map-get(map-get($h1, font-weight), medium);
       line-height: map-get($h1, line-height);
       color: $text-heading;
     }
-    p {
+    .description {
       color: $text-secondary;
     }
   }
 
-  .form {
-    @include flex(space-between, center, column);
-    width: 400px;
-    gap: 16px;
-
-    &__input,
-    &__select {
-      width: 100%;
-      &-wrapper {
-        width: 100%;
-        @include flex(center, flex-start, column);
-        gap: 6px;
-      }
-      &-label {
-        font-weight: map-get(map-get($text-body, font-weight), medium);
-      }
-      &-required {
-        color: $error-normal;
-      }
-      &-field {
-        @include input-style;
-      }
-      &-error {
-        font-size: map-get($text-caption, font-size);
-        line-height: map-get($text-caption, line-height);
-        color: $error-normal;
-      }
-    }
-
-    &__submit {
-      @include button-style(100%);
-    }
-
-    &__redirect {
-      color: $text-secondary;
-      a {
-        color: $primary-normal;
-        text-decoration: none;
-        &:hover {
-          color: $primary-hover;
-        }
-        &:active {
-          color: $primary-click;
-        }
-      }
-    }
-  }
+  @include form-style(400px);
 
   .errors {
     @include flex(center, center, column);

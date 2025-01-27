@@ -1,31 +1,39 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Genders } from '@src/app-constants';
+import { Genders, Roles } from '@src/app-constants';
 import { FormInput, FormSelect } from '@src/components';
-import { registerSubmit } from '@src/features/auth/utils/authUtils';
-import { getRegisterSchema } from '@src/schemas';
-import { UserRegister } from '@src/types';
+import { getUsersSchema } from '@src/schemas/';
+import { UserCreate, UserFormSubmit, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
-export const Register = () => {
+type UserFormProps = {
+  mainClass: string;
+  header: string;
+  submitButton: string;
+  submitFunction: UserFormSubmit;
+  initialValues?: UserFormTypes;
+  userId?: string;
+};
+
+export const UserForm = ({ mainClass, header, submitButton, submitFunction, initialValues, userId }: UserFormProps) => {
   const { t } = useTranslation();
 
-  const schema = getRegisterSchema(t);
+  const schema = getUsersSchema(t);
+
   type FormData = z.infer<typeof schema>;
 
   const {
     register,
+    reset,
     handleSubmit,
     setError,
     control,
     formState: { errors, isSubmitting }
   } = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema)
+    resolver: zodResolver(schema),
+    defaultValues: initialValues
   });
-
-  const navigate = useNavigate();
 
   const genderOptions = [
     { value: Genders.Male, label: t('form.label.gender.male') },
@@ -33,21 +41,35 @@ export const Register = () => {
     { value: Genders.PreferNotToSay, label: t('form.label.gender.prefer_not_to_say') }
   ];
 
+  const roleOptions = [
+    { value: Roles.Admin, label: 'Admin' },
+    { value: Roles.Moderator, label: 'Moderator' },
+    { value: Roles.User, label: 'User' }
+  ];
+
   const onSubmit = async (data: FormData) => {
     const { first_name, last_name, confirm_password, ...rest } = data;
-    const registerData: UserRegister = {
+    const registerData: UserCreate = {
       ...rest,
       name: `${first_name} ${last_name}`
     };
 
-    await registerSubmit(registerData, setError, navigate);
+    if (initialValues) {
+      const hasChanged = Object.entries(data).some(
+        ([key, value]) => initialValues[key as keyof UserFormTypes] !== value
+      );
+
+      if (!hasChanged) return;
+    }
+
+    const resetForm = await submitFunction(registerData, setError, userId);
+    if (resetForm) reset();
   };
 
   return (
     <>
-      <div className={`auth__header`}>
-        <h1 className="title">{t('form.register.title')}</h1>
-        <p className="description">{t('form.register.description')}</p>
+      <div className={`${mainClass}__header`}>
+        <h1 className="title">{t(header)}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
@@ -94,11 +116,23 @@ export const Register = () => {
         <FormSelect
           name="gender"
           label={t('form.label.gender.label')}
-          placeholder={t('form.label.gender.default')}
+          placeholder={t('form.label.gender.label')}
           control={control}
           options={genderOptions}
+          defaultValue={initialValues?.gender}
           error={errors.gender}
         />
+
+        <FormSelect
+          name="role"
+          label={t('form.label.roles')}
+          placeholder={t('form.label.roles-placeholder')}
+          control={control}
+          options={roleOptions}
+          defaultValue={initialValues?.role}
+          error={errors.role}
+        />
+
         <FormInput
           name="password"
           type="password"
@@ -116,11 +150,7 @@ export const Register = () => {
           error={errors.confirm_password}
         />
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('form.register.submit')} />
-
-        <div className="form__redirect">
-          {t('form.redirect.title-register')} <Link to="/login">{t('form.login.title')}</Link>
-        </div>
+        <input disabled={isSubmitting} type="submit" className="form__submit" value={t(submitButton)} />
       </form>
     </>
   );

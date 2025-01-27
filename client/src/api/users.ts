@@ -1,4 +1,4 @@
-import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse } from '@src/types';
+import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse, UserEdit } from '@src/types';
 
 import api from './axios';
 
@@ -8,8 +8,8 @@ export const users = {
     return data;
   },
 
-  getListById: async (id: number): Promise<User> => {
-    const { data } = await api.get<User>(`/users/${id}`);
+  getById: async (id: number): Promise<User | UserEdit> => {
+    const { data } = await api.get<User | UserEdit>(`/users/${id}`);
     return data;
   },
 
@@ -58,12 +58,12 @@ export const users = {
     return data.decodedToken;
   },
 
-  update: async (id: string, userData: UserRegister) => {
-    const { data } = await api.put(`/users/${id}`, userData);
+  update: async (userId: string, userData: UserRegister) => {
+    const { data } = await api.put(`/api/users/edit/${userId}`, userData);
     return data;
   },
 
-  delete: async (id: string) => {
+  delete: async (id: number) => {
     const { data } = await api.delete(`/users/${id}`);
     return data;
   }
