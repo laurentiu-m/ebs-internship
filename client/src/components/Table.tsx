@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { flexRender, Table as TanStackTable } from '@tanstack/react-table';
+import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -56,11 +57,7 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
                           }[header.column.getIsSorted() as string] || null}
                         </div>
                       ) : null}
-                      {header.column.getCanFilter() && (
-                        <div>
-                          <Filter column={header.column} />
-                        </div>
-                      )}
+                      {header.column.getCanFilter() && <Filter column={header.column} />}
                     </>
                   )}
                 </th>
@@ -71,12 +68,7 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
         <tbody>
           {table.getRowModel().rows.map((row, index) => {
             return (
-              <tr
-                key={row.id}
-                style={{
-                  backgroundColor: `${index % 2 !== 0 ? 'white' : '#f8f9fa'}`
-                }}
-              >
+              <tr key={row.id} className={cn({ 'background-grey': index % 2 !== 0 })}>
                 {row.getVisibleCells().map((cell) => {
                   return (
                     <td key={cell.id} className={cell.column.columnDef.meta?.className || ''}>

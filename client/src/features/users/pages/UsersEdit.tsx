@@ -13,7 +13,7 @@ export const UsersEdit = () => {
 
   const { data, isLoading } = useQuery<UserEdit>({
     queryKey: [`edit_user_${id}`],
-    queryFn: () => apiClient.users.getListById(Number(id))
+    queryFn: () => apiClient.users.getById(Number(id))
   });
 
   if (isLoading) return <Loading />;

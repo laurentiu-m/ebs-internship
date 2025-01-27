@@ -63,7 +63,9 @@ export const PostsTable = () => {
       return postId;
     },
     onSuccess: (postId: number) => {
-      queryClient.setQueryData(['posts_table'], (oldData: Posts[]) => oldData.filter((post) => post.id !== postId));
+      queryClient.setQueryData(['posts_table', userRole, userId], (oldData: Posts[]) =>
+        oldData.filter((post) => post.id !== postId)
+      );
     }
   });
 

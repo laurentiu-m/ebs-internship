@@ -8,7 +8,7 @@ export const users = {
     return data;
   },
 
-  getListById: async (id: number): Promise<User | UserEdit> => {
+  getById: async (id: number): Promise<User | UserEdit> => {
     const { data } = await api.get<User | UserEdit>(`/users/${id}`);
     return data;
   },
@@ -59,10 +59,12 @@ export const users = {
   },
 
   update: async (userId: string, userData: UserRegister) => {
-    await api.put(`/api/users/edit/${userId}`, userData);
+    const { data } = await api.put(`/api/users/edit/${userId}`, userData);
+    return data;
   },
 
   delete: async (id: number) => {
-    await api.delete(`/users/${id}`);
+    const { data } = await api.delete(`/users/${id}`);
+    return data;
   }
 };
