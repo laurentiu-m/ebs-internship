@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Routes } from '@src/app-constants';
+import { Roles, Routes } from '@src/app-constants';
 import { Loading, Table } from '@src/components';
+import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -32,7 +33,11 @@ declare module '@tanstack/react-table' {
 
 export const PostsTable = () => {
   const { t } = useTranslation();
+  const { tokenData } = useAppContext();
   const queryClient = useQueryClient();
+
+  const userRole = tokenData?.role;
+  const userId = tokenData?.userId;
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
@@ -40,7 +45,16 @@ export const PostsTable = () => {
 
   const columnHelper = createColumnHelper<Posts>();
 
-  const { data, isLoading } = useQuery({ queryKey: ['posts_table'], queryFn: () => apiClient.posts.getList() });
+  const { data, isLoading } = useQuery({
+    queryKey: ['posts_table'],
+    queryFn: () => {
+      if (userRole === Roles.User) {
+        return apiClient.posts.getByUserId(userId as number);
+      } else {
+        return apiClient.posts.getList();
+      }
+    }
+  });
 
   const deletePostMutation = useMutation({
     mutationFn: async (postId: number) => {

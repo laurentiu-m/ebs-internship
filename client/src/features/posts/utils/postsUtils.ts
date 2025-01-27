@@ -11,6 +11,6 @@ export const editPost: PostFormSubmit = async (data, postId) => {
   if (!postId) return;
 
   await apiClient.posts.edit(data, postId);
-  alert('User was edited');
+  alert(`Post ${postId} was edited`);
   return false;
 };

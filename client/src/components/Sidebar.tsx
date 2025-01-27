@@ -39,7 +39,7 @@ export const Sidebar = () => {
       text: t('sidebar.posts'),
       icon: posts_icon,
       link: Routes.Posts,
-      requiredRoles: [Roles.Admin, Roles.Moderator]
+      requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
     }
   ];
 

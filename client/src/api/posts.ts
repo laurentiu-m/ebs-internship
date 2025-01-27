@@ -13,6 +13,11 @@ export const posts = {
     return data;
   },
 
+  getByUserId: async (id: number) => {
+    const { data } = await api.get(`/posts/?userId=${id}`);
+    return data;
+  },
+
   getTotalPosts: async (): Promise<number> => {
     const { headers } = await api.get('/posts?_page=1&_limit=1');
     return headers['x-total-count'];
