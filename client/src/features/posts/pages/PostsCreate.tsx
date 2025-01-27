@@ -4,7 +4,7 @@ import { createPost } from '../utils/postsUtils';
 export const PostsCreate = () => {
   return (
     <div className="posts-create">
-      <PostsForm submitFunction={createPost} />
+      <PostsForm mainClass="posts-create" header="Create Post" submitFunction={createPost} />
     </div>
   );
 };

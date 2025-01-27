@@ -9,7 +9,7 @@ export type PostForm = Omit<Posts, 'id' | 'userId'>;
 
 export type PostCreate = Omit<Posts, 'id'>;
 
-export type PostFormSubmit = (postData: PostCreate) => Promise<void | boolean>;
+export type PostFormSubmit = (postData: PostCreate, postId?: string) => Promise<void | boolean>;
 
 export type TopPosts = {
   postId: number;

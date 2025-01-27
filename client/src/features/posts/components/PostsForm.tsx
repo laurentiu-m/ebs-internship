@@ -8,11 +8,15 @@ import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 type PostsFormProps = {
+  mainClass: string;
+  header: string;
   initialValues?: PostForm;
   submitFunction: PostFormSubmit;
+  postId?: string;
+  postUserId?: number;
 };
 
-export const PostsForm = ({ initialValues, submitFunction }: PostsFormProps) => {
+export const PostsForm = ({ mainClass, header, initialValues, submitFunction, postId, postUserId }: PostsFormProps) => {
   const { t } = useTranslation();
   const { tokenData } = useAppContext();
 
@@ -32,25 +36,25 @@ export const PostsForm = ({ initialValues, submitFunction }: PostsFormProps) => 
   });
 
   if (!tokenData) return;
-  const userId = tokenData.userId;
+  const currentUserId = tokenData.userId;
 
   const onSubmit = async (data: FormData) => {
-    const postData = { ...data, userId: userId };
+    const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
 
     if (initialValues) {
       const hasChanged = Object.entries(data).some(([key, value]) => initialValues[key as keyof PostForm] !== value);
       if (!hasChanged) return;
     }
 
-    const resetForm = await submitFunction(postData);
+    const resetForm = await submitFunction(postData, postId);
 
     if (resetForm) reset();
   };
 
   return (
     <>
-      <div className="posts-create__header">
-        <h1 className="title">Create Post</h1>
+      <div className={`${mainClass}__header`}>
+        <h1 className="title">{header}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
