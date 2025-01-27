@@ -46,7 +46,7 @@ export const PostsTable = () => {
   const columnHelper = createColumnHelper<Posts>();
 
   const { data, isLoading } = useQuery({
-    queryKey: ['posts_table'],
+    queryKey: ['posts_table', userRole, userId],
     queryFn: () => {
       if (userRole === Roles.User) {
         return apiClient.posts.getByUserId(userId as number);
