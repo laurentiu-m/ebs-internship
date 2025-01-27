@@ -8,12 +8,12 @@ export const posts = {
     return data;
   },
 
-  getById: async (id: string) => {
+  getById: async (id: string): Promise<Posts> => {
     const { data } = await api.get(`/posts/${id}`);
     return data;
   },
 
-  getByUserId: async (id: number) => {
+  getByUserId: async (id: number): Promise<Posts[]> => {
     const { data } = await api.get(`/posts/?userId=${id}`);
     return data;
   },
