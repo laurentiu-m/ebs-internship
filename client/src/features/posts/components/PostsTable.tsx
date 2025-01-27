@@ -78,9 +78,9 @@ export const PostsTable = () => {
       enableGlobalFilter: false,
       meta: { className: 'center start' }
     }),
-    columnHelper.accessor('userId', { header: t('UserId') }),
-    columnHelper.accessor('title', { header: t('Title') }),
-    columnHelper.accessor('body', { header: 'Body' }),
+    columnHelper.accessor('userId', { header: 'userId' }),
+    columnHelper.accessor('title', { header: t('form.label.title') }),
+    columnHelper.accessor('body', { header: t('form.label.body') }),
     columnHelper.display({
       id: 'actions',
       header: t('table.options'),
@@ -118,7 +118,7 @@ export const PostsTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: 'Create Post', link: Routes.PostsCreate }}
+        header={{ title: t('table.button-posts'), link: Routes.PostsCreate }}
       />
     </div>
   );

@@ -27,6 +27,8 @@
       "first_name": "First Name",
       "last_name": "Last Name",
       "username": "Username",
+      "title": "Title",
+      "body": "Body",
       "phone": "Phone",
       "roles": "Roles",
       "roles-placeholder": "Select Role",
@@ -60,8 +62,14 @@
     "title-edit": "Edit User"
   },
 
+  "posts": {
+    "title-create": "Create Post",
+    "title-edit": "Edit Post"
+  },
+
   "table": {
     "button-users": "Add User",
+    "button-posts": "Create Post",
     "search": "Search...",
     "rows": "Rows per page:",
     "page": "of",
@@ -91,6 +99,10 @@
     "password_min": "Password should be at least 8 characters long.",
     "confirm_password_empty": "Confirm password is required.",
     "confirm_password_invalid": "Passwords do not match.",
+    "title_empty": "Title is required",
+    "body_empty": "Body is required",
+    "max_title": "Maximum 50 characters",
+    "max_body": "Maximum 500 characters",
     "none": "",
     "403": {
       "message": "Access Denied",

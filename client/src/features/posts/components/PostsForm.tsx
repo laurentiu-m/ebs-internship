@@ -61,13 +61,19 @@ export const PostsForm = ({ mainClass, header, initialValues, submitFunction, po
         <FormInput
           name="title"
           type="text"
-          label="Title"
+          label={t('form.label.title')}
           register={register}
-          placeholder="Title of the post"
+          placeholder={t('form.label.title')}
           error={errors.title}
         />
-        <FormTextarea name="body" label="Body" register={register} placeholder="Body of the post" error={errors.body} />
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('create')} />
+        <FormTextarea
+          name="body"
+          label={t('form.label.body')}
+          register={register}
+          placeholder={t('form.label.body')}
+          error={errors.body}
+        />
+        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('form.button.create')} />
       </form>
     </>
   );

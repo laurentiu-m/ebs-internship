@@ -2,12 +2,14 @@ import { apiClient } from '@src/api';
 import { Loading } from '@src/components';
 import { Posts } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { PostsForm } from '../components';
 import { editPost } from '../utils/postsUtils';
 
 export const PostEdit = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
 
   const { data, isLoading } = useQuery<Posts>({
@@ -27,7 +29,7 @@ export const PostEdit = () => {
     <div className="posts-edit">
       <PostsForm
         mainClass="posts-edit"
-        header={`Edit Post ${id}`}
+        header={`${t('posts.title-edit')} ${id}`}
         initialValues={formData}
         submitFunction={editPost}
         postId={id}
