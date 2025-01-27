@@ -28,15 +28,18 @@ export const posts = {
     return data;
   },
 
-  create: async (data: PostCreate) => {
-    await api.post('/posts', data);
+  create: async (postData: PostCreate) => {
+    const { data } = await api.post('/posts', postData);
+    return data;
   },
 
-  edit: async (data: PostCreate, postId: string) => {
-    await api.patch(`/posts/${postId}`, data);
+  edit: async (postData: PostCreate, postId: string) => {
+    const { data } = await api.patch(`/posts/${postId}`, postData);
+    return data;
   },
 
   delete: async (id: number) => {
-    await api.delete(`/posts/${id}`);
+    const { data } = await api.delete(`/posts/${id}`);
+    return data;
   }
 };
