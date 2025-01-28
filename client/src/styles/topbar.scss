@@ -4,9 +4,9 @@
 @mixin topbar-style {
   .topbar {
     @include flex(flex-end, center, row);
-    width: 100%;
+    width: $width-sm;
     height: 96px;
-    padding: 12px 32px;
+    padding: 12px 0px;
     gap: 16px;
 
     &__language {
@@ -16,6 +16,18 @@
     &__user {
       @include flex(space-between, center, row);
       gap: 8px;
+    }
+
+    @include respond-to('md') {
+      width: $width-md;
+    }
+
+    @include respond-to('lg') {
+      width: $width-lg;
+    }
+
+    @include respond-to('xl') {
+      width: $width-xl;
     }
   }
 }

@@ -3,11 +3,10 @@
 @use '@styles/charts.scss' as *;
 
 .dashboard {
-  width: 1100px;
+  width: $width-sm;
   @include flex(flex-start, flex-start, column);
   gap: 32px;
   padding-bottom: 72px;
-  padding-inline: 32px;
 
   &__header {
     font-size: map-get($h1, font-size);
@@ -72,5 +71,17 @@
     .pie-chart {
       @include pie-chart-style();
     }
+  }
+
+  @include respond-to('md') {
+    width: $width-md;
+  }
+
+  @include respond-to('lg') {
+    width: $width-lg;
+  }
+
+  @include respond-to('xl') {
+    width: $width-xl;
   }
 }

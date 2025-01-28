@@ -4,3 +4,24 @@
   align-items: $align;
   flex-direction: $direction;
 }
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (min-width: 1440px) {
+      @content;
+    }
+  }
+  @if $breakpoint == 'md' {
+    @media (min-width: 1536px) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: 1650px) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: 1784px) {
+      @content;
+    }
+  }
+}
