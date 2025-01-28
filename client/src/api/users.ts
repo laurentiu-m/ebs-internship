@@ -1,4 +1,14 @@
-import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse, UserEdit } from '@src/types';
+import {
+  AuthResponse,
+  JwtPayload,
+  User,
+  UserLogin,
+  UserRegister,
+  ValidResponse,
+  UserEdit,
+  TopUser,
+  UserPie
+} from '@src/types';
 
 import api from './axios';
 
@@ -13,38 +23,28 @@ export const users = {
     return data;
   },
 
-  getTotalUsers: async () => {
+  getTotalUsers: async (): Promise<number> => {
     const { headers } = await api.get('/users?_page=1&_limit=1');
     return headers['x-total-count'];
   },
 
-  getAdminCount: async () => {
-    const { data } = await api.get('/users?role=admin');
-    return data.length;
-  },
-
-  getModeratorCount: async () => {
-    const { data } = await api.get('/users?role=moderator');
-    return data.length;
-  },
-
-  getUserCount: async () => {
-    const { data } = await api.get('/users?role=user');
-    return data.length;
-  },
-
-  getTopUsers: async () => {
+  getTopUsers: async (): Promise<TopUser[]> => {
     const { data } = await api.get('/api/charts/top-users');
     return data;
   },
 
-  getGenderCount: async () => {
+  getGenderCount: async (): Promise<UserPie> => {
     const { data } = await api.get('/api/charts/gender-count');
     return data;
   },
 
-  getRolesCount: async () => {
+  getRolesCount: async (): Promise<UserPie> => {
     const { data } = await api.get('/api/charts/roles-count');
+    return data;
+  },
+
+  getTotalAlbums: async (userId: number): Promise<number> => {
+    const { data } = await api.get(`/api/charts/users/${userId}/albums/total`);
     return data;
   },
 
@@ -63,12 +63,12 @@ export const users = {
     return data.decodedToken;
   },
 
-  update: async (userId: string, userData: UserRegister) => {
+  update: async (userId: string, userData: UserRegister): Promise<void> => {
     const { data } = await api.put(`/api/users/edit/${userId}`, userData);
     return data;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: number): Promise<void> => {
     const { data } = await api.delete(`/users/${id}`);
     return data;
   }

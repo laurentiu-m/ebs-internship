@@ -1,4 +1,5 @@
 import { Loading } from '@src/components';
+import { TopPosts } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer } from 'recharts';
 
@@ -7,7 +8,7 @@ type BarChartProps = {
   queryKey: string;
   axisKey: { yKey: string; xKey: string };
   tooltip: { xKey: string; yKey: string };
-  fetchFunction: () => Promise<undefined>;
+  fetchFunction: () => Promise<TopPosts[]>;
 };
 
 type CustomTooltipProps = {
@@ -34,6 +35,8 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
     return null;
   };
 
+  if (data?.length === 0) return <div className="bar-chart--hide" />;
+
   return (
     <div className="bar-chart">
       <div className="header">
@@ -47,7 +50,7 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
 
       <div className="bar-chart__main">
         <ResponsiveContainer>
-          <BarChart data={data} barSize={10}>
+          <BarChart data={data} barSize={20}>
             <YAxis width={30} axisLine={false} tickLine={false} />
             <XAxis dataKey={axisKey.xKey} axisLine={false} tickLine={false} />
             <Tooltip

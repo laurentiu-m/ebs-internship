@@ -23,7 +23,7 @@ router.get("/top-users", (req: Request, res: Response) => {
 
   const topUsers = postCounts
     .sort((a, b) => b.postCount - a.postCount)
-    .slice(0, 10);
+    .slice(0, 12);
 
   res.json(topUsers);
 });
@@ -41,7 +41,7 @@ router.get("/top-posts", (req: Request, res: Response) => {
 
   const topPosts = commentCounts
     .sort((a, b) => b.commentCount - a.commentCount)
-    .slice(0, 10);
+    .slice(0, 12);
 
   res.json(topPosts);
 });
@@ -54,26 +54,115 @@ router.get("/gender-count", (req: Request, res: Response) => {
     return acc;
   }, {});
 
-  res.json([
-    { name: "female", value: female },
-    { name: "male", value: male },
-    { name: "prefer_not_to_say", value: prefer_not_to_say },
-  ]);
+  const total = female + male + prefer_not_to_say;
+
+  res.json({
+    total,
+    result: [
+      {
+        name: "female",
+        value: female,
+        percentage: ((female / total) * 100).toFixed(2),
+      },
+      {
+        name: "male",
+        value: male,
+        percentage: ((male / total) * 100).toFixed(2),
+      },
+      {
+        name: "prefer_not_to_say",
+        value: prefer_not_to_say,
+        percentage: ((prefer_not_to_say / total) * 100).toFixed(2),
+      },
+    ],
+  });
 });
 
 router.get("/roles-count", (req: Request, res: Response) => {
   const users = db.get("users").value();
 
-  const {admin, moderator, user} = users.reduce((acc, user) => {
+  const { admin, moderator, user } = users.reduce((acc, user) => {
     acc[user.role] = (acc[user.role] || 0) + 1;
     return acc;
   }, {});
 
-  res.json([
-    {name: "admin", value: admin},
-    {name: "moderator", value: moderator},
-    {name: "user", value: user}
-  ])
-})
+  const total = admin + moderator + user;
+
+  res.json({
+    total,
+    result: [
+      {
+        name: "admin",
+        value: admin,
+        percentage: ((admin / total) * 100).toFixed(2),
+      },
+      {
+        name: "moderator",
+        value: moderator,
+        percentage: ((moderator / total) * 100).toFixed(2),
+      },
+      {
+        name: "user",
+        value: user,
+        percentage: ((user / total) * 100).toFixed(2),
+      },
+    ],
+  });
+});
+
+router.get("/users/:id/posts/total-comments", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const postsId = db
+    .get("posts")
+    .filter((post) => post.userId === Number(id))
+    .map((post) => post.id)
+    .value();
+
+  const totalComments = db
+    .get("comments")
+    .filter((comment) => postsId.includes(comment.postId))
+    .value().length;
+
+  res.json(totalComments);
+});
+
+router.get("/users/:id/posts/comments-count", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const comments = db.get("comments").value();
+  const postsId = db
+    .get("posts")
+    .filter((post) => post.userId === Number(id))
+    .map((post) => post.id)
+    .value();
+
+  const commentsCounts = postsId
+    .map((postId) => {
+      const commentCount = comments.filter(
+        (comment) => comment.postId === postId
+      ).length;
+
+      if (commentCount > 0) {
+        return { postId, commentCount };
+      }
+
+      return null;
+    })
+    .filter((comment) => comment !== null);
+
+  res.json(commentsCounts);
+});
+
+router.get("/users/:id/albums/total", (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const totalAlbums = db
+    .get("albums")
+    .filter((album) => album.userId === Number(id))
+    .value().length;
+
+  res.json(totalAlbums);
+});
 
 export default router;

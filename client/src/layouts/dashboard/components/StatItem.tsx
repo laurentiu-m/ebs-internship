@@ -4,12 +4,13 @@ import { useQuery } from '@tanstack/react-query';
 type StatsComponentProps = {
   title: string;
   queryKey: string[];
-  fetchFunction: () => Promise<string>;
+  fetchFunction: () => Promise<number>;
 };
 
 export const StatItem = ({ title, queryKey, fetchFunction }: StatsComponentProps) => {
   const { data, isLoading } = useQuery({ queryKey: queryKey, queryFn: fetchFunction });
   if (isLoading) return <Loading />;
+
   return (
     <div className="stat">
       <h3 className="stat__title">{title}</h3>

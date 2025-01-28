@@ -1,0 +1,47 @@
+import { apiClient } from '@src/api';
+import { Roles } from '@src/app-constants';
+
+export const configBar = {
+  userPost: {
+    title: 'Users with the Most Posts',
+    queryKey: 'top_users',
+    axisKey: { yKey: 'postCount', xKey: 'userId' },
+    tooltip: { xKey: 'UserId', yKey: 'Posts' },
+    fetchFunction: () => apiClient.users.getTopUsers(),
+    requiredRoles: [Roles.Admin, Roles.Moderator]
+  },
+  postCommented: {
+    title: 'Most Commented Posts',
+    queryKey: 'top_posts',
+    axisKey: { yKey: 'commentCount', xKey: 'postId' },
+    tooltip: { xKey: 'PostId', yKey: 'Comments' },
+    fetchFunction: () => apiClient.posts.getTopPosts(),
+    requiredRoles: [Roles.Admin, Roles.Moderator]
+  },
+  userPostCommented: {
+    title: 'Your Most Commented Post',
+    queryKey: 'user_post_commented',
+    axisKey: { yKey: 'commentCount', xKey: 'postId' },
+    tooltip: { xKey: 'PostId', yKey: 'Comments' },
+    fetchFunction: (userId: number) => apiClient.posts.getUserPostCommented(userId),
+    requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
+  }
+};
+
+export const configPie = {
+  gender: {
+    title: 'Gender Distribution of Users',
+    queryKey: 'gender_number',
+    fetchFunction: () => apiClient.users.getGenderCount(),
+    colors: ['#0088FE', '#00C49F', '#FFBB28'],
+    requiredRoles: [Roles.Admin]
+  },
+
+  role: {
+    title: 'Roles Distribution of Users',
+    queryKey: 'roles_number',
+    fetchFunction: () => apiClient.users.getRolesCount(),
+    colors: ['#0088FE', '#00C49F', '#FFBB28'],
+    requiredRoles: [Roles.Admin]
+  }
+};

@@ -1,80 +1,119 @@
-import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
 import { Loading } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 
-import { BarChartComponent } from './BarChartComponent';
-import { PieChartComponent } from './PieChartComponent';
-
-const barChartsConfig = [
-  {
-    title: 'Users with the Most Posts',
-    queryKey: 'top_users',
-    axisKey: { yKey: 'postCount', xKey: 'userId' },
-    tooltip: { xKey: 'UserId', yKey: 'Posts' },
-    fetchFunction: () => apiClient.users.getTopUsers(),
-    requiredRoles: [Roles.Admin, Roles.Moderator]
-  },
-  {
-    title: 'Most Commented Posts',
-    queryKey: 'top_posts',
-    axisKey: { yKey: 'commentCount', xKey: 'postId' },
-    tooltip: { xKey: 'PostId', yKey: 'Comments' },
-    fetchFunction: () => apiClient.posts.getTopPosts(),
-    requiredRoles: [Roles.Admin, Roles.Moderator]
-  }
-];
-
-const pieChartsConfig = [
-  {
-    title: 'Gender Distribution of Users',
-    queryKey: 'gender_number',
-    fetchFunction: () => apiClient.users.getGenderCount(),
-    colors: ['#0088FE', '#00C49F', '#FFBB28'],
-    requiredRoles: [Roles.Admin]
-  },
-  {
-    title: 'Roles Distribution of Users',
-    queryKey: 'roles_number',
-    fetchFunction: () => apiClient.users.getRolesCount(),
-    colors: ['#0088FE', '#00C49F', '#FFBB28'],
-    requiredRoles: [Roles.Admin]
-  }
-];
+import { BarChartComponent, PieChartComponent, StatItem } from './';
+import { configBar, configPie, configStats } from '../configs/';
 
 export const ChartsComponent = () => {
   const { tokenData } = useAppContext();
 
   if (!tokenData) return <Loading />;
 
-  const { role } = tokenData;
+  const userRole = tokenData.role;
+  const userId = tokenData.userId;
+
+  const { userPost, postCommented, userPostCommented } = configBar;
+  const { gender, role } = configPie;
+  const { totalUsers, totalPosts, totalComments, totalUserPosts, totalUserComments, totalAlbums } = configStats;
+
+  const middleStats = [totalUsers, totalPosts, totalComments];
+  const userStats = [totalUserPosts, totalUserComments, totalAlbums];
 
   return (
     <div className="dashboard__charts">
-      {barChartsConfig
-        .filter(({ requiredRoles }) => requiredRoles.includes(role as Roles))
-        .map(({ title, queryKey, axisKey, fetchFunction, tooltip }) => (
-          <BarChartComponent
-            key={queryKey}
-            title={title}
-            queryKey={queryKey}
-            axisKey={axisKey}
-            tooltip={tooltip}
-            fetchFunction={fetchFunction}
-          />
-        ))}
+      {/* Top Charts */}
+      {userRole !== Roles.User && (
+        <div className="charts-top">
+          {role.requiredRoles.includes(userRole as Roles) && (
+            <PieChartComponent
+              key={role.queryKey}
+              title={role.title}
+              queryKey={role.queryKey}
+              fetchFunction={role.fetchFunction}
+              colors={role.colors}
+            />
+          )}
+          {userPost.requiredRoles.includes(userRole as Roles) && (
+            <BarChartComponent
+              key={userPost.queryKey}
+              title={userPost.title}
+              queryKey={userPost.queryKey}
+              axisKey={userPost.axisKey}
+              tooltip={userPost.tooltip}
+              fetchFunction={userPost.fetchFunction}
+            />
+          )}
+        </div>
+      )}
 
-      {pieChartsConfig
-        .filter(({ requiredRoles }) => requiredRoles.includes(role as Roles))
-        .map(({ title, queryKey, fetchFunction, colors }) => (
-          <PieChartComponent
-            key={queryKey}
-            title={title}
-            queryKey={queryKey}
-            fetchFunction={fetchFunction}
-            colors={colors}
+      {/* Middle Charts */}
+      {userRole !== Roles.User && (
+        <div className="charts-middle">
+          <div className="wrapper">
+            <div className="stats">
+              {middleStats
+                .filter((stat) => stat.requiredRoles.includes(userRole as Roles))
+                .map((stat) => (
+                  <StatItem
+                    key={stat.title}
+                    title={stat.title}
+                    queryKey={stat.queryKey}
+                    fetchFunction={stat.fetchFunction}
+                  />
+                ))}
+            </div>
+
+            {userPost.requiredRoles.includes(userRole as Roles) && (
+              <BarChartComponent
+                key={postCommented.queryKey}
+                title={postCommented.title}
+                queryKey={postCommented.queryKey}
+                axisKey={postCommented.axisKey}
+                tooltip={postCommented.tooltip}
+                fetchFunction={postCommented.fetchFunction}
+              />
+            )}
+          </div>
+
+          {role.requiredRoles.includes(userRole as Roles) && (
+            <PieChartComponent
+              key={gender.queryKey}
+              title={gender.title}
+              queryKey={gender.queryKey}
+              fetchFunction={gender.fetchFunction}
+              colors={gender.colors}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Bottom Charts */}
+      <div className="chart-bottom">
+        <div className="stats">
+          {userStats
+            .filter((stat) => stat.requiredRoles.includes(userRole as Roles))
+            .map((stat) => (
+              <StatItem
+                key={stat.title}
+                title={stat.title}
+                queryKey={stat.queryKey}
+                fetchFunction={() => stat.fetchFunction(userId)}
+              />
+            ))}
+        </div>
+
+        {userPostCommented.requiredRoles.includes(userRole as Roles) && (
+          <BarChartComponent
+            key={userPostCommented.queryKey}
+            title={userPostCommented.title}
+            queryKey={userPostCommented.queryKey}
+            axisKey={userPostCommented.axisKey}
+            tooltip={userPostCommented.tooltip}
+            fetchFunction={() => userPostCommented.fetchFunction(userId)}
           />
-        ))}
+        )}
+      </div>
     </div>
   );
 };
