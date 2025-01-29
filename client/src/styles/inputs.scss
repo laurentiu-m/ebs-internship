@@ -1,24 +1,23 @@
-@use './colors.scss' as *;
 @use './variables' as *;
 
 @mixin input-style {
   width: 100%;
-  background: $white;
-  border: 1px solid $gray-400;
+  background: map-get($secondary, 1);
+  border: 1px solid $border-color;
   border-radius: $border-radius;
   padding: 12px;
   outline: none;
   transition: border-color 0.1s ease;
   &::placeholder {
-    color: $text-disable;
+    color: map-get($neutral, 400);
   }
   &:focus {
-    border-color: $primary-click;
+    border-color: map-get($primary, selected);
   }
   &--error {
-    border-color: $error-normal;
+    border-color: $error;
     &:focus {
-      border-color: $error-normal;
+      border-color: $error;
     }
   }
 }

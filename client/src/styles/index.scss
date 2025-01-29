@@ -7,7 +7,7 @@
   line-height: map-get($text-body, line-height);
   font-weight: map-get(map-get($text-body, font-weight), regular);
 
-  color: $text-normal;
+  color: map-get($neutral, 100);
 
   box-sizing: border-box;
   margin: 0;

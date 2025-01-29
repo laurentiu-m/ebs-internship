@@ -22,7 +22,7 @@
         font-weight: map-get(map-get($text-body, font-weight), medium);
       }
       &-required {
-        color: $error-normal;
+        color: $error;
       }
       &-field {
         @include input-style;
@@ -30,7 +30,7 @@
       &-error {
         font-size: map-get($text-caption, font-size);
         line-height: map-get($text-caption, line-height);
-        color: $error-normal;
+        color: $error;
       }
     }
 
@@ -45,15 +45,16 @@
     }
 
     &__redirect {
-      color: $text-secondary;
+      color: map-get($neutral, 100);
       a {
-        color: $primary-normal;
+        color: map-get($primary, base);
         text-decoration: none;
+        transition: color 0.2s ease;
         &:hover {
-          color: $primary-hover;
+          color: map-get($primary, hover);
         }
         &:active {
-          color: $primary-click;
+          color: map-get($primary, active);
         }
       }
     }

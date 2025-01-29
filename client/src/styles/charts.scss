@@ -6,7 +6,7 @@
   width: $width;
   height: $height;
   gap: 32px;
-  background: $white;
+  background: map-get($neutral, 100);
   border: 1px solid $border-color;
   border-radius: $border-radius;
   padding: 24px;
@@ -16,7 +16,7 @@
 
     &__title {
       font-weight: map-get(map-get($text-body, font-weight), medium);
-      color: $text-secondary;
+      color: '';
     }
 
     &__info {
@@ -27,7 +27,7 @@
         font-size: map-get($text-caption, font-size);
         font-weight: map-get(map-get($text-caption, font-weight), normal);
         line-height: map-get($text-caption, line-height);
-        color: $text-secondary;
+        color: '';
       }
     }
   }
@@ -41,27 +41,27 @@
       text-align: center;
       border: 1px solid $border-color;
       border-radius: $border-radius;
-      background: $white;
+      background: map-get($neutral, 100);
       padding: 8px 16px;
 
       p {
-        color: $text-heading;
+        color: '';
         font-weight: map-get(map-get($text-body, font-weight), medium);
       }
 
       span {
-        color: $primary-normal;
+        color: '';
         font-weight: map-get(map-get($text-body, font-weight), medium);
       }
     }
 
     .custom-cursor {
-      fill: $text-disable;
+      fill: '';
       transition: all 0.4s ease;
     }
 
     .custom-bar {
-      fill: $primary-normal;
+      fill: '';
       border-radius: 20px;
     }
   }
@@ -74,7 +74,7 @@
   padding: 24px;
   border: 1px solid $border-color;
   border-radius: $border-radius;
-  background: $white;
+  background: map-get($neutral, 100);
   z-index: 0;
 
   .header {
@@ -83,7 +83,7 @@
     &__title {
       text-align: left;
       font-weight: map-get(map-get($text-body, font-weight), medium);
-      color: $text-secondary;
+      color: '';
     }
   }
 
@@ -94,15 +94,15 @@
     @include flex(space-between, center, column);
 
     .color-0 {
-      fill: $primary-normal;
+      fill: '';
     }
 
     .color-1 {
-      fill: $primary-click;
+      fill: '';
     }
 
     .color-2 {
-      fill: $primary-hover;
+      fill: '';
     }
 
     .recharts-tooltip-wrapper {
@@ -120,7 +120,7 @@
       font-weight: map-get($h2, font-weight);
       line-height: map-get($h2, line-height);
 
-      color: $text-heading;
+      color: '';
     }
 
     .custom-tooltip {
@@ -128,16 +128,16 @@
       text-align: center;
       border: 1px solid $border-color;
       border-radius: $border-radius;
-      background: $white;
+      background: map-get($neutral, 100);
       padding: 8px 16px;
 
       p {
-        color: $text-heading;
+        color: '';
         font-weight: map-get(map-get($text-body, font-weight), medium);
       }
 
       span {
-        color: $primary-normal;
+        color: '';
         font-weight: map-get(map-get($text-body, font-weight), medium);
       }
     }
@@ -149,15 +149,15 @@
     gap: 8px;
 
     .color-0 {
-      background: $primary-normal;
+      background: '';
     }
 
     .color-1 {
-      background: $primary-hover;
+      background: '';
     }
 
     .color-2 {
-      background: $primary-selected;
+      background: '';
     }
 
     .legend {
@@ -175,7 +175,7 @@
         }
 
         .item {
-          color: $text-secondary;
+          color: '';
         }
       }
     }
@@ -203,14 +203,14 @@
       gap: 8px;
 
       .icon {
-        fill: $primary-normal;
+        fill: '';
       }
 
       .text {
         font-size: map-get($text-caption, font-size);
         font-weight: map-get(map-get($text-caption, font-weight), medium);
         line-height: map-get($text-caption, line-height);
-        color: $text-secondary;
+        color: '';
       }
     }
 
@@ -218,7 +218,7 @@
       font-size: map-get($h3, font-size);
       font-weight: map-get($h3, font-weight);
       line-height: map-get($h3, line-height);
-      color: $primary-normal;
+      color: '';
     }
   }
 }
