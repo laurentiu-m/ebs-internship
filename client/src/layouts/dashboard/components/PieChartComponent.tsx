@@ -17,14 +17,30 @@ type PieChartComponentProps = {
   title: string;
   queryKey: string;
   fetchFunction: () => Promise<PieChartData>;
-  colors: string[];
 };
 
-export const PieChartComponent = ({ title, queryKey, fetchFunction, colors }: PieChartComponentProps) => {
+export const PieChartComponent = ({ title, queryKey, fetchFunction }: PieChartComponentProps) => {
   const { data, isLoading } = useQuery<PieChartData>({ queryKey: [queryKey], queryFn: fetchFunction });
 
-  if (!data) return;
   if (isLoading) return <Loading />;
+  if (!data) return;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const { name, value } = payload[0].payload;
+
+      return (
+        <div className="custom-tooltip">
+          <p>
+            {name}: <span>{value}</span>
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="pie-chart">
@@ -48,10 +64,10 @@ export const PieChartComponent = ({ title, queryKey, fetchFunction, colors }: Pi
               cy="50%"
             >
               {data.result.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]} />
+                <Cell key={`cell-${index}`} className={`color-${index}`} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
           </PieChart>
         </ResponsiveContainer>
         <div className="total">{data.total}</div>
@@ -61,7 +77,7 @@ export const PieChartComponent = ({ title, queryKey, fetchFunction, colors }: Pi
         {data.result.map(({ name, percentage }, index) => (
           <div className="legend" key={name}>
             <div className="legend__title">
-              <span className="dot" style={{ background: `${colors[index]}` }} />
+              <span className={`dot color-${index}`} />
               <p className="item">{name}</p>
             </div>
             <p className="legend__percentage">{percentage}%</p>

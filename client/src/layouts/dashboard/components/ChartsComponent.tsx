@@ -31,7 +31,6 @@ export const ChartsComponent = () => {
               title={role.title}
               queryKey={role.queryKey}
               fetchFunction={role.fetchFunction}
-              colors={role.colors}
             />
           )}
           {userPost.requiredRoles.includes(userRole as Roles) && (
@@ -82,7 +81,6 @@ export const ChartsComponent = () => {
               title={gender.title}
               queryKey={gender.queryKey}
               fetchFunction={gender.fetchFunction}
-              colors={gender.colors}
             />
           )}
         </div>

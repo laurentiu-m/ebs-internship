@@ -10,7 +10,7 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
 
   if (isLoading) return <Loading />;
 
-  if (data?.length === 0) return <div>Empty</div>;
+  if (data?.length === 0) return;
 
   return (
     <div className="bar-chart">

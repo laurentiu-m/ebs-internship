@@ -62,17 +62,17 @@ router.get("/gender-count", (req: Request, res: Response) => {
       {
         name: "female",
         value: female,
-        percentage: ((female / total) * 100).toFixed(2),
+        percentage: Math.round(((female * 100) / total) * 100) / 100,
       },
       {
         name: "male",
         value: male,
-        percentage: ((male / total) * 100).toFixed(2),
+        percentage: Math.round(((male * 100) / total) * 100) / 100,
       },
       {
         name: "prefer_not_to_say",
         value: prefer_not_to_say,
-        percentage: ((prefer_not_to_say / total) * 100).toFixed(2),
+        percentage: Math.round(((prefer_not_to_say * 100) / total) * 100) / 100,
       },
     ],
   });
@@ -94,17 +94,17 @@ router.get("/roles-count", (req: Request, res: Response) => {
       {
         name: "admin",
         value: admin,
-        percentage: ((admin / total) * 100).toFixed(2),
+        percentage: Math.round(((admin * 100) / total) * 100) / 100,
       },
       {
         name: "moderator",
         value: moderator,
-        percentage: ((moderator / total) * 100).toFixed(2),
+        percentage: Math.round(((moderator * 100) / total) * 100) / 100,
       },
       {
         name: "user",
         value: user,
-        percentage: ((user / total) * 100).toFixed(2),
+        percentage: Math.round(((user * 100) / total) * 100) / 100,
       },
     ],
   });

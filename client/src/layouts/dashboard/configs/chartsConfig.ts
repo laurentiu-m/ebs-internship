@@ -33,7 +33,6 @@ export const configPie = {
     title: 'Gender Distribution of Users',
     queryKey: 'gender_number',
     fetchFunction: () => apiClient.users.getGenderCount(),
-    colors: ['#0088FE', '#00C49F', '#FFBB28'],
     requiredRoles: [Roles.Admin]
   },
 
@@ -41,7 +40,6 @@ export const configPie = {
     title: 'Roles Distribution of Users',
     queryKey: 'roles_number',
     fetchFunction: () => apiClient.users.getRolesCount(),
-    colors: ['#0088FE', '#00C49F', '#FFBB28'],
     requiredRoles: [Roles.Admin]
   }
 };
