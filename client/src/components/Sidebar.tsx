@@ -8,7 +8,7 @@ import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
-import { ArrowSidebar } from './ArrowSidebar';
+import { ArrowIcon } from './Icons';
 import { Loading } from './Loading';
 
 export const Sidebar = () => {
@@ -51,7 +51,7 @@ export const Sidebar = () => {
         </div>
 
         <div className={cn('toggle', { 'toggle--rotated': isSidebarClosed })} onClick={onToggleSidebar}>
-          <ArrowSidebar styleClass={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
+          <ArrowIcon styleClass={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
         </div>
       </div>
 

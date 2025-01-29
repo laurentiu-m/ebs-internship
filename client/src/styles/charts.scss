@@ -199,10 +199,19 @@
     background: white;
 
     &__title {
-      font-size: map-get($text-caption, font-size);
-      font-weight: map-get(map-get($text-caption, font-weight), medium);
-      line-height: map-get($text-caption, line-height);
-      color: $text-secondary;
+      @include flex(flex-start, center, row);
+      gap: 8px;
+
+      .icon {
+        fill: $primary-normal;
+      }
+
+      .text {
+        font-size: map-get($text-caption, font-size);
+        font-weight: map-get(map-get($text-caption, font-weight), medium);
+        line-height: map-get($text-caption, line-height);
+        color: $text-secondary;
+      }
     }
 
     &__result {
