@@ -1,41 +1,16 @@
 import { Loading } from '@src/components';
-import { TopPosts } from '@src/types';
+import { BarChartProps } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer } from 'recharts';
 
-type BarChartProps = {
-  title: string;
-  queryKey: string;
-  axisKey: { yKey: string; xKey: string };
-  tooltip: { xKey: string; yKey: string };
-  fetchFunction: () => Promise<TopPosts[]>;
-};
-
-type CustomTooltipProps = {
-  active?: boolean;
-  payload?: { value: number; name: string }[];
-  label?: string | number;
-};
+import { CustomBarShape, CustomCursor, CustomTooltip } from './BarCustomComponents';
 
 export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
 
   if (isLoading) return <Loading />;
 
-  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="tooltip">
-          <p>{`${tooltip.xKey}: ${label}`}</p>
-          <p>{`${tooltip.yKey}: ${payload[0].value}`}</p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
-  if (data?.length === 0) return <div className="bar-chart--hide" />;
+  if (data?.length === 0) return <div>Empty</div>;
 
   return (
     <div className="bar-chart">
@@ -53,14 +28,8 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
           <BarChart data={data} barSize={20}>
             <YAxis width={30} axisLine={false} tickLine={false} />
             <XAxis dataKey={axisKey.xKey} axisLine={false} tickLine={false} />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{
-                stroke: '#e9ecef',
-                fill: '#e9ecef'
-              }}
-            />
-            <Bar dataKey={axisKey.yKey} radius={4} />
+            <Tooltip cursor={<CustomCursor />} content={<CustomTooltip tooltip={tooltip} />} />
+            <Bar dataKey={axisKey.yKey} shape={<CustomBarShape />} barSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>

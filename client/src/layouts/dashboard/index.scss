@@ -22,7 +22,7 @@
 
     .charts-top {
       @include flex(space-between, flex-start, row);
-      gap: 32px;
+      gap: 16px;
       width: 100%;
       height: 450px;
 
