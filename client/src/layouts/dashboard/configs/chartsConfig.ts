@@ -3,7 +3,6 @@ import { Roles } from '@src/app-constants';
 
 export const configBar = {
   userPost: {
-    title: 'Users with the Most Posts',
     queryKey: 'top_users',
     axisKey: { yKey: 'postCount', xKey: 'userId' },
     tooltip: { xKey: 'UserId', yKey: 'Posts' },
@@ -11,7 +10,6 @@ export const configBar = {
     requiredRoles: [Roles.Admin, Roles.Moderator]
   },
   postCommented: {
-    title: 'Most Commented Posts',
     queryKey: 'top_posts',
     axisKey: { yKey: 'commentCount', xKey: 'postId' },
     tooltip: { xKey: 'PostId', yKey: 'Comments' },
@@ -19,7 +17,6 @@ export const configBar = {
     requiredRoles: [Roles.Admin, Roles.Moderator]
   },
   userPostCommented: {
-    title: 'Your Most Commented Post',
     queryKey: 'user_post_commented',
     axisKey: { yKey: 'commentCount', xKey: 'postId' },
     tooltip: { xKey: 'PostId', yKey: 'Comments' },
@@ -30,14 +27,12 @@ export const configBar = {
 
 export const configPie = {
   gender: {
-    title: 'Gender Distribution of Users',
     queryKey: 'gender_number',
     fetchFunction: () => apiClient.users.getGenderCount(),
     requiredRoles: [Roles.Admin]
   },
 
   role: {
-    title: 'Roles Distribution of Users',
     queryKey: 'roles_number',
     fetchFunction: () => apiClient.users.getRolesCount(),
     requiredRoles: [Roles.Admin]

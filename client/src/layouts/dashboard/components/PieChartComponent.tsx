@@ -1,5 +1,6 @@
 import { Loading } from '@src/components';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 type PieChartData = {
@@ -14,12 +15,12 @@ type PieChartData = {
 };
 
 type PieChartComponentProps = {
-  title: string;
   queryKey: string;
   fetchFunction: () => Promise<PieChartData>;
 };
 
-export const PieChartComponent = ({ title, queryKey, fetchFunction }: PieChartComponentProps) => {
+export const PieChartComponent = ({ queryKey, fetchFunction }: PieChartComponentProps) => {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery<PieChartData>({ queryKey: [queryKey], queryFn: fetchFunction });
 
   if (isLoading) return <Loading />;
@@ -45,7 +46,7 @@ export const PieChartComponent = ({ title, queryKey, fetchFunction }: PieChartCo
   return (
     <div className="pie-chart">
       <div className="header">
-        <h1 className="header__title">{title}</h1>
+        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
       </div>
 
       <div className="pie-chart__main">

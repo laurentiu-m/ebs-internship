@@ -1,11 +1,13 @@
 import { Loading } from '@src/components';
 import { BarChartProps } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer } from 'recharts';
 
 import { CustomBarShape, CustomCursor, CustomTooltip } from './BarCustomComponents';
 
-export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
+export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
 
   if (isLoading) return <Loading />;
@@ -15,7 +17,7 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
   return (
     <div className="bar-chart">
       <div className="header">
-        <h1 className="header__title">{title}</h1>
+        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
 
         <div className="header__info">
           <p>X: {axisKey.xKey}</p>

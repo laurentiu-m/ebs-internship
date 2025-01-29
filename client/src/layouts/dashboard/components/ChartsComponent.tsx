@@ -26,17 +26,11 @@ export const ChartsComponent = () => {
       {userRole !== Roles.User && (
         <div className="charts-top">
           {role.requiredRoles.includes(userRole as Roles) && (
-            <PieChartComponent
-              key={role.queryKey}
-              title={role.title}
-              queryKey={role.queryKey}
-              fetchFunction={role.fetchFunction}
-            />
+            <PieChartComponent key={role.queryKey} queryKey={role.queryKey} fetchFunction={role.fetchFunction} />
           )}
           {userPost.requiredRoles.includes(userRole as Roles) && (
             <BarChartComponent
               key={userPost.queryKey}
-              title={userPost.title}
               queryKey={userPost.queryKey}
               axisKey={userPost.axisKey}
               tooltip={userPost.tooltip}
@@ -55,8 +49,7 @@ export const ChartsComponent = () => {
                 .filter((stat) => stat.requiredRoles.includes(userRole as Roles))
                 .map((stat) => (
                   <StatItem
-                    key={stat.title}
-                    title={stat.title}
+                    key={stat.queryKey}
                     queryKey={stat.queryKey}
                     fetchFunction={stat.fetchFunction}
                     icon={stat.icon('icon')}
@@ -67,7 +60,6 @@ export const ChartsComponent = () => {
             {userPost.requiredRoles.includes(userRole as Roles) && (
               <BarChartComponent
                 key={postCommented.queryKey}
-                title={postCommented.title}
                 queryKey={postCommented.queryKey}
                 axisKey={postCommented.axisKey}
                 tooltip={postCommented.tooltip}
@@ -77,12 +69,7 @@ export const ChartsComponent = () => {
           </div>
 
           {role.requiredRoles.includes(userRole as Roles) && (
-            <PieChartComponent
-              key={gender.queryKey}
-              title={gender.title}
-              queryKey={gender.queryKey}
-              fetchFunction={gender.fetchFunction}
-            />
+            <PieChartComponent key={gender.queryKey} queryKey={gender.queryKey} fetchFunction={gender.fetchFunction} />
           )}
         </div>
       )}
@@ -94,8 +81,7 @@ export const ChartsComponent = () => {
             .filter((stat) => stat.requiredRoles.includes(userRole as Roles))
             .map((stat) => (
               <StatItem
-                key={stat.title}
-                title={stat.title}
+                key={stat.queryKey}
                 queryKey={stat.queryKey}
                 fetchFunction={() => stat.fetchFunction(userId)}
                 icon={stat.icon('icon')}
@@ -106,7 +92,6 @@ export const ChartsComponent = () => {
         {userPostCommented.requiredRoles.includes(userRole as Roles) && (
           <BarChartComponent
             key={userPostCommented.queryKey}
-            title={userPostCommented.title}
             queryKey={userPostCommented.queryKey}
             axisKey={userPostCommented.axisKey}
             tooltip={userPostCommented.tooltip}
