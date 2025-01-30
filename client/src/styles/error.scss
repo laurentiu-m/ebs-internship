@@ -29,7 +29,7 @@
       font-size: map-get($text-body, font-size);
       font-weight: map-get(map-get($h6, font-weight), regular);
       line-height: map-get($h6, line-height);
-      color: '';
+      color: map-get($neutral, 400);
     }
 
     &__button {

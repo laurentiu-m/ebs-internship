@@ -34,13 +34,14 @@
         background: $sidebar-background;
         border: none;
         border-radius: $border-radius;
+        padding: 8px;
         cursor: pointer;
         &:hover .icon {
           fill: map-get($neutral, 100);
         }
 
         .icon {
-          font-size: 24px;
+          font-size: 32px;
           fill: map-get($neutral, 400);
           transition: transform 0.3s ease;
           &--closed {

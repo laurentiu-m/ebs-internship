@@ -8,7 +8,7 @@ export const ArrowIcon = ({ styleClass }: { styleClass: string }) => {
       viewBox="0 -960 960 960"
       fill="currentColor"
     >
-      <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+      <path d="M240-240v-480h80v480h-80Zm440 0L440-480l240-240 56 56-184 184 184 184-56 56Z" />
     </svg>
   );
 };

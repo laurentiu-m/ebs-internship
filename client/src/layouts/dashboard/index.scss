@@ -12,7 +12,7 @@
     font-size: map-get($h1, font-size);
     font-weight: map-get(map-get($h1, font-weight), medium);
     line-height: map-get($h1, line-height);
-    color: '';
+    color: map-get($neutral, 100);
   }
 
   &__charts {
