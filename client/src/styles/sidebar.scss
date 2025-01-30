@@ -12,7 +12,9 @@
     padding: 32px;
     height: 100%;
     width: $sidebar-width;
-    background: $sidebar-background;
+    background: map-get($neutral, 800);
+    border: 1px solid map-get($neutral, 600);
+    box-shadow: map-get($shadow, 2);
     transition: width $sidebar-close-transition ease;
     z-index: 10;
 
@@ -30,23 +32,15 @@
         right: 0;
         @include flex(center, center, row);
         background: $sidebar-background;
-        border: 1px solid $sidebar-hover;
+        border: none;
         border-radius: $border-radius;
-        padding: 8px;
         cursor: pointer;
-        transition: all 0.2s ease-out;
-
-        &:hover {
-          border-color: $sidebar-hover;
-          background: $sidebar-hover;
-        }
-
-        &:active {
-          background-color: $sidebar-clicked;
+        &:hover .icon {
+          fill: map-get($primary, hover);
         }
 
         .icon {
-          font-size: 24px;
+          font-size: 32px;
           fill: map-get($neutral, 100);
           transition: transform 0.3s ease;
           &--closed {
@@ -61,7 +55,7 @@
 
         h1 {
           font-size: map-get($h3, font-size);
-          color: white;
+          color: map-get($neutral, 100);
         }
 
         &--closed {

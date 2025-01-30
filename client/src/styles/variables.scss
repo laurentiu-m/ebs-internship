@@ -37,15 +37,15 @@ $gradient: linear-gradient(to right, #6c72ff 0%, #494ecc 51%, #6c72ff 100%);
 $error: #ff3b41;
 
 $shadow: (
-  1: '1px 1px 1px 0px rgba(16, 25, 52, 0.4)',
-  2: '0px 2px 12px 0px rgba(1, 5, 17, 0.12)'
+  1: 1px 1px 1px 0px rgba(16, 25, 52, 0.4),
+  2: 0px 2px 12px 0px rgba(1, 5, 17, 0.55)
 );
 
 // Sidebar
 $sidebar-width: 260px;
 $sidebar-width-closed: 112px;
 $sidebar-close-transition: 0.5s;
-$sidebar-background: '';
+$sidebar-background: map-get($neutral, 800);
 $sidebar-hover: '';
 $sidebar-clicked: '';
 
@@ -115,7 +115,7 @@ $text-button: (
   font-size: 14px,
   font-weight: 500,
   line-height: 24px,
-  text-transform: uppercase
+  text-transform: capitalize
 );
 $text-caption: (
   font-size: 12px,
