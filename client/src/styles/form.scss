@@ -10,7 +10,8 @@
     gap: 16px;
 
     &__input,
-    &__select {
+    &__select,
+    &__textarea {
       width: 100%;
       &-wrapper {
         width: 100%;
@@ -31,6 +32,12 @@
         line-height: map-get($text-caption, line-height);
         color: $error-normal;
       }
+    }
+
+    &__textarea-field {
+      resize: vertical;
+      min-height: 200px;
+      max-height: 400px;
     }
 
     &__submit {

@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { UserTable } from '@src/types';
-import { flexRender, Table as TableTypes } from '@tanstack/react-table';
+import { flexRender, Table as TanStackTable } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -9,8 +8,8 @@ import { Link } from 'react-router-dom';
 import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
 
-type TableProps = {
-  table: TableTypes<UserTable>;
+type TableProps<TData> = {
+  table: TanStackTable<TData>;
   state: {
     globalFilter: string | null;
     setGlobalFilter: Dispatch<SetStateAction<string | null>>;
@@ -18,7 +17,7 @@ type TableProps = {
   header: { title: string; link: string };
 };
 
-export const Table = ({ table, state, header }: TableProps) => {
+export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
   const { t } = useTranslation();
 
   return (
