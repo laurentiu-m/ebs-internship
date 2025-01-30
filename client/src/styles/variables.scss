@@ -32,9 +32,14 @@ $pie-chart-colors: (
   blue: #0e43fb
 );
 
-$gradient: linear-gradient(to right, #6c72ff 0%, #494ecc 51%, #5a60e6 100%);
+$gradient: linear-gradient(to right, #6c72ff 0%, #494ecc 51%, #6c72ff 100%);
 
-$error: #ff1f25;
+$error: #ff3b41;
+
+$shadow: (
+  1: '1px 1px 1px 0px rgba(16, 25, 52, 0.4)',
+  2: '0px 2px 12px 0px rgba(1, 5, 17, 0.12)'
+);
 
 // Sidebar
 $sidebar-width: 260px;

@@ -7,6 +7,12 @@ const options = [
   { value: 'ro', label: 'Română' }
 ];
 
+const style = {
+  border: '0px',
+  background: 'transparent',
+  margin: '0'
+};
+
 export const LanguageSelect = () => {
   const { i18n } = useTranslation();
 
@@ -19,6 +25,12 @@ export const LanguageSelect = () => {
   };
 
   return (
-    <CustomSelect options={options} defaultValue={i18n.language} placeholder="Language" onChange={onChangeLanguage} />
+    <CustomSelect
+      options={options}
+      style={style}
+      defaultValue={i18n.language}
+      placeholder="Language"
+      onChange={onChangeLanguage}
+    />
   );
 };

@@ -1,9 +1,14 @@
 import { FieldError } from 'react-hook-form';
 import Select, { ActionMeta, StylesConfig } from 'react-select';
 
-type SelectReactProps = {
+type Props = {
   placeholder?: string | JSX.Element;
   defaultValue?: string;
+  style?: {
+    border: string;
+    background: string;
+    margin: string;
+  };
   options: {
     value: string;
     label: string;
@@ -12,7 +17,7 @@ type SelectReactProps = {
   onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 };
 
-export const CustomSelect = ({ placeholder, options, onChange, defaultValue, error }: SelectReactProps) => {
+export const CustomSelect = ({ placeholder, options, style, onChange, defaultValue, error }: Props) => {
   const customStyles: StylesConfig = {
     container: (provided) => ({
       ...provided,
@@ -20,18 +25,18 @@ export const CustomSelect = ({ placeholder, options, onChange, defaultValue, err
     }),
     control: (provided, { selectProps }) => ({
       ...provided,
-      backgroundColor: 'white',
-      borderWidth: '1px',
+      backgroundColor: `${style?.background ? style?.background : '#0b1739'}`,
+      borderWidth: `${style?.border ? style?.border : '1px'}`,
       borderStyle: 'solid',
-      borderColor: error ? '#ff1f25' : selectProps.menuIsOpen ? '#0057fc' : '#ced4da',
-      borderRadius: '8px',
+      borderColor: error ? '#ff3b41' : selectProps.menuIsOpen ? '#494ecc' : '#343b4f',
+      borderRadius: '4px',
       paddingBlock: '12px',
       outline: 'none',
       boxShadow: 'none',
       overflow: 'hidden',
       cursor: 'pointer',
       ':hover': {
-        borderColor: error ? '#ff1f25' : selectProps.menuIsOpen ? '#0057fc' : '#ced4da'
+        borderColor: error ? '#ff1f25' : selectProps.menuIsOpen ? '#494ecc' : '#343b4f'
       }
     }),
     indicatorsContainer: (provided) => ({
@@ -46,36 +51,32 @@ export const CustomSelect = ({ placeholder, options, onChange, defaultValue, err
       ...provided,
       backgroundColor: 'transparent',
       padding: '0 12px',
-      '& svg': { fill: '#ced4da', backgroundColor: 'transparent' },
+      '& svg': { fill: '#ffffff', backgroundColor: 'transparent' },
       transition: 'all .2s ease',
       transform: selectProps.menuIsOpen ? 'rotate(180deg)' : ''
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: '#ced4da',
+      color: '#aeb9e1',
       backgroundColor: 'transparent'
     }),
     menu: (provided) => ({
       ...provided,
       width: '100%',
-      marginTop: '-8px',
-      backgroundColor: 'white',
-      border: `1px solid ${error ? '#ff1f25' : '#0057fc'}`,
-      borderTop: 'none',
-      borderRadius: '0 0 8px 8px',
-      boxShadow: 'none',
+      marginTop: `${style?.margin ? style?.margin : '12px'}`,
+      backgroundColor: '#0b1739',
+      boxShadow: '0px 2px 12px 0px rgba(1, 5, 17, 0.35)',
       overflow: 'hidden'
     }),
     option: (provided) => ({
       ...provided,
       fontSize: '14px',
-      backgroundColor: 'transparent',
-      color: '#343a40',
+      backgroundColor: '#0b1739',
+      color: '#ffffff',
       cursor: 'pointer',
       transition: 'all 0.1s ease',
       ':hover': {
-        backgroundColor: '#0057fc',
-        color: 'white'
+        backgroundColor: '#5a60e6'
       },
       ':active': {
         backgroundColor: ''
@@ -84,18 +85,20 @@ export const CustomSelect = ({ placeholder, options, onChange, defaultValue, err
     singleValue: (provided) => ({
       ...provided,
       fontSize: '14px',
-      backgroundColor: 'transparent'
+      textAlign: 'center',
+      backgroundColor: 'transparent',
+      color: '#ffffff'
     }),
     valueContainer: (provided) => ({
       ...provided,
       padding: '0 0 0 12px',
-      color: '#343a40',
+      color: '#ffffff',
       backgroundColor: 'transparent'
     }),
     menuList: (provided) => ({
       ...provided,
-      padding: '4px 0 0 0',
-      backgroundColor: 'white'
+      padding: '0px',
+      backgroundColor: 'none'
     })
   };
 

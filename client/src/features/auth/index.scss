@@ -8,14 +8,14 @@
   min-height: 100vh;
   @include flex(center, center, column);
   gap: 16px;
-  padding-block: 32px;
+  padding-block: 40px;
   background-color: map-get($neutral, 800);
 
   &__language {
     position: absolute;
     top: 3%;
     right: 3%;
-    width: 140px;
+    width: 120px;
   }
 
   &__header {
