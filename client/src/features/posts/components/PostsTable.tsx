@@ -47,17 +47,19 @@ export const PostsTable = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
-    queryFn: () => {
+    queryFn: async () => {
       if (userRole === Roles.User) {
-        return apiClient.posts.getByUserId(userId as number);
+        const { results } = await apiClient.posts.getList({ userId });
+        return results;
       } else {
-        return apiClient.posts.getList();
+        const { results } = await apiClient.posts.getList();
+        return results;
       }
     },
     enabled: !!userRole && !!userId
   });
 
-  const deletePostMutation = useMutation({
+  const { mutate: deletePost } = useMutation({
     mutationFn: async (postId: number) => {
       await apiClient.posts.delete(postId);
       return postId;
@@ -69,8 +71,8 @@ export const PostsTable = () => {
     }
   });
 
-  const handleDelete = (postId: number) => {
-    deletePostMutation.mutate(postId);
+  const onDelete = (postId: number) => {
+    deletePost(postId);
   };
 
   const columns = [
@@ -88,7 +90,7 @@ export const PostsTable = () => {
       cell: ({ row }) => (
         <div className="options center">
           <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
-          <button className="options__button" onClick={() => handleDelete(row.original.id)}>
+          <button className="options__button" onClick={() => onDelete(row.original.id)}>
             Delete
           </button>
         </div>

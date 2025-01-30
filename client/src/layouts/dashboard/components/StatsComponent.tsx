@@ -33,7 +33,10 @@ const statsConfig = [
   {
     title: 'Total Posts',
     queryKey: ['total_posts'],
-    fetchFunction: () => apiClient.posts.getTotalPosts(),
+    fetchFunction: async () => {
+      const { count } = await apiClient.posts.getList();
+      return count;
+    },
     requiredRoles: [Roles.Admin]
   },
   {
