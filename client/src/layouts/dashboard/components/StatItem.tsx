@@ -2,13 +2,13 @@ import { Loading } from '@src/components';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-type StatsComponentProps = {
+type Props = {
   queryKey: string;
   fetchFunction: () => Promise<number>;
   icon: JSX.Element;
 };
 
-export const StatItem = ({ queryKey, fetchFunction, icon }: StatsComponentProps) => {
+export const StatItem = ({ queryKey, fetchFunction, icon }: Props) => {
   const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
   if (isLoading) return <Loading />;

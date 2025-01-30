@@ -9,14 +9,14 @@ import { z } from 'zod';
 
 import { createUser, editUser } from '../utils/userUtils';
 
-type UserFormProps = {
+type Props = {
   mainClass: string;
   submitButton: string;
   initialValues?: UserFormTypes;
   userId?: string;
 };
 
-export const UserForm = ({ mainClass, submitButton, initialValues, userId }: UserFormProps) => {
+export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
   const { t } = useTranslation();
 
   const schema = getUsersSchema(t);
