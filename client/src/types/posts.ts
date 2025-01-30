@@ -5,6 +5,11 @@ export type Posts = {
   body: string;
 };
 
+export type PostsList = {
+  results: [Posts];
+  count: number;
+};
+
 export type PostForm = Omit<Posts, 'id' | 'userId'>;
 
 export type PostCreate = Omit<Posts, 'id'>;

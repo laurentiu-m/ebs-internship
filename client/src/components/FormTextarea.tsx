@@ -7,7 +7,7 @@ type TextareaProps<T extends FieldValues> = {
   name: Path<T>;
   label: string;
   placeholder: string;
-  error: FieldError | undefined;
+  error?: FieldError;
 };
 
 export const FormTextarea = <T extends FieldValues>({

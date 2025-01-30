@@ -2,21 +2,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormInput, FormTextarea } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { getPostsSchema } from '@src/schemas';
-import { PostForm, PostFormSubmit } from '@src/types';
+import { PostForm } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-type PostsFormProps = {
+import { createPost, editPost } from '../utils/postsUtils';
+
+type Props = {
   mainClass: string;
-  header: string;
   initialValues?: PostForm;
-  submitFunction: PostFormSubmit;
   postId?: string;
   postUserId?: number;
 };
 
-export const PostsForm = ({ mainClass, header, initialValues, submitFunction, postId, postUserId }: PostsFormProps) => {
+export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Props) => {
   const { t } = useTranslation();
   const { tokenData } = useAppContext();
 
@@ -28,7 +28,6 @@ export const PostsForm = ({ mainClass, header, initialValues, submitFunction, po
     register,
     reset,
     handleSubmit,
-
     formState: { errors, isSubmitting }
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -46,15 +45,19 @@ export const PostsForm = ({ mainClass, header, initialValues, submitFunction, po
       if (!hasChanged) return;
     }
 
-    const resetForm = await submitFunction(postData, postId);
+    if (postId) {
+      await editPost(postData, postId);
+      return;
+    }
 
-    if (resetForm) reset();
+    await createPost(postData);
+    reset();
   };
 
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{header}</h1>
+        <h1 className="title">{postId ? `${t('posts.title-edit')} ${postId}` : t('posts.title-create')}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
