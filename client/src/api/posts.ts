@@ -1,4 +1,4 @@
-import { PostCreate, Posts, PostsList, TopPosts } from '@src/types';
+import { PostComments, PostCreate, Posts, PostsList, TopPosts } from '@src/types';
 
 import api from './axios';
 
@@ -14,18 +14,13 @@ export const posts = {
   },
 
   getTopPosts: async (): Promise<TopPosts[]> => {
-    const { data } = await api.get('/api/charts/top-posts');
+    const { data } = await api.get('/api/charts/posts/top');
     return data;
   },
 
-  getUserPostCommented: async (userId: number): Promise<TopPosts[]> => {
-    const { data } = await api.get(`api/charts/users/${userId}/posts/comments-count`);
+  getUserPostComments: async (userId: number): Promise<PostComments> => {
+    const { data } = await api.get(`api/charts/users/${userId}/posts/comments`);
     return data;
-  },
-
-  getUserTotalPosts: async (userId: number): Promise<number> => {
-    const { headers } = await api.get(`posts/?userId=${userId}&_page=1&_limit=1`);
-    return headers['x-total-count'];
   },
 
   create: async (postData: PostCreate): Promise<void> => {

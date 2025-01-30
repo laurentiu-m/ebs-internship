@@ -45,9 +45,15 @@ export const UserTable = () => {
     return row.getValue(columnId) === filterValue;
   };
 
-  const { data, isLoading } = useQuery({ queryKey: ['user_table'], queryFn: () => apiClient.users.getList() });
+  const { data, isLoading } = useQuery({
+    queryKey: ['user_table'],
+    queryFn: async () => {
+      const { result } = await apiClient.users.getList();
+      return result;
+    }
+  });
 
-  const deleteUserMutation = useMutation({
+  const { mutate: deleteUser } = useMutation({
     mutationFn: async (userId: number) => {
       await apiClient.users.delete(userId);
       return userId;
@@ -59,8 +65,8 @@ export const UserTable = () => {
     }
   });
 
-  const handleDelete = (userId: number) => {
-    deleteUserMutation.mutate(userId);
+  const onDelete = (userId: number) => {
+    deleteUser(userId);
   };
 
   const columns = [
@@ -93,7 +99,7 @@ export const UserTable = () => {
       cell: ({ row }) => (
         <div className="options center">
           <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
-          <button className="options__button" onClick={() => handleDelete(row.original.id)}>
+          <button className="options__button" onClick={() => onDelete(row.original.id)}>
             Delete
           </button>
         </div>

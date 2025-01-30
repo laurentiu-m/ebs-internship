@@ -110,6 +110,11 @@ export type UserPie = {
   ];
 };
 
+export type UserList = {
+  result: [User];
+  count: number;
+};
+
 export type UserLoginSubmit = (
   data: UserLogin,
   setError: UseFormSetError<UserLogin>,

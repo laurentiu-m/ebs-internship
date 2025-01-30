@@ -20,3 +20,8 @@ export type TopPosts = {
   postId: number;
   commentCount: number;
 };
+
+export type PostComments = {
+  totalComments: number;
+  commentsCounts: [TopPosts];
+};

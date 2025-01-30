@@ -7,15 +7,16 @@ import {
   ValidResponse,
   UserEdit,
   TopUser,
-  UserPie
+  UserPie,
+  UserList
 } from '@src/types';
 
 import api from './axios';
 
 export const users = {
-  getList: async (): Promise<User[]> => {
-    const { data } = await api.get<User[]>('/users');
-    return data;
+  getList: async (params?: { id?: number }): Promise<UserList> => {
+    const { data } = await api.get('/api/users', { params });
+    return { result: data.result, count: data.count };
   },
 
   getById: async (id: number): Promise<User | UserEdit> => {
@@ -23,23 +24,18 @@ export const users = {
     return data;
   },
 
-  getTotalUsers: async (): Promise<number> => {
-    const { headers } = await api.get('/users?_page=1&_limit=1');
-    return headers['x-total-count'];
-  },
-
   getTopUsers: async (): Promise<TopUser[]> => {
-    const { data } = await api.get('/api/charts/top-users');
+    const { data } = await api.get('/api/charts/users/top');
     return data;
   },
 
   getGenderCount: async (): Promise<UserPie> => {
-    const { data } = await api.get('/api/charts/gender-count');
+    const { data } = await api.get('/api/charts/gender');
     return data;
   },
 
   getRolesCount: async (): Promise<UserPie> => {
-    const { data } = await api.get('/api/charts/roles-count');
+    const { data } = await api.get('/api/charts/roles');
     return data;
   },
 

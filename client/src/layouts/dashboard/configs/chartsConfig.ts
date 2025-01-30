@@ -20,7 +20,10 @@ export const configBar = {
     queryKey: 'user_post_commented',
     axisKey: { yKey: 'commentCount', xKey: 'postId' },
     tooltip: { xKey: 'PostId', yKey: 'Comments' },
-    fetchFunction: (userId: number) => apiClient.posts.getUserPostCommented(userId),
+    fetchFunction: async (userId: number) => {
+      const { commentsCounts } = await apiClient.posts.getUserPostComments(userId);
+      return commentsCounts;
+    },
     requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
   }
 };
