@@ -16,6 +16,9 @@
     &__user {
       @include flex(space-between, center, row);
       gap: 8px;
+      span {
+        color: map-get($neutral, 400);
+      }
     }
 
     @include respond-to('md') {

@@ -7,6 +7,12 @@ import { useNavigate } from 'react-router-dom';
 import { CustomSelect } from './CustomSelect';
 import { Loading } from './Loading';
 
+const style = {
+  border: '0px',
+  background: 'transparent',
+  margin: '0px'
+};
+
 export const UserSelect = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -35,5 +41,5 @@ export const UserSelect = () => {
     navigate(Routes.Login);
   };
 
-  return <CustomSelect options={options} placeholder={<CustomPlaceholder />} onChange={handleLogout} />;
+  return <CustomSelect options={options} style={style} placeholder={<CustomPlaceholder />} onChange={handleLogout} />;
 };

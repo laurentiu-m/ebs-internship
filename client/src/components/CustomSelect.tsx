@@ -51,7 +51,7 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
       ...provided,
       backgroundColor: 'transparent',
       padding: '0 12px',
-      '& svg': { fill: '#ffffff', backgroundColor: 'transparent' },
+      '& svg': { fill: '#aeb9e1', backgroundColor: 'transparent' },
       transition: 'all .2s ease',
       transform: selectProps.menuIsOpen ? 'rotate(180deg)' : ''
     }),
@@ -87,7 +87,11 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
       fontSize: '14px',
       textAlign: 'center',
       backgroundColor: 'transparent',
-      color: '#ffffff'
+      color: '#aeb9e1',
+      transition: 'all 0.1s ease-in-out',
+      ':hover': {
+        color: '#ffffff'
+      }
     }),
     valueContainer: (provided) => ({
       ...provided,

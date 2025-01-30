@@ -36,12 +36,12 @@
         border-radius: $border-radius;
         cursor: pointer;
         &:hover .icon {
-          fill: map-get($primary, hover);
+          fill: map-get($neutral, 100);
         }
 
         .icon {
-          font-size: 32px;
-          fill: map-get($neutral, 100);
+          font-size: 24px;
+          fill: map-get($neutral, 400);
           transition: transform 0.3s ease;
           &--closed {
             transform: scaleX(-1);
