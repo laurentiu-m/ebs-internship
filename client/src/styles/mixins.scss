@@ -7,20 +7,23 @@
 
 @mixin respond-to($breakpoint) {
   @if $breakpoint == 'sm' {
-    @media (min-width: 1440px) {
+    @media (min-width: 1500px) {
       @content;
     }
-  }
-  @if $breakpoint == 'md' {
-    @media (min-width: 1536px) {
+  } @else if $breakpoint == 'md' {
+    @media (min-width: 1600px) {
       @content;
     }
   } @else if $breakpoint == 'lg' {
-    @media (min-width: 1650px) {
+    @media (min-width: 1700px) {
       @content;
     }
   } @else if $breakpoint == 'xl' {
-    @media (min-width: 1784px) {
+    @media (min-width: 1800px) {
+      @content;
+    }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: 1900px) {
       @content;
     }
   }

@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Roles, Routes } from '@src/app-constants';
-import { Loading, Table } from '@src/components';
+import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -45,6 +45,10 @@ export const PostsTable = () => {
 
   const columnHelper = createColumnHelper<Posts>();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pagination]);
+
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
     queryFn: () => {
@@ -69,7 +73,7 @@ export const PostsTable = () => {
     }
   });
 
-  const handleDelete = (postId: number) => {
+  const onDelete = (postId: number) => {
     deletePostMutation.mutate(postId);
   };
 
@@ -87,10 +91,13 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
-          <button className="options__button" onClick={() => handleDelete(row.original.id)}>
-            Delete
-          </button>
+          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>
+            <EditIcon styleClass="icon" />
+          </Link>
+
+          <div>
+            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
+          </div>
         </div>
       )
     })

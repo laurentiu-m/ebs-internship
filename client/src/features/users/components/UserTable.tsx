@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Routes } from '@src/app-constants';
@@ -41,6 +41,10 @@ export const UserTable = () => {
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pagination]);
 
   const exactTextFilter = <TData,>(row: Row<TData>, columnId: string, filterValue: undefined) => {
     return row.getValue(columnId) === filterValue;

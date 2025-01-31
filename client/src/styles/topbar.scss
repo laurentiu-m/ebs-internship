@@ -4,7 +4,7 @@
 @mixin topbar-style {
   .topbar {
     @include flex(flex-end, center, row);
-    width: $width-sm;
+    width: $width;
     height: 96px;
     padding: 12px 0px;
     gap: 16px;
@@ -28,6 +28,10 @@
       }
     }
 
+    @include respond-to('sm') {
+      width: $width-sm;
+    }
+
     @include respond-to('md') {
       width: $width-md;
     }
@@ -38,6 +42,10 @@
 
     @include respond-to('xl') {
       width: $width-xl;
+    }
+
+    @include respond-to('2xl') {
+      width: $width-2xl;
     }
   }
 }

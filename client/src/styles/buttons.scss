@@ -49,8 +49,4 @@
       background: map-get($neutral, 700);
     }
   }
-
-  &:active {
-    background: $sidebar-clicked;
-  }
 }

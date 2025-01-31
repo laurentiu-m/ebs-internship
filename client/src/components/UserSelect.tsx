@@ -1,6 +1,6 @@
 import { Routes } from '@src/app-constants';
 import account_icon from '@src/assets/icons/account_icon.svg';
-import { getTokenData } from '@src/utils/getTokenData';
+import { useAppContext } from '@src/hooks/useAppContext';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ const style = {
 export const UserSelect = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const tokenData = getTokenData();
+  const { tokenData } = useAppContext();
 
   if (!tokenData) {
     return <Loading />;

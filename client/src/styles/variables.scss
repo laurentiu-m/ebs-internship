@@ -45,19 +45,18 @@ $shadow: (
 $sidebar-width: 260px;
 $sidebar-width-closed: 112px;
 $sidebar-close-transition: 0.5s;
-$sidebar-background: map-get($neutral, 800);
-$sidebar-hover: '';
-$sidebar-clicked: '';
 
 // Border
 $border-color: map-get($secondary, 4);
 $border-radius: 4px;
 
 // Width
-$width-sm: 1100px;
-$width-md: 1150px;
-$width-lg: 1200px;
-$width-xl: 1300px;
+$width: 1050px;
+$width-sm: 1170px;
+$width-md: 1250px;
+$width-lg: 1350px;
+$width-xl: 1450px;
+$width-2xl: 1550px;
 
 // Fonts
 $h1: (

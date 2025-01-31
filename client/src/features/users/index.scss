@@ -4,7 +4,7 @@
 @use '@styles/form' as *;
 
 .users {
-  width: $width-sm;
+  width: $width;
   @include flex(flex-start, flex-start, column);
   gap: 32px;
   padding-bottom: 72px;
@@ -21,6 +21,10 @@
     @include table-style();
   }
 
+  @include respond-to('sm') {
+    width: $width-sm;
+  }
+
   @include respond-to('md') {
     width: $width-md;
   }
@@ -32,11 +36,15 @@
   @include respond-to('xl') {
     width: $width-xl;
   }
+
+  @include respond-to('2xl') {
+    width: $width-2xl;
+  }
 }
 
 .users-create,
 .users-edit {
-  padding-bottom: 32px;
+  padding-bottom: 72px;
   @include flex(center, center, column);
   gap: 16px;
 
@@ -46,9 +54,9 @@
       font-size: map-get($h1, font-size);
       font-weight: map-get(map-get($h1, font-weight), medium);
       line-height: map-get($h1, line-height);
-      color: '';
+      color: map-get($neutral, 100);
     }
   }
 
-  @include form-style(500px);
+  @include form-style(450px);
 }

@@ -3,8 +3,8 @@
 @use '@styles/charts.scss' as *;
 
 .dashboard {
-  width: $width-sm;
   @include flex(flex-start, flex-start, column);
+  width: $width;
   gap: 32px;
   padding-bottom: 72px;
 
@@ -73,6 +73,10 @@
     }
   }
 
+  @include respond-to('sm') {
+    width: $width-sm;
+  }
+
   @include respond-to('md') {
     width: $width-md;
   }
@@ -83,5 +87,9 @@
 
   @include respond-to('xl') {
     width: $width-xl;
+  }
+
+  @include respond-to('2xl') {
+    width: $width-2xl;
   }
 }
