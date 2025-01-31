@@ -13,3 +13,11 @@
   margin: 0;
   padding: 0;
 }
+
+.custom-toast-container {
+  font-family: 'Poppins', serif;
+}
+
+.custom-toast-container .Toastify__toast--error {
+  background-color: map-get($neutral, 600);
+}

@@ -5,8 +5,6 @@ import { AxiosError } from 'axios';
 export const createUser: UserFormSubmit = async (data, setError) => {
   try {
     await apiClient.users.create(data);
-    alert('User was created');
-    return true;
   } catch (err) {
     if (err instanceof AxiosError) {
       const errData = err.response?.data;
@@ -17,7 +15,6 @@ export const createUser: UserFormSubmit = async (data, setError) => {
         });
         return;
       }
-
       setError(errData.field, { type: errData.type, message: errData.messageKey });
     }
   }
@@ -28,8 +25,6 @@ export const editUser: UserFormSubmit = async (data, setError, userId) => {
 
   try {
     await apiClient.users.update(userId, data);
-    alert('User was edited');
-    return false;
   } catch (err) {
     if (err instanceof AxiosError) {
       const errData = err.response?.data;
