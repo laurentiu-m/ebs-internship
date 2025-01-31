@@ -82,7 +82,7 @@ export const PostsTable = () => {
   const columns = [
     columnHelper.accessor('id', {
       enableGlobalFilter: false,
-      meta: { className: 'center start' }
+      meta: { className: 'center start post-col' }
     }),
     columnHelper.accessor('userId', { header: 'userId' }),
     columnHelper.accessor('title', { header: t('form.label.title') }),
