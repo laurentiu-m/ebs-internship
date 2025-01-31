@@ -11,6 +11,7 @@ import { Login, Register } from './features/auth/pages';
 import { Posts, PostsCreate, PostEdit } from './features/posts/pages/';
 import { Users, UsersCreate, UsersEdit } from './features/users/pages';
 import { TokenAuth, RoleAccess } from './router';
+import ScrollToTop from './utils/ScrollToTop';
 
 // Routes Config
 const routesConfig = [
@@ -36,6 +37,7 @@ export const App = () => {
     <AppProvider>
       <Suspense fallback={<Loading />}>
         <Router>
+          <ScrollToTop />
           <RouterPaths>
             {/* Auth */}
             <Route path="/" element={<Navigate to={Routes.Dashboard} />} />

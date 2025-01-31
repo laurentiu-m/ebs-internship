@@ -25,7 +25,7 @@
         color: $error;
       }
       &-field {
-        @include input-style;
+        @include input-style(12px, 12px);
       }
       &-error {
         font-size: map-get($text-caption, font-size);

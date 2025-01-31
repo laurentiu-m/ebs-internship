@@ -1,36 +1,55 @@
 import { FieldError } from 'react-hook-form';
-import Select, { ActionMeta, StylesConfig } from 'react-select';
+import Select, { ActionMeta, MenuPlacement, StylesConfig } from 'react-select';
 
 type Props = {
   placeholder?: string | JSX.Element;
-  defaultValue?: string;
+  defaultValue?: string | number;
+  placement?: string;
   style?: {
-    border: string;
-    background: string;
-    margin: string;
+    container: {
+      width: string;
+    };
+    control: {
+      border: string;
+      background: string;
+      padding: string;
+    };
+    menu: {
+      width: string;
+      margin: string;
+    };
+    option: {
+      font_size: string;
+    };
+    singleValue: {
+      font_size: string;
+      width: string;
+      align: string;
+      color: string;
+    };
   };
   options: {
-    value: string;
+    value: string | number;
     label: string;
   }[];
   error?: FieldError | undefined;
   onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 };
 
-export const CustomSelect = ({ placeholder, options, style, onChange, defaultValue, error }: Props) => {
+export const CustomSelect = ({ placeholder, placement, options, style, onChange, defaultValue, error }: Props) => {
   const customStyles: StylesConfig = {
     container: (provided) => ({
       ...provided,
-      width: '100%'
+      width: style?.container.width || '100%'
     }),
     control: (provided, { selectProps }) => ({
       ...provided,
-      backgroundColor: `${style?.background ? style?.background : '#0b1739'}`,
-      borderWidth: `${style?.border ? style?.border : '1px'}`,
+      backgroundColor: style?.control?.background || '#0b1739',
+      borderWidth: style?.control.border || '1px',
       borderStyle: 'solid',
       borderColor: error ? '#ff3b41' : selectProps.menuIsOpen ? '#494ecc' : '#343b4f',
       borderRadius: '4px',
-      paddingBlock: '12px',
+      padding: style?.control.padding || '12px',
       outline: 'none',
       boxShadow: 'none',
       overflow: 'hidden',
@@ -50,7 +69,7 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
     dropdownIndicator: (provided, { selectProps }) => ({
       ...provided,
       backgroundColor: 'transparent',
-      padding: '0 12px',
+      padding: '0px',
       '& svg': { fill: '#aeb9e1', backgroundColor: 'transparent' },
       transition: 'all .2s ease',
       transform: selectProps.menuIsOpen ? 'rotate(180deg)' : ''
@@ -58,19 +77,23 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
     placeholder: (provided) => ({
       ...provided,
       color: '#aeb9e1',
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      fontSize: '14px'
     }),
     menu: (provided) => ({
       ...provided,
-      width: '100%',
-      marginTop: `${style?.margin ? style?.margin : '12px'}`,
+      width: style?.menu?.width || '100%',
+      marginTop: style?.menu?.margin || '12px',
       backgroundColor: '#0b1739',
-      boxShadow: '0px 2px 12px 0px rgba(1, 5, 17, 0.35)',
-      overflow: 'hidden'
+      boxShadow: '0px 2px 12px 0px rgba(1, 5, 17, 0.44)',
+      overflow: 'hidden',
+      zIndex: '50'
     }),
     option: (provided) => ({
       ...provided,
-      fontSize: '14px',
+      width: '100%',
+      fontSize: style?.option?.font_size || '14px',
+      textAlign: 'center',
       backgroundColor: '#0b1739',
       color: '#ffffff',
       cursor: 'pointer',
@@ -84,10 +107,11 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
     }),
     singleValue: (provided) => ({
       ...provided,
-      fontSize: '14px',
-      textAlign: 'center',
+      fontSize: style?.singleValue?.font_size || '14px',
+      width: style?.singleValue?.width || '100%',
+      textAlign: (style?.singleValue?.align as React.CSSProperties['textAlign']) || 'left',
       backgroundColor: 'transparent',
-      color: '#aeb9e1',
+      color: style?.singleValue?.color || '#ffffff',
       transition: 'all 0.1s ease-in-out',
       ':hover': {
         color: '#ffffff'
@@ -95,7 +119,7 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
     }),
     valueContainer: (provided) => ({
       ...provided,
-      padding: '0 0 0 12px',
+      padding: '0 0 0 0px',
       color: '#ffffff',
       backgroundColor: 'transparent'
     }),
@@ -109,6 +133,7 @@ export const CustomSelect = ({ placeholder, options, style, onChange, defaultVal
   return (
     <Select
       options={options}
+      menuPlacement={placement as MenuPlacement}
       defaultValue={options.find((option) => option.value === defaultValue)}
       placeholder={placeholder}
       isSearchable={false}

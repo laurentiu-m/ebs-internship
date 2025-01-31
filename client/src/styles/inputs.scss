@@ -1,11 +1,11 @@
 @use './variables' as *;
 
-@mixin input-style {
+@mixin input-style($py, $px) {
   width: 100%;
   background: map-get($secondary, 1);
   border: 1px solid $border-color;
   border-radius: $border-radius;
-  padding: 12px;
+  padding: $py $px;
   outline: none;
   transition: border-color 0.1s ease;
   &::placeholder {

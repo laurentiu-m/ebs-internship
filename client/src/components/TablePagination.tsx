@@ -2,10 +2,43 @@ import { Table } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+import { CustomSelect } from './CustomSelect';
 import { ArrowIcon } from './Icons';
 
 type TableProps<TData> = {
   table: Table<TData>;
+};
+
+const options = [
+  { value: 10, label: '10' },
+  { value: 20, label: '20' },
+  { value: 30, label: '30' },
+  { value: 40, label: '40' },
+  { value: 50, label: '50' }
+];
+
+const style = {
+  container: {
+    width: '50px'
+  },
+  control: {
+    border: '0px',
+    background: 'transparent',
+    padding: '0px'
+  },
+  menu: {
+    width: '100%',
+    margin: '0px'
+  },
+  option: {
+    font_size: '12px'
+  },
+  singleValue: {
+    font_size: '12px',
+    width: '100%',
+    align: 'center',
+    color: '#ffffff'
+  }
 };
 
 export const TablePagination = <TData,>({ table }: TableProps<TData>) => {
@@ -29,20 +62,17 @@ export const TablePagination = <TData,>({ table }: TableProps<TData>) => {
         </div>
 
         <div className="active__select">
-          <p>{t('table.rows')}</p>
+          <p className="text">{t('table.rows')}</p>
 
-          <select
-            value={table.getState().pagination.pageSize}
-            onChange={(e) => {
-              table.setPageSize(Number(e.target.value));
+          <CustomSelect
+            defaultValue={10}
+            placement="top"
+            style={style}
+            options={options}
+            onChange={(selectedOption) => {
+              table.setPageSize((selectedOption as { value: number }).value);
             }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
+          />
         </div>
       </div>
     </div>

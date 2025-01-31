@@ -16,8 +16,15 @@
     &__user {
       @include flex(space-between, center, row);
       gap: 8px;
+      padding-inline: 8px;
+
       span {
         color: map-get($neutral, 400);
+        transition: color 0.2s ease;
+      }
+
+      &:hover span {
+        color: map-get($neutral, 100);
       }
     }
 

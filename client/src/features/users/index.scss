@@ -4,21 +4,33 @@
 @use '@styles/form' as *;
 
 .users {
+  width: $width-sm;
   @include flex(flex-start, flex-start, column);
   gap: 32px;
   padding-bottom: 72px;
-  padding-inline: 32px;
 
   &__header {
     font-size: map-get($h1, font-size);
     font-weight: map-get(map-get($h1, font-weight), medium);
     line-height: map-get($h1, line-height);
-    color: '';
+    color: map-get($neutral, 100);
   }
 
   &__table {
     width: 100%;
     @include table-style();
+  }
+
+  @include respond-to('md') {
+    width: $width-md;
+  }
+
+  @include respond-to('lg') {
+    width: $width-lg;
+  }
+
+  @include respond-to('xl') {
+    width: $width-xl;
   }
 }
 

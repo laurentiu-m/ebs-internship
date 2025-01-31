@@ -8,9 +8,27 @@ const options = [
 ];
 
 const style = {
-  border: '0px',
-  background: 'transparent',
-  margin: '0'
+  container: {
+    width: '100px'
+  },
+  control: {
+    border: '0px',
+    background: 'transparent',
+    padding: '0px'
+  },
+  menu: {
+    width: '100%',
+    margin: '0px'
+  },
+  option: {
+    font_size: '14px'
+  },
+  singleValue: {
+    font_size: '14px',
+    width: '100%',
+    align: 'center',
+    color: '#aeb9e1'
+  }
 };
 
 export const LanguageSelect = () => {

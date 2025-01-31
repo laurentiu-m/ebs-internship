@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
+import searchIcon from '../assets/icons/search_icon.svg';
 
 type TableProps<TData> = {
   table: TanStackTable<TData>;
@@ -26,13 +27,15 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
         <Link to={header.link} className="button">
           {header.title}
         </Link>
-
-        <input
-          value={state?.globalFilter || ''}
-          className="input"
-          onChange={(e) => state?.setGlobalFilter(e.target.value || null)}
-          placeholder={t('table.search')}
-        />
+        <div className="input-wrapper">
+          <img src={searchIcon} alt="search-icon" />
+          <input
+            value={state?.globalFilter || ''}
+            className="input"
+            onChange={(e) => state?.setGlobalFilter(e.target.value || null)}
+            placeholder={t('table.search')}
+          />
+        </div>
       </div>
 
       <table>
@@ -68,7 +71,7 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
         <tbody>
           {table.getRowModel().rows.map((row, index) => {
             return (
-              <tr key={row.id} className={cn({ 'background-grey': index % 2 !== 0 })}>
+              <tr key={row.id} className={cn({ 'second-background': index % 2 === 0 })}>
                 {row.getVisibleCells().map((cell) => {
                   return (
                     <td key={cell.id} className={cell.column.columnDef.meta?.className || ''}>
