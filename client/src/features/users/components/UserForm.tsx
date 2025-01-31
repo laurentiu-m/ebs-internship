@@ -2,21 +2,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders, Roles } from '@src/app-constants';
 import { FormInput, FormSelect } from '@src/components';
 import { getUsersSchema } from '@src/schemas/';
-import { UserCreate, UserFormSubmit, UserFormTypes } from '@src/types';
+import { UserCreate, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-type UserFormProps = {
+import { createUser, editUser } from '../utils/userUtils';
+
+type Props = {
   mainClass: string;
-  header: string;
   submitButton: string;
-  submitFunction: UserFormSubmit;
   initialValues?: UserFormTypes;
   userId?: string;
 };
 
-export const UserForm = ({ mainClass, header, submitButton, submitFunction, initialValues, userId }: UserFormProps) => {
+export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
   const { t } = useTranslation();
 
   const schema = getUsersSchema(t);
@@ -62,14 +62,19 @@ export const UserForm = ({ mainClass, header, submitButton, submitFunction, init
       if (!hasChanged) return;
     }
 
-    const resetForm = await submitFunction(registerData, setError, userId);
-    if (resetForm) reset();
+    if (userId) {
+      await editUser(registerData, setError, userId);
+      return;
+    }
+
+    await createUser(registerData, setError);
+    reset();
   };
 
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{t(header)}</h1>
+        <h1 className="title">{userId ? `${t('users.title-edit')} ${userId}` : t('users.title-create')}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

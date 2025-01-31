@@ -14,12 +14,12 @@ type PieChartData = {
   ];
 };
 
-type PieChartComponentProps = {
+type Props = {
   queryKey: string;
   fetchFunction: () => Promise<PieChartData>;
 };
 
-export const PieChartComponent = ({ queryKey, fetchFunction }: PieChartComponentProps) => {
+export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
   const { t } = useTranslation();
   const { data, isLoading } = useQuery<PieChartData>({ queryKey: [queryKey], queryFn: fetchFunction });
 

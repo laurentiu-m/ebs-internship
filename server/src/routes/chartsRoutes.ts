@@ -12,13 +12,13 @@ const db = jsonServer.router(config.db).db;
 
 const router = Router();
 
-router.get("/top-users", (req: Request, res: Response) => {
+router.get("/users/top", (req: Request, res: Response) => {
   const posts = db.get("posts").value();
   const users = db.get("users").value();
 
   const postCounts = users.map((user) => {
     const postCount = posts.filter((post) => post.userId === user.id).length;
-    return { userId: user.id, postCount };
+    return { userId: user.id, postCount, username: user.username };
   });
 
   const topUsers = postCounts
@@ -28,7 +28,7 @@ router.get("/top-users", (req: Request, res: Response) => {
   res.json(topUsers);
 });
 
-router.get("/top-posts", (req: Request, res: Response) => {
+router.get("/posts/top", (req: Request, res: Response) => {
   const posts = db.get("posts").value();
   const comments = db.get("comments").value();
 
@@ -46,7 +46,7 @@ router.get("/top-posts", (req: Request, res: Response) => {
   res.json(topPosts);
 });
 
-router.get("/gender-count", (req: Request, res: Response) => {
+router.get("/gender", (req: Request, res: Response) => {
   const users = db.get("users").value();
 
   const { female, male, prefer_not_to_say } = users.reduce((acc, user) => {
@@ -78,7 +78,7 @@ router.get("/gender-count", (req: Request, res: Response) => {
   });
 });
 
-router.get("/roles-count", (req: Request, res: Response) => {
+router.get("/roles", (req: Request, res: Response) => {
   const users = db.get("users").value();
 
   const { admin, moderator, user } = users.reduce((acc, user) => {
@@ -110,9 +110,10 @@ router.get("/roles-count", (req: Request, res: Response) => {
   });
 });
 
-router.get("/users/:id/posts/total-comments", (req: Request, res: Response) => {
+router.get("/users/:id/posts/comments", (req: Request, res: Response) => {
   const { id } = req.params;
 
+  const comments = db.get("comments").value();
   const postsId = db
     .get("posts")
     .filter((post) => post.userId === Number(id))
@@ -123,19 +124,6 @@ router.get("/users/:id/posts/total-comments", (req: Request, res: Response) => {
     .get("comments")
     .filter((comment) => postsId.includes(comment.postId))
     .value().length;
-
-  res.json(totalComments);
-});
-
-router.get("/users/:id/posts/comments-count", (req: Request, res: Response) => {
-  const { id } = req.params;
-
-  const comments = db.get("comments").value();
-  const postsId = db
-    .get("posts")
-    .filter((post) => post.userId === Number(id))
-    .map((post) => post.id)
-    .value();
 
   const commentsCounts = postsId
     .map((postId) => {
@@ -151,7 +139,7 @@ router.get("/users/:id/posts/comments-count", (req: Request, res: Response) => {
     })
     .filter((comment) => comment !== null);
 
-  res.json(commentsCounts);
+  res.json({ totalComments, commentsCounts });
 });
 
 router.get("/users/:id/albums/total", (req: Request, res: Response) => {
@@ -163,6 +151,12 @@ router.get("/users/:id/albums/total", (req: Request, res: Response) => {
     .value().length;
 
   res.json(totalAlbums);
+});
+
+router.get("/comments/total", (req: Request, res: Response) => {
+  const comments = db.get("comments").value();
+
+  res.json({ total: comments.length });
 });
 
 export default router;

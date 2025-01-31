@@ -1,11 +1,11 @@
-import { PostCreate, Posts, TopPosts } from '@src/types';
+import { PostComments, PostCreate, Posts, PostsList, TopPosts } from '@src/types';
 
 import api from './axios';
 
 export const posts = {
-  getList: async (): Promise<Posts[]> => {
-    const { data } = await api.get('/posts');
-    return data;
+  getList: async (params?: { userId?: number }): Promise<PostsList> => {
+    const { data } = await api.get('/api/posts', { params });
+    return { results: data.results, count: data.count };
   },
 
   getById: async (id: string): Promise<Posts> => {
@@ -13,29 +13,14 @@ export const posts = {
     return data;
   },
 
-  getByUserId: async (id: number): Promise<Posts[]> => {
-    const { data } = await api.get(`/posts/?userId=${id}`);
-    return data;
-  },
-
-  getTotalPosts: async (): Promise<number> => {
-    const { headers } = await api.get('/posts?_page=1&_limit=1');
-    return headers['x-total-count'];
-  },
-
   getTopPosts: async (): Promise<TopPosts[]> => {
-    const { data } = await api.get('/api/charts/top-posts');
+    const { data } = await api.get('/api/charts/posts/top');
     return data;
   },
 
-  getUserPostCommented: async (userId: number): Promise<TopPosts[]> => {
-    const { data } = await api.get(`api/charts/users/${userId}/posts/comments-count`);
+  getUserPostComments: async (userId: number): Promise<PostComments> => {
+    const { data } = await api.get(`api/charts/users/${userId}/posts/comments`);
     return data;
-  },
-
-  getUserTotalPosts: async (userId: number): Promise<number> => {
-    const { headers } = await api.get(`posts/?userId=${userId}&_page=1&_limit=1`);
-    return headers['x-total-count'];
   },
 
   create: async (postData: PostCreate): Promise<void> => {
@@ -43,8 +28,8 @@ export const posts = {
     return data;
   },
 
-  edit: async (postData: PostCreate, postId: string): Promise<void> => {
-    const { data } = await api.patch(`/posts/${postId}`, postData);
+  edit: async (postData: PostCreate, id: string) => {
+    const { data } = await api.patch(`/posts/${id}`, postData);
     return data;
   },
 

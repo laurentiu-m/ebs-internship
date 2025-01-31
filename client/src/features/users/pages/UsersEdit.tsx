@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 
 import { UserForm } from '../components/';
 import '../index.scss';
-import { editUser } from '../utils/userUtils';
 
 export const UsersEdit = () => {
   const { id } = useParams();
@@ -36,14 +35,7 @@ export const UsersEdit = () => {
 
   return (
     <div className="users-edit">
-      <UserForm
-        mainClass="users-edit"
-        header={`users.title-edit`}
-        submitButton="form.button.edit"
-        submitFunction={editUser}
-        userId={id}
-        initialValues={formData}
-      />
+      <UserForm mainClass="users-edit" submitButton="form.button.edit" userId={id} initialValues={formData} />
     </div>
   );
 };

@@ -22,10 +22,12 @@ export const CustomTooltip = ({ tooltip, label, payload }: any) => {
     return null;
   }
 
+  const username = payload[0].payload.username;
+
   return (
     <div className="tooltip">
       <p>
-        {tooltip.xKey}: <span>{label}</span>
+        {username ? username : tooltip.xKey}: <span>{label}</span>
       </p>
       <p>
         {tooltip.yKey}: <span>{payload[0].value}</span>

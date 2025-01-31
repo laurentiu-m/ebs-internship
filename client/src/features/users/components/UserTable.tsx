@@ -50,9 +50,15 @@ export const UserTable = () => {
     return row.getValue(columnId) === filterValue;
   };
 
-  const { data, isLoading } = useQuery({ queryKey: ['user_table'], queryFn: () => apiClient.users.getList() });
+  const { data, isLoading } = useQuery({
+    queryKey: ['user_table'],
+    queryFn: async () => {
+      const { result } = await apiClient.users.getList();
+      return result;
+    }
+  });
 
-  const deleteUserMutation = useMutation({
+  const { mutate: deleteUser } = useMutation({
     mutationFn: async (userId: number) => {
       await apiClient.users.delete(userId);
       return userId;
@@ -65,7 +71,7 @@ export const UserTable = () => {
   });
 
   const onDelete = (userId: number) => {
-    deleteUserMutation.mutate(userId);
+    deleteUser(userId);
   };
 
   const columns = [

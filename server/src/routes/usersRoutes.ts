@@ -13,6 +13,18 @@ const db = jsonServer.router(config.db).db;
 
 const router = Router();
 
+router.get("", (req: Request, res: Response) => {
+  const { id } = req.query;
+
+  let users = db.get("users").value();
+
+  if (id) {
+    users = users.filter((user) => user.id === Number(id));
+  }
+
+  res.json({ result: users, count: users.length });
+});
+
 router.put("/edit/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const { email, username } = req.body;

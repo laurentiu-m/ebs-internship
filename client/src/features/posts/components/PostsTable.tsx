@@ -51,17 +51,19 @@ export const PostsTable = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
-    queryFn: () => {
+    queryFn: async () => {
       if (userRole === Roles.User) {
-        return apiClient.posts.getByUserId(userId as number);
+        const { results } = await apiClient.posts.getList({ userId });
+        return results;
       } else {
-        return apiClient.posts.getList();
+        const { results } = await apiClient.posts.getList();
+        return results;
       }
     },
     enabled: !!userRole && !!userId
   });
 
-  const deletePostMutation = useMutation({
+  const { mutate: deletePost } = useMutation({
     mutationFn: async (postId: number) => {
       await apiClient.posts.delete(postId);
       return postId;
@@ -74,7 +76,7 @@ export const PostsTable = () => {
   });
 
   const onDelete = (postId: number) => {
-    deletePostMutation.mutate(postId);
+    deletePost(postId);
   };
 
   const columns = [
