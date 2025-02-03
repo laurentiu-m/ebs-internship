@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders, Roles } from '@src/app-constants';
-import { FormInput, FormSelect } from '@src/components';
+import { FormInput, FormSelect, CloseIcon } from '@src/components';
+import { useAppContext } from '@src/hooks/useAppContext';
 import { getUsersSchema } from '@src/schemas/';
 import { UserCreate, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
@@ -19,6 +20,7 @@ type Props = {
 
 export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
   const { t } = useTranslation();
+  const { onCloseModal } = useAppContext();
 
   const { mutate: createUser } = useCreateUser();
   const { mutate: editUser } = useEditUser();
@@ -81,6 +83,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{userId ? `${t('users.title-edit')} ${userId}` : t('users.title-create')}</h1>
+        <CloseIcon styleClass="icon" onClose={onCloseModal} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

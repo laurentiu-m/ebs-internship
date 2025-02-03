@@ -7,6 +7,10 @@ type AppContext = {
   setTokenData: Dispatch<SetStateAction<JwtPayload | null>>;
   isSidebarClosed: boolean;
   onToggleSidebar: () => void;
+  isModalOpen: boolean;
+  selectedCell: number | null;
+  onOpenModal: (id?: number | null) => void;
+  onCloseModal: () => void;
 };
 
 export const AppContext = createContext<AppContext | null>(null);

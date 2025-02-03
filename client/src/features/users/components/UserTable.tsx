@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { apiClient } from '@src/api';
 import { DeleteIcon, Loading, Table } from '@src/components';
 import { EditIcon } from '@src/components';
+import { useAppContext } from '@src/hooks/useAppContext';
 import { UserTable as UserTableTypes } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -37,13 +38,12 @@ Modal.setAppElement('#root');
 
 export const UserTable = () => {
   const { t } = useTranslation();
+  const { isModalOpen, onOpenModal, onCloseModal, selectedCell } = useAppContext();
   const queryClient = useQueryClient();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<number | null>(null);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
 
@@ -87,21 +87,6 @@ export const UserTable = () => {
     deleteUser(userId);
   };
 
-  const openAddModal = () => {
-    setIsModalOpen(true);
-    setSelectedUser(null);
-  };
-
-  const openEditModal = (id: number) => {
-    setSelectedUser(id);
-    setIsModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setIsModalOpen(false);
-    setSelectedUser(null);
-  };
-
   const columns = [
     columnHelper.accessor('id', {
       enableGlobalFilter: false,
@@ -135,7 +120,7 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <div onClick={() => openEditModal(row.original.id)}>
+          <div onClick={() => onOpenModal(row.original.id)}>
             <EditIcon styleClass="icon" />
           </div>
 
@@ -169,17 +154,17 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-users'), onClick: openAddModal }}
+        header={{ title: t('table.button-users'), onClick: onOpenModal }}
       />
 
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={closeEditModal}
+        onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
         className="modal-content"
         overlayClassName="modal-overlay"
       >
-        {selectedUser ? <UsersEdit id={selectedUser} /> : <UsersCreate />}
+        {selectedCell ? <UsersEdit id={selectedCell} /> : <UsersCreate />}
       </Modal>
     </div>
   );
