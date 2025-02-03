@@ -5,6 +5,7 @@ import { getUsersSchema } from '@src/schemas/';
 import { UserCreate, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 import { useCreateUser, useEditUser } from '../hooks/';
@@ -62,15 +63,20 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
         ([key, value]) => initialValues[key as keyof UserFormTypes] !== value
       );
 
-      if (!hasChanged) return;
+      if (!hasChanged) {
+        toast.info("You haven't made any changes.");
+        return;
+      }
     }
 
     if (userId) {
       editUser({ userId: userId, data: registerData, setError });
+      toast.success('User details updated successfully.');
       return;
     }
 
     createUser({ data: registerData, setError });
+    toast.success('New user was created successfully.');
     reset();
   };
 

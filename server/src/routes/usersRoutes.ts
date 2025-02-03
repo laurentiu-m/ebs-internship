@@ -56,11 +56,10 @@ router.put("/edit/:id", async (req: Request, res: Response) => {
   }
 
   try {
-    const { data } = await axiosInstance.put(`/users/${id}`, req.body);
+    await axiosInstance.put(`/users/${id}`, req.body);
 
     res.status(200).json({
       message: `You've edited successfully user ${id}`,
-      result: data,
     });
   } catch (err) {
     res.status(500).json({ message: "An error occurred during editing user" });
