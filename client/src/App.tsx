@@ -39,12 +39,14 @@ export const App = () => {
       <Suspense fallback={<Loading />}>
         <Router>
           <ToastContainer
-            autoClose={3000}
+            autoClose={2000}
             closeOnClick={true}
             draggable={false}
             position="top-center"
             hideProgressBar={true}
+            limit={3}
             theme="dark"
+            stacked
             className="custom-toast-container"
           />
           <ScrollToTop />
