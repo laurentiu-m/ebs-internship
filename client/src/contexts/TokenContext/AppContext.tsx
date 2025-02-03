@@ -2,6 +2,8 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 
 import { JwtPayload } from '@src/types';
 
+type ModalMode = 'create' | 'edit' | 'delete' | null;
+
 type AppContext = {
   tokenData: JwtPayload | null;
   setTokenData: Dispatch<SetStateAction<JwtPayload | null>>;
@@ -9,8 +11,9 @@ type AppContext = {
   onToggleSidebar: () => void;
   isModalOpen: boolean;
   selectedCell: number | null;
-  onOpenModal: (id?: number | null) => void;
+  onOpenModal: (mode?: ModalMode, id?: number) => void;
   onCloseModal: () => void;
+  modalMode: ModalMode;
 };
 
 export const AppContext = createContext<AppContext | null>(null);

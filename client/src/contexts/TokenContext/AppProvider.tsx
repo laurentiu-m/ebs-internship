@@ -4,21 +4,26 @@ import { JwtPayload } from '@src/types';
 
 import { AppContext } from './AppContext';
 
+type ModalMode = 'create' | 'edit' | 'delete' | null;
+
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);
   const [isSidebarClosed, setIsSidebarClosed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<ModalMode | null>(null);
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
 
   const onToggleSidebar = () => setIsSidebarClosed((prev) => !prev);
 
-  const onOpenModal = (id: number | null = null) => {
-    setSelectedCell(id);
+  const onOpenModal = (mode?: ModalMode, id?: number) => {
+    setSelectedCell(id ?? null);
+    setModalMode(mode ?? null);
     setIsModalOpen(true);
   };
 
   const onCloseModal = () => {
     setIsModalOpen(false);
+    setModalMode(null);
     setSelectedCell(null);
   };
 
@@ -32,7 +37,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         isModalOpen,
         selectedCell,
         onOpenModal,
-        onCloseModal
+        onCloseModal,
+        modalMode
       }}
     >
       {children}

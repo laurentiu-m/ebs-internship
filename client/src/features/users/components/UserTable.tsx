@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { apiClient } from '@src/api';
 import { DeleteIcon, Loading, Table } from '@src/components';
 import { EditIcon } from '@src/components';
+import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { UserTable as UserTableTypes } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -38,7 +39,7 @@ Modal.setAppElement('#root');
 
 export const UserTable = () => {
   const { t } = useTranslation();
-  const { isModalOpen, onOpenModal, onCloseModal, selectedCell } = useAppContext();
+  const { isModalOpen, onOpenModal, onCloseModal, selectedCell, modalMode } = useAppContext();
   const queryClient = useQueryClient();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -120,12 +121,12 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <div onClick={() => onOpenModal(row.original.id)}>
+          <div onClick={() => onOpenModal('edit', row.original.id)}>
             <EditIcon styleClass="icon" />
           </div>
 
-          <div>
-            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
+          <div onClick={() => onOpenModal('delete', row.original.id)}>
+            <DeleteIcon styleClass="icon" />
           </div>
         </div>
       )
@@ -154,17 +155,19 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-users'), onClick: onOpenModal }}
+        header={{ title: t('table.button-users'), onClick: () => onOpenModal('create') }}
       />
 
       <Modal
         isOpen={isModalOpen}
         onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
-        className="modal-content"
+        className={modalMode === 'delete' ? 'modal-content--delete' : 'modal-content'}
         overlayClassName="modal-overlay"
       >
-        {selectedCell ? <UsersEdit id={selectedCell} /> : <UsersCreate />}
+        {modalMode === 'create' && <UsersCreate />}
+        {modalMode === 'edit' && selectedCell !== null && <UsersEdit id={selectedCell} />}
+        {modalMode === 'delete' && selectedCell !== null && <DeleteModal onDelete={() => onDelete(selectedCell)} />}
       </Modal>
     </div>
   );

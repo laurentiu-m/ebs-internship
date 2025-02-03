@@ -103,7 +103,7 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <div onClick={() => onOpenModal(row.original.id)}>
+          <div onClick={() => onOpenModal('edit', row.original.id)}>
             <EditIcon styleClass="icon" />
           </div>
 
@@ -137,7 +137,7 @@ export const PostsTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-posts'), onClick: onOpenModal }}
+        header={{ title: t('table.button-posts'), onClick: () => onOpenModal('create') }}
       />
 
       <Modal

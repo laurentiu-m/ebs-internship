@@ -8,13 +8,15 @@ import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
 import searchIcon from '../assets/icons/search_icon.svg';
 
+type ModalMode = 'create' | 'edit' | 'delete' | null;
+
 type TableProps<TData> = {
   table: TanStackTable<TData>;
   state: {
     globalFilter: string | null;
     setGlobalFilter: Dispatch<SetStateAction<string | null>>;
   };
-  header: { title: string; onClick: () => void };
+  header: { title: string; onClick: (mode?: ModalMode, id?: number) => void };
 };
 
 export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {

@@ -1,5 +1,6 @@
 @use './variables.scss' as *;
 @use './mixins.scss' as *;
+@use './buttons.scss' as *;
 
 * {
   font-family: 'Poppins', serif;
@@ -36,6 +37,52 @@
   max-height: 80vh;
   overflow-y: auto;
   outline: none;
+}
+
+.modal-content--delete {
+  @include flex(center, center, column);
+  width: 600px;
+  background-color: map-get($neutral, 700);
+  border-radius: $border-radius;
+  padding: 40px;
+  position: relative;
+  max-height: 50svh;
+  overflow-y: auto;
+  outline: none;
+
+  .delete {
+    @include flex(center, center, column);
+    gap: 32px;
+
+    &__info {
+      @include flex(center, center, column);
+      text-align: center;
+      gap: 8px;
+
+      .title {
+        font-size: map-get($h3, font-size);
+        line-height: map-get($h3, line-height);
+        font-weight: map-get($h3, font-weight);
+        color: map-get($neutral, 100);
+      }
+
+      .warning {
+        font-size: map-get($text-caption, font-size);
+        line-height: map-get($text-caption, line-height);
+        font-weight: map-get(map-get($text-caption, font-weight), regular);
+        color: map-get($neutral, 400);
+      }
+    }
+
+    &__buttons {
+      @include flex(center, center, row);
+      gap: 16px;
+
+      button {
+        @include button-style(150px);
+      }
+    }
+  }
 }
 
 .custom-toast-container {

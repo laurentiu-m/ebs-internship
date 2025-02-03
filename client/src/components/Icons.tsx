@@ -88,10 +88,9 @@ export const EditIcon = ({ styleClass }: { styleClass: string }) => {
   );
 };
 
-export const DeleteIcon = ({ styleClass, onDelete }: { styleClass: string; onDelete: () => void }) => {
+export const DeleteIcon = ({ styleClass }: { styleClass: string }) => {
   return (
     <svg
-      onClick={onDelete}
       xmlns="http://www.w3.org/2000/svg"
       className={styleClass}
       width="1em"
