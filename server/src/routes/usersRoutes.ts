@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import jsonServer from "json-server";
 import dotenv from "dotenv";
 import { axiosInstance } from "../api/axios";
+import { readFileSync } from "fs";
 
 dotenv.config();
 
@@ -15,8 +16,8 @@ const router = Router();
 
 router.get("", (req: Request, res: Response) => {
   const { id } = req.query;
-
-  let users = db.get("users").value();
+  const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
+  let users = dbData.users;
 
   if (id) {
     users = users.filter((user) => user.id === Number(id));
@@ -63,7 +64,6 @@ router.put("/edit/:id", async (req: Request, res: Response) => {
     });
   } catch (err) {
     res.status(500).json({ message: "An error occurred during editing user" });
-    console.log(err);
   }
 });
 
