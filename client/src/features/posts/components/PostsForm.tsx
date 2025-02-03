@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormInput, FormTextarea } from '@src/components';
+import { CloseIcon, FormInput, FormTextarea } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { getPostsSchema } from '@src/schemas';
 import { PostForm } from '@src/types';
@@ -13,13 +13,13 @@ import { useCreatePost, useEditPost } from '../hooks';
 type Props = {
   mainClass: string;
   initialValues?: PostForm;
-  postId?: string;
+  postId?: number;
   postUserId?: number;
 };
 
 export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Props) => {
   const { t } = useTranslation();
-  const { tokenData } = useAppContext();
+  const { tokenData, onCloseModal } = useAppContext();
   const { mutate: createPost } = useCreatePost();
   const { mutate: editPost } = useEditPost();
 
@@ -53,19 +53,17 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
 
     if (postId) {
       editPost({ data: postData, postId });
-      toast.success('Post details updated successfully.');
       return;
     }
 
-    createPost({ data: postData });
-    toast.success('New post was created successfully.');
-    reset();
+    createPost({ data: postData, reset });
   };
 
   return (
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{postId ? `${t('posts.title-edit')} ${postId}` : t('posts.title-create')}</h1>
+        <CloseIcon styleClass="icon" onClose={onCloseModal} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

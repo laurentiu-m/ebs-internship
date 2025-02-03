@@ -76,7 +76,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
       return;
     }
 
-    createUser({ data: registerData, setError, reset: reset });
+    createUser({ data: registerData, setError, reset });
   };
 
   return (

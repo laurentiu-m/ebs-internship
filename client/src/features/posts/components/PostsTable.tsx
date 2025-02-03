@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Roles, Routes } from '@src/app-constants';
+import { Roles } from '@src/app-constants';
 import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
@@ -19,7 +19,9 @@ import {
   RowData
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+
+import { PostEdit, PostsCreate } from '../pages';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -33,7 +35,7 @@ declare module '@tanstack/react-table' {
 
 export const PostsTable = () => {
   const { t } = useTranslation();
-  const { tokenData } = useAppContext();
+  const { tokenData, isModalOpen, onOpenModal, onCloseModal, selectedCell } = useAppContext();
   const queryClient = useQueryClient();
 
   const userRole = tokenData?.role;
@@ -48,6 +50,14 @@ export const PostsTable = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pagination]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isModalOpen]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
@@ -93,9 +103,9 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>
+          <div onClick={() => onOpenModal(row.original.id)}>
             <EditIcon styleClass="icon" />
-          </Link>
+          </div>
 
           <div>
             <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
@@ -127,8 +137,18 @@ export const PostsTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-posts'), link: Routes.PostsCreate }}
+        header={{ title: t('table.button-posts'), onClick: onOpenModal }}
       />
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={onCloseModal}
+        shouldCloseOnOverlayClick={true}
+        className="modal-content"
+        overlayClassName="modal-overlay"
+      >
+        {selectedCell ? <PostEdit id={selectedCell} /> : <PostsCreate />}
+      </Modal>
     </div>
   );
 };

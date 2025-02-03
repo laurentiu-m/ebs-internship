@@ -2,16 +2,13 @@ import { apiClient } from '@src/api';
 import { Loading } from '@src/components';
 import { Posts } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
 
 import { PostsForm } from '../components';
 
-export const PostEdit = () => {
-  const { id } = useParams();
-
+export const PostEdit = ({ id }: { id: number }) => {
   const { data, isLoading } = useQuery<Posts>({
     queryKey: [`edit_post_${id}`],
-    queryFn: () => apiClient.posts.getById(id || '')
+    queryFn: () => apiClient.posts.getById(id)
   });
 
   if (isLoading) return <Loading />;
