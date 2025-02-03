@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { createUser, editUser } from '../utils/userUtils';
+import { useCreateUser, useEditUser } from '../hooks/';
 
 type Props = {
   mainClass: string;
@@ -18,6 +18,9 @@ type Props = {
 
 export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
   const { t } = useTranslation();
+
+  const { mutate: createUser } = useCreateUser();
+  const { mutate: editUser } = useEditUser();
 
   const schema = getUsersSchema(t);
 
@@ -63,11 +66,11 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     }
 
     if (userId) {
-      await editUser(registerData, setError, userId);
+      editUser({ userId: userId, data: registerData, setError });
       return;
     }
 
-    await createUser(registerData, setError);
+    createUser({ data: registerData, setError });
     reset();
   };
 

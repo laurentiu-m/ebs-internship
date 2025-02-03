@@ -61,7 +61,7 @@ export const users = {
 
   update: async (userId: string, userData: UserRegister): Promise<void> => {
     const { data } = await api.put(`/api/users/edit/${userId}`, userData);
-    return data;
+    return data.result;
   },
 
   delete: async (id: number): Promise<void> => {
