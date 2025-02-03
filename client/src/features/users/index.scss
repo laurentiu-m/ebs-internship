@@ -44,19 +44,19 @@
 
 .users-create,
 .users-edit {
-  padding-bottom: 72px;
-  @include flex(center, center, column);
-  gap: 16px;
+  @include flex(center, flex-start, column);
+  min-height: 100%;
+  gap: 8px;
 
   &__header {
     text-align: center;
     .title {
-      font-size: map-get($h1, font-size);
+      font-size: map-get($h2, font-size);
       font-weight: map-get(map-get($h1, font-weight), medium);
-      line-height: map-get($h1, line-height);
+      line-height: map-get($h2, line-height);
       color: map-get($neutral, 100);
     }
   }
 
-  @include form-style(450px);
+  @include form-modal-style();
 }

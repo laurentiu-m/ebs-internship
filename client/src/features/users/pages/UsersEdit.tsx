@@ -2,14 +2,11 @@ import { apiClient } from '@src/api';
 import { Loading } from '@src/components';
 import { UserEdit } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
 
 import { UserForm } from '../components/';
 import '../index.scss';
 
-export const UsersEdit = () => {
-  const { id } = useParams();
-
+export const UsersEdit = ({ id }: { id: number }) => {
   const { data, isLoading } = useQuery<UserEdit>({
     queryKey: [`edit_user_${id}`],
     queryFn: () => apiClient.users.getById(Number(id))

@@ -59,7 +59,7 @@ export const users = {
     return data.decodedToken;
   },
 
-  update: async (userId: string, userData: UserRegister): Promise<void> => {
+  update: async (userId: number, userData: UserRegister): Promise<void> => {
     const { data } = await api.put(`/api/users/edit/${userId}`, userData);
     return data;
   },

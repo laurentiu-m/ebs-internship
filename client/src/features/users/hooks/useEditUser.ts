@@ -3,6 +3,7 @@ import { UserCreate, UserCreateForm } from '@src/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { UseFormSetError } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 export const useEditUser = () => {
   const queryClient = useQueryClient();
@@ -13,12 +14,13 @@ export const useEditUser = () => {
       data,
       setError
     }: {
-      userId: string;
+      userId: number;
       data: UserCreate;
       setError: UseFormSetError<UserCreateForm>;
     }) => {
       try {
         await apiClient.users.update(userId, data);
+        toast.success('User details updated successfully.');
       } catch (err) {
         if (err instanceof AxiosError) {
           const errData = err.response?.data;
@@ -29,14 +31,13 @@ export const useEditUser = () => {
             });
             return;
           }
-
           setError(errData.field, { type: errData.type, message: errData.messageKey });
         }
-        throw err;
       }
     },
-    onSuccess: (_, { userId }) => {
+    onSuccess: async (_, { userId }) => {
       queryClient.invalidateQueries({ queryKey: [`edit_user_${userId}`] });
+      queryClient.invalidateQueries({ queryKey: ['user_table'] });
     }
   });
 };

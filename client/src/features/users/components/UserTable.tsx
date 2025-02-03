@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Routes } from '@src/app-constants';
 import { DeleteIcon, Loading, Table } from '@src/components';
 import { EditIcon } from '@src/components';
 import { UserTable as UserTableTypes } from '@src/types';
@@ -20,7 +19,9 @@ import {
   RowData
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+
+import { UsersCreate, UsersEdit } from '../pages';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -32,6 +33,8 @@ declare module '@tanstack/react-table' {
   }
 }
 
+Modal.setAppElement('#root');
+
 export const UserTable = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -39,12 +42,22 @@ export const UserTable = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<number | null>(null);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pagination]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [isModalOpen]);
 
   const exactTextFilter = <TData,>(row: Row<TData>, columnId: string, filterValue: undefined) => {
     return row.getValue(columnId) === filterValue;
@@ -72,6 +85,21 @@ export const UserTable = () => {
 
   const onDelete = (userId: number) => {
     deleteUser(userId);
+  };
+
+  const openAddModal = () => {
+    setIsModalOpen(true);
+    setSelectedUser(null);
+  };
+
+  const openEditModal = (id: number) => {
+    setSelectedUser(id);
+    setIsModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsModalOpen(false);
+    setSelectedUser(null);
   };
 
   const columns = [
@@ -107,9 +135,9 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>
+          <div onClick={() => openEditModal(row.original.id)}>
             <EditIcon styleClass="icon" />
-          </Link>
+          </div>
 
           <div>
             <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
@@ -141,8 +169,18 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-users'), link: Routes.UsersCreate }}
+        header={{ title: t('table.button-users'), onClick: openAddModal }}
       />
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeEditModal}
+        shouldCloseOnOverlayClick={true}
+        className="modal-content"
+        overlayClassName="modal-overlay"
+      >
+        {selectedUser ? <UsersEdit id={selectedUser} /> : <UsersCreate />}
+      </Modal>
     </div>
   );
 };

@@ -14,7 +14,7 @@ type Props = {
   mainClass: string;
   submitButton: string;
   initialValues?: UserFormTypes;
-  userId?: string;
+  userId?: number;
 };
 
 export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
@@ -71,13 +71,10 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
 
     if (userId) {
       editUser({ userId: userId, data: registerData, setError });
-      toast.success('User details updated successfully.');
       return;
     }
 
-    createUser({ data: registerData, setError });
-    toast.success('New user was created successfully.');
-    reset();
+    createUser({ data: registerData, setError, reset: reset });
   };
 
   return (
@@ -87,22 +84,25 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
-        <FormInput
-          name="first_name"
-          type="text"
-          label={t('form.label.first_name')}
-          register={register}
-          placeholder={t('form.label.first_name')}
-          error={errors.first_name}
-        />
-        <FormInput
-          name="last_name"
-          type="text"
-          label={t('form.label.last_name')}
-          register={register}
-          placeholder={t('form.label.last_name')}
-          error={errors.last_name}
-        />
+        <div className="form__wrapper">
+          <FormInput
+            name="first_name"
+            type="text"
+            label={t('form.label.first_name')}
+            register={register}
+            placeholder={t('form.label.first_name')}
+            error={errors.first_name}
+          />
+          <FormInput
+            name="last_name"
+            type="text"
+            label={t('form.label.last_name')}
+            register={register}
+            placeholder={t('form.label.last_name')}
+            error={errors.last_name}
+          />
+        </div>
+
         <FormInput
           name="email"
           type="email"
@@ -111,58 +111,66 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
           placeholder="Email"
           error={errors.email}
         />
-        <FormInput
-          name="username"
-          type="text"
-          label={t('form.label.username')}
-          register={register}
-          placeholder={t('form.label.username')}
-          error={errors.username}
-        />
-        <FormInput
-          name="phone"
-          type="text"
-          label={t('form.label.phone')}
-          register={register}
-          placeholder={t('form.label.phone')}
-          error={errors.phone}
-        />
-        <FormSelect
-          name="gender"
-          label={t('form.label.gender.label')}
-          placeholder={t('form.label.gender.label')}
-          control={control}
-          options={genderOptions}
-          defaultValue={initialValues?.gender}
-          error={errors.gender}
-        />
 
-        <FormSelect
-          name="role"
-          label={t('form.label.roles')}
-          placeholder={t('form.label.roles-placeholder')}
-          control={control}
-          options={roleOptions}
-          defaultValue={initialValues?.role}
-          error={errors.role}
-        />
+        <div className="form__wrapper">
+          <FormInput
+            name="username"
+            type="text"
+            label={t('form.label.username')}
+            register={register}
+            placeholder={t('form.label.username')}
+            error={errors.username}
+          />
+          <FormInput
+            name="phone"
+            type="text"
+            label={t('form.label.phone')}
+            register={register}
+            placeholder={t('form.label.phone')}
+            error={errors.phone}
+          />
+        </div>
 
-        <FormInput
-          name="password"
-          type="password"
-          label={t('form.label.password')}
-          register={register}
-          placeholder={t('form.label.password')}
-          error={errors.password}
-        />
-        <FormInput
-          name="confirm_password"
-          type="password"
-          label={t('form.label.confirm_password')}
-          register={register}
-          placeholder={t('form.label.confirm_password')}
-          error={errors.confirm_password}
-        />
+        <div className="form__wrapper">
+          <FormSelect
+            name="gender"
+            label={t('form.label.gender.label')}
+            placeholder={t('form.label.gender.label')}
+            control={control}
+            options={genderOptions}
+            defaultValue={initialValues?.gender}
+            error={errors.gender}
+          />
+
+          <FormSelect
+            name="role"
+            label={t('form.label.roles')}
+            placeholder={t('form.label.roles-placeholder')}
+            control={control}
+            options={roleOptions}
+            defaultValue={initialValues?.role}
+            error={errors.role}
+          />
+        </div>
+
+        <div className="form__wrapper">
+          <FormInput
+            name="password"
+            type="password"
+            label={t('form.label.password')}
+            register={register}
+            placeholder={t('form.label.password')}
+            error={errors.password}
+          />
+          <FormInput
+            name="confirm_password"
+            type="password"
+            label={t('form.label.confirm_password')}
+            register={register}
+            placeholder={t('form.label.confirm_password')}
+            error={errors.confirm_password}
+          />
+        </div>
 
         <input disabled={isSubmitting} type="submit" className="form__submit" value={t(submitButton)} />
       </form>

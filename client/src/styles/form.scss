@@ -60,3 +60,52 @@
     }
   }
 }
+
+@mixin form-modal-style() {
+  .form {
+    @include flex(center, flex-start, column);
+    width: 100%;
+    gap: 16px;
+
+    &__wrapper {
+      width: 100%;
+      @include flex(space-between, center, row);
+      gap: 32px;
+    }
+
+    &__input,
+    &__select,
+    &__textarea {
+      width: 100%;
+      &-wrapper {
+        width: 100%;
+        @include flex(center, flex-start, column);
+        gap: 6px;
+      }
+      &-label {
+        font-weight: map-get(map-get($text-body, font-weight), medium);
+      }
+      &-required {
+        color: $error;
+      }
+      &-field {
+        @include input-style(12px, 12px);
+      }
+      &-error {
+        font-size: map-get($text-caption, font-size);
+        line-height: map-get($text-caption, line-height);
+        color: $error;
+      }
+    }
+
+    &__textarea-field {
+      resize: vertical;
+      min-height: 200px;
+      max-height: 400px;
+    }
+
+    &__submit {
+      @include button-style(200px);
+    }
+  }
+}
