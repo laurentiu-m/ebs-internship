@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { createUser, editUser } from '../utils/userUtils';
+import { createUser, editUser } from '../utils/';
 
 type Props = {
   mainClass: string;
@@ -71,10 +71,18 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     reset();
   };
 
+  const onTitle = () => {
+    if (userId) {
+      return `${t('users.title-edit')} ${userId}`;
+    } else {
+      return t('users.title-create');
+    }
+  };
+
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{userId ? `${t('users.title-edit')} ${userId}` : t('users.title-create')}</h1>
+        <h1 className="title">{onTitle()}</h1>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
