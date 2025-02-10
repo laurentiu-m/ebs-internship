@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
-import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
+import DeleteIcon from '@src/assets/icons/delete_icon.svg?react';
+import EditIcon from '@src/assets/icons/edit_icon.svg?react';
+import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
@@ -108,10 +110,10 @@ export const PostsTable = () => {
       cell: ({ row }) => (
         <div className="options center">
           <div onClick={() => onOpenModal('edit', row.original.id)}>
-            <EditIcon styleClass="icon" />
+            <EditIcon className="icon" />
           </div>
           <div onClick={() => onOpenModal('delete_post', row.original.id)}>
-            <DeleteIcon styleClass="icon" />
+            <DeleteIcon className="icon" />
           </div>
         </div>
       )

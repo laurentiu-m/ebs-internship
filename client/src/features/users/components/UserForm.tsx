@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders, Roles } from '@src/app-constants';
-import { FormInput, FormSelect, CloseIcon } from '@src/components';
+import CloseIcon from '@src/assets/icons/close_icon.svg?react';
+import { FormInput, FormSelect } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { getUsersSchema } from '@src/schemas/';
 import { UserCreate, UserFormTypes } from '@src/types';
@@ -77,7 +78,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{userId ? `${t('table.edit')} ${initialValues?.username}` : t('users.title-create')}</h1>
-        <CloseIcon styleClass="icon" onClose={onCloseModal} />
+        <CloseIcon className="icon" onClick={onCloseModal} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

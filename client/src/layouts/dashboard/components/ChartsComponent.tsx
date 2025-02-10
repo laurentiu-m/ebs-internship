@@ -52,7 +52,7 @@ export const ChartsComponent = () => {
                     key={stat.queryKey}
                     queryKey={stat.queryKey}
                     fetchFunction={stat.fetchFunction}
-                    icon={stat.icon('icon')}
+                    icon={stat.icon}
                   />
                 ))}
             </div>
@@ -84,7 +84,7 @@ export const ChartsComponent = () => {
                 key={stat.queryKey}
                 queryKey={stat.queryKey}
                 fetchFunction={() => stat.fetchFunction(userId)}
-                icon={stat.icon('icon')}
+                icon={stat.icon}
               />
             ))}
         </div>

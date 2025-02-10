@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { DeleteIcon, Loading, Table } from '@src/components';
-import { EditIcon } from '@src/components';
+import DeleteIcon from '@src/assets/icons/delete_icon.svg?react';
+import EditIcon from '@src/assets/icons/edit_icon.svg?react';
+import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { UserTable as UserTableTypes } from '@src/types';
@@ -125,10 +126,10 @@ export const UserTable = () => {
       cell: ({ row }) => (
         <div className="options center">
           <div onClick={() => onOpenModal('edit', row.original.id)}>
-            <EditIcon styleClass="icon" />
+            <EditIcon className="icon" />
           </div>
           <div onClick={() => onOpenModal('delete_user', row.original.id)}>
-            <DeleteIcon styleClass="icon" />
+            <DeleteIcon className="icon" />
           </div>
         </div>
       )

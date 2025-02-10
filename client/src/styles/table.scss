@@ -88,6 +88,8 @@
           gap: 8px;
 
           .icon {
+            width: 1em;
+            height: 1em;
             fill: map-get($neutral, 400);
             font-size: 20px;
             cursor: pointer;
@@ -150,6 +152,8 @@
             cursor: pointer;
 
             .icon {
+              width: 1em;
+              height: 1em;
               font-size: 24px;
               fill: map-get($neutral, 100);
 
