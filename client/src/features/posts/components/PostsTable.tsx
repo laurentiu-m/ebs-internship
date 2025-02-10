@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Roles, Routes } from '@src/app-constants';
 import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
+import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
@@ -44,10 +45,6 @@ export const PostsTable = () => {
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
   const columnHelper = createColumnHelper<Posts>();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pagination]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
@@ -124,6 +121,7 @@ export const PostsTable = () => {
 
   return (
     <div className="posts__table">
+      <ScrollToTop pagination={pagination} />
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}

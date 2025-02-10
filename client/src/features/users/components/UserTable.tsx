@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Routes } from '@src/app-constants';
-import { DeleteIcon, Loading, Table } from '@src/components';
-import { EditIcon } from '@src/components';
+import { DeleteIcon, Loading, Table, EditIcon } from '@src/components';
 import { UserTable as UserTableTypes } from '@src/types';
+import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
@@ -41,10 +41,6 @@ export const UserTable = () => {
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pagination]);
 
   const exactTextFilter = <TData,>(row: Row<TData>, columnId: string, filterValue: undefined) => {
     return row.getValue(columnId) === filterValue;
@@ -138,6 +134,7 @@ export const UserTable = () => {
 
   return (
     <div className="users__table">
+      <ScrollToTop pagination={pagination} />
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
