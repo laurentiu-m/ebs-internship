@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders, Roles } from '@src/app-constants';
 import { FormInput, FormSelect, CloseIcon } from '@src/components';
@@ -6,7 +8,6 @@ import { getUsersSchema } from '@src/schemas/';
 import { UserCreate, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 import { useCreateUser, useEditUser } from '../hooks/';
@@ -35,11 +36,15 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     handleSubmit,
     setError,
     control,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting, isDirty }
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: initialValues
   });
+
+  useEffect(() => {
+    reset(initialValues);
+  }, [initialValues, reset]);
 
   const genderOptions = [
     { value: Genders.Male, label: t('form.label.gender.male') },
@@ -59,17 +64,6 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
       ...rest,
       name: `${first_name} ${last_name}`
     };
-
-    if (initialValues) {
-      const hasChanged = Object.entries(data).some(
-        ([key, value]) => initialValues[key as keyof UserFormTypes] !== value
-      );
-
-      if (!hasChanged) {
-        toast.info("You haven't made any changes.");
-        return;
-      }
-    }
 
     if (userId) {
       editUser({ userId: userId, data: registerData, setError });
@@ -175,7 +169,12 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
           />
         </div>
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t(submitButton)} />
+        <input
+          disabled={isSubmitting || !isDirty}
+          type="submit"
+          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
+          value={t(submitButton)}
+        />
       </form>
     </>
   );

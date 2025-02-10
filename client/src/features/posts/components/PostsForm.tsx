@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CloseIcon, FormInput, FormTextarea } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
@@ -5,7 +7,6 @@ import { getPostsSchema } from '@src/schemas';
 import { PostForm } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 import { useCreatePost, useEditPost } from '../hooks';
@@ -31,25 +32,21 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
     register,
     reset,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting, isDirty }
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: initialValues
   });
+
+  useEffect(() => {
+    reset(initialValues);
+  }, [initialValues, reset]);
 
   if (!tokenData) return;
   const currentUserId = tokenData.userId;
 
   const onSubmit = async (data: FormData) => {
     const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
-
-    if (initialValues) {
-      const hasChanged = Object.entries(data).some(([key, value]) => initialValues[key as keyof PostForm] !== value);
-      if (!hasChanged) {
-        toast.info("You haven't made any changes.");
-        return;
-      }
-    }
 
     if (postId) {
       editPost({ data: postData, postId });
@@ -82,7 +79,12 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
           placeholder={t('form.label.body')}
           error={errors.body}
         />
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('form.button.create')} />
+        <input
+          disabled={isSubmitting || !isDirty}
+          type="submit"
+          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
+          value={t('form.button.create')}
+        />
       </form>
     </>
   );
