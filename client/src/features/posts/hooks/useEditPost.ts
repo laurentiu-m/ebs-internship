@@ -9,13 +9,14 @@ export const useEditPost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data, postId }: { data: PostCreate; postId: number }) => {
+    mutationFn: async ({ data, postId }: { data: PostCreate; postId: number; onCloseModal: () => void }) => {
       await apiClient.posts.edit(data, postId);
     },
-    onSuccess: (_, { postId }) => {
+    onSuccess: (_, { postId, onCloseModal }) => {
       queryClient.invalidateQueries({ queryKey: [`edit_post_${postId}`] });
       queryClient.invalidateQueries({ queryKey: ['posts_table'] });
       toast.success(t('notification.post_edit'));
+      onCloseModal();
     }
   });
 };

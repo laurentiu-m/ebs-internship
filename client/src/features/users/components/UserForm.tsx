@@ -67,7 +67,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     };
 
     return userId
-      ? editUser({ userId: userId, data: registerData, setError, reset })
+      ? editUser({ userId: userId, data: registerData, setError, onCloseModal })
       : createUser({ data: registerData, setError, reset });
   };
 

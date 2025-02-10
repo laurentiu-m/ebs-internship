@@ -49,7 +49,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
   const onSubmit = async (data: FormData) => {
     const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
 
-    return postId ? editPost({ data: postData, postId }) : createPost({ data: postData, reset });
+    return postId ? editPost({ data: postData, postId, onCloseModal }) : createPost({ data: postData, reset });
   };
 
   return (
