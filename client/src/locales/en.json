@@ -58,8 +58,7 @@
   },
 
   "users": {
-    "title-create": "Create User",
-    "title-edit": "Edit User"
+    "title-create": "Create User"
   },
 
   "posts": {

@@ -82,7 +82,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{userId ? `${t('users.title-edit')} ${userId}` : t('users.title-create')}</h1>
+        <h1 className="title">{userId ? `${t('table.edit')} ${initialValues?.username}` : t('users.title-create')}</h1>
         <CloseIcon styleClass="icon" onClose={onCloseModal} />
       </div>
 

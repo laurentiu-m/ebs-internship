@@ -52,8 +52,7 @@
     "logout": "Deconectare"
   },
   "users": {
-    "title-create": "Crează utilizator",
-    "title-edit": "Editează utilizator"
+    "title-create": "Crează utilizator"
   },
   "posts": {
     "title-create": "Crează postare",

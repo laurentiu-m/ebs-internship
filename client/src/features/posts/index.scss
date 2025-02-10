@@ -52,9 +52,9 @@
     @include flex(space-between, center, row);
     width: 100%;
     .title {
-      font-size: map-get($h2, font-size);
-      font-weight: map-get(map-get($h1, font-weight), medium);
-      line-height: map-get($h2, line-height);
+      font-size: map-get($h3, font-size);
+      font-weight: map-get($h3, font-weight);
+      line-height: map-get($h3, line-height);
       color: map-get($neutral, 100);
     }
 
