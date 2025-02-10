@@ -85,7 +85,7 @@ export const PostsTable = () => {
         oldData.filter((post) => post.id !== postId)
       );
       onCloseModal();
-      toast.success('The post was deleted successfully!');
+      toast.success(t('notification.post_delete'));
     }
   });
 

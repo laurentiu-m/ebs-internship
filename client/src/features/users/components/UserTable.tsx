@@ -83,7 +83,7 @@ export const UserTable = () => {
         oldData.filter((user) => user.id !== userId)
       );
       onCloseModal();
-      toast.success('The user was deleted successfully!');
+      toast.success(t('notification.user_delete'));
     }
   });
 

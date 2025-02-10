@@ -92,6 +92,16 @@
     "delete": "Delete"
   },
 
+  "notification": {
+    "user_create": "New user was created successfully.",
+    "user_edit": "User details updated successfully.",
+    "user_delete": "The user was deleted successfully!",
+    "post_create": "New post was created successfully.",
+    "post_edit": "Post details updated successfully.",
+    "post_delete": "The post was deleted successfully!",
+    "session": "Session expired. Please log in again."
+  },
+
   "error": {
     "first_name_empty": "First name is required.",
     "first_name_min": "First name should be at least 2 characters long.",
@@ -118,6 +128,13 @@
     "max_title": "Maximum 50 characters",
     "max_body": "Maximum 500 characters",
     "none": "",
+    "modal": {
+      "title_user": "Delete User",
+      "title_post": "Delete Post",
+      "warning": "Are you sure you want to delete",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
     "403": {
       "message": "Access Denied",
       "description": "You do not have permission to view this page."

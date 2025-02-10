@@ -2,10 +2,12 @@ import { apiClient } from '@src/api';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts, UserEdit } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 import { Loading } from './Loading';
 
 export const DeleteModal = ({ id, modalMode, onDelete }: { id: number; modalMode: string; onDelete: () => void }) => {
+  const { t } = useTranslation();
   const { onCloseModal } = useAppContext();
 
   const { data, isLoading } = useQuery({
@@ -24,9 +26,11 @@ export const DeleteModal = ({ id, modalMode, onDelete }: { id: number; modalMode
   return (
     <div className="delete">
       <div className="delete__info">
-        <h1 className="title">{modalMode === 'delete_user' ? 'Delete User' : 'Delete Post'}</h1>
+        <h1 className="title">
+          {modalMode === 'delete_user' ? t('error.modal.title_user') : t('error.modal.title_post')}
+        </h1>
         <p className="warning">
-          Are you sure you want to delete{' '}
+          {t('error.modal.warning')}{' '}
           {modalMode === 'delete_user' ? (
             <span>{(data as UserEdit)?.username}</span>
           ) : (
@@ -37,10 +41,10 @@ export const DeleteModal = ({ id, modalMode, onDelete }: { id: number; modalMode
 
       <div className="delete__buttons">
         <button className="cancel" onClick={onCloseModal}>
-          Cancel
+          {t('error.modal.cancel')}
         </button>
         <button className="delete" onClick={onDelete}>
-          Delete
+          {t('error.modal.delete')}
         </button>
       </div>
     </div>

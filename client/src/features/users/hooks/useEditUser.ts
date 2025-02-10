@@ -3,9 +3,11 @@ import { UserCreate, UserCreateForm } from '@src/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { UseFormSetError } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 
 export const useEditUser = () => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -20,7 +22,7 @@ export const useEditUser = () => {
     }) => {
       try {
         await apiClient.users.update(userId, data);
-        toast.success('User details updated successfully.');
+        toast.success(t('notification.user_edit'));
       } catch (err) {
         if (err instanceof AxiosError) {
           const errData = err.response?.data;
