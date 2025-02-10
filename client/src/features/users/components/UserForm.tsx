@@ -66,12 +66,9 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
       name: `${first_name} ${last_name}`
     };
 
-    if (userId) {
-      editUser({ userId: userId, data: registerData, setError });
-      return;
-    }
-
-    createUser({ data: registerData, setError, reset });
+    return userId
+      ? editUser({ userId: userId, data: registerData, setError, reset })
+      : createUser({ data: registerData, setError, reset });
   };
 
   return (

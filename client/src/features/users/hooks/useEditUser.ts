@@ -19,6 +19,7 @@ export const useEditUser = () => {
       userId: number;
       data: UserCreate;
       setError: UseFormSetError<UserCreateForm>;
+      reset: () => void;
     }) => {
       try {
         await apiClient.users.update(userId, data);
@@ -37,9 +38,10 @@ export const useEditUser = () => {
         }
       }
     },
-    onSuccess: async (_, { userId }) => {
+    onSuccess: async (_, { userId, reset }) => {
       queryClient.invalidateQueries({ queryKey: [`edit_user_${userId}`] });
       queryClient.invalidateQueries({ queryKey: ['user_table'] });
+      reset();
     }
   });
 };

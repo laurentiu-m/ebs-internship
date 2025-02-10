@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CloseIcon, FormInput, FormTextarea } from '@src/components';
+import CloseIcon from '@src/assets/icons/close_icon.svg?react';
+import { FormInput, FormTextarea } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { getPostsSchema } from '@src/schemas';
 import { PostForm } from '@src/types';
@@ -48,19 +49,14 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
   const onSubmit = async (data: FormData) => {
     const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
 
-    if (postId) {
-      editPost({ data: postData, postId });
-      return;
-    }
-
-    createPost({ data: postData, reset });
+    return postId ? editPost({ data: postData, postId }) : createPost({ data: postData, reset });
   };
 
   return (
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{postId ? `${t('posts.title-edit')} ${postId}` : t('posts.title-create')}</h1>
-        <CloseIcon styleClass="icon" onClose={onCloseModal} />
+        <CloseIcon className="icon" onClick={onCloseModal} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
