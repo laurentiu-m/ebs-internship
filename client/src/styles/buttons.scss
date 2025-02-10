@@ -1,7 +1,7 @@
 @use './variables.scss' as *;
 @use './mixins.scss' as *;
 
-@mixin button-style($width) {
+@mixin button-style($width, $background) {
   font-size: map-get($text-button, font-size);
   font-weight: map-get($text-button, font-weight);
   line-height: map-get($text-button, line-height);
@@ -15,10 +15,11 @@
   border-radius: $border-radius;
   outline: none;
   cursor: pointer;
-  background: $gradient;
+  background: $background;
   background-size: 200% auto;
   transition: all 0.4s ease-in-out;
   &:hover {
+    opacity: 110%;
     background-position: right center;
   }
 }

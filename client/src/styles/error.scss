@@ -33,7 +33,7 @@
     }
 
     &__button {
-      @include button-style(130px);
+      @include button-style(130px, $error-gradient);
     }
   }
 }

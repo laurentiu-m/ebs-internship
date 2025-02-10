@@ -1,8 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-import { JwtPayload } from '@src/types';
-
-type ModalMode = 'create' | 'edit' | 'delete' | null;
+import { JwtPayload, ModalMode } from '@src/types';
 
 type AppContext = {
   tokenData: JwtPayload | null;

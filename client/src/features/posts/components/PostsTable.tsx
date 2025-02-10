@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
 import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
+import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -20,6 +21,7 @@ import {
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 import Modal from 'react-modal';
+import { toast } from 'react-toastify';
 
 import { PostEdit, PostsCreate } from '../pages';
 
@@ -35,7 +37,7 @@ declare module '@tanstack/react-table' {
 
 export const PostsTable = () => {
   const { t } = useTranslation();
-  const { tokenData, isModalOpen, onOpenModal, onCloseModal, selectedCell } = useAppContext();
+  const { isModalOpen, onOpenModal, onCloseModal, selectedCell, modalMode, tokenData } = useAppContext();
   const queryClient = useQueryClient();
 
   const userRole = tokenData?.role;
@@ -82,6 +84,8 @@ export const PostsTable = () => {
       queryClient.setQueryData(['posts_table', userRole, userId], (oldData: Posts[]) =>
         oldData.filter((post) => post.id !== postId)
       );
+      onCloseModal();
+      toast.success('The post was deleted successfully!');
     }
   });
 
@@ -106,9 +110,8 @@ export const PostsTable = () => {
           <div onClick={() => onOpenModal('edit', row.original.id)}>
             <EditIcon styleClass="icon" />
           </div>
-
-          <div>
-            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
+          <div onClick={() => onOpenModal('delete_post', row.original.id)}>
+            <DeleteIcon styleClass="icon" />
           </div>
         </div>
       )
@@ -144,10 +147,14 @@ export const PostsTable = () => {
         isOpen={isModalOpen}
         onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
-        className="modal-content"
+        className={modalMode === 'delete_post' ? 'modal-content--delete' : 'modal-content'}
         overlayClassName="modal-overlay"
       >
-        {selectedCell ? <PostEdit id={selectedCell} /> : <PostsCreate />}
+        {modalMode === 'create' && <PostsCreate />}
+        {modalMode === 'edit' && selectedCell !== null && <PostEdit id={selectedCell} />}
+        {modalMode === 'delete_post' && selectedCell !== null && (
+          <DeleteModal id={selectedCell} modalMode={modalMode} onDelete={() => onDelete(selectedCell)} />
+        )}
       </Modal>
     </div>
   );

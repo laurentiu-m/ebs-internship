@@ -22,6 +22,7 @@ import {
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 import Modal from 'react-modal';
+import { toast } from 'react-toastify';
 
 import { UsersCreate, UsersEdit } from '../pages';
 
@@ -81,6 +82,8 @@ export const UserTable = () => {
       queryClient.setQueryData(['user_table'], (oldData: UserTableTypes[]) =>
         oldData.filter((user) => user.id !== userId)
       );
+      onCloseModal();
+      toast.success('The user was deleted successfully!');
     }
   });
 
@@ -124,8 +127,7 @@ export const UserTable = () => {
           <div onClick={() => onOpenModal('edit', row.original.id)}>
             <EditIcon styleClass="icon" />
           </div>
-
-          <div onClick={() => onOpenModal('delete', row.original.id)}>
+          <div onClick={() => onOpenModal('delete_user', row.original.id)}>
             <DeleteIcon styleClass="icon" />
           </div>
         </div>
@@ -162,12 +164,14 @@ export const UserTable = () => {
         isOpen={isModalOpen}
         onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
-        className={modalMode === 'delete' ? 'modal-content--delete' : 'modal-content'}
+        className={modalMode === 'delete_user' ? 'modal-content--delete' : 'modal-content'}
         overlayClassName="modal-overlay"
       >
         {modalMode === 'create' && <UsersCreate />}
         {modalMode === 'edit' && selectedCell !== null && <UsersEdit id={selectedCell} />}
-        {modalMode === 'delete' && selectedCell !== null && <DeleteModal onDelete={() => onDelete(selectedCell)} />}
+        {modalMode === 'delete_user' && selectedCell !== null && (
+          <DeleteModal id={selectedCell} modalMode={modalMode} onDelete={() => onDelete(selectedCell)} />
+        )}
       </Modal>
     </div>
   );

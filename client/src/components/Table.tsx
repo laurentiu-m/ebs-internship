@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { ModalMode } from '@src/types';
 import { flexRender, Table as TanStackTable } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -7,8 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
 import searchIcon from '../assets/icons/search_icon.svg';
-
-type ModalMode = 'create' | 'edit' | 'delete' | null;
 
 type TableProps<TData> = {
   table: TanStackTable<TData>;

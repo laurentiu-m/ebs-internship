@@ -1,10 +1,8 @@
 import { ReactNode, useState } from 'react';
 
-import { JwtPayload } from '@src/types';
+import { JwtPayload, ModalMode } from '@src/types';
 
 import { AppContext } from './AppContext';
-
-type ModalMode = 'create' | 'edit' | 'delete' | null;
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [tokenData, setTokenData] = useState<JwtPayload | null>(null);

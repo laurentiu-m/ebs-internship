@@ -15,7 +15,7 @@
       width: 100%;
 
       .button {
-        @include button-style(150px);
+        @include button-style(150px, $gradient);
       }
 
       .input-wrapper {
