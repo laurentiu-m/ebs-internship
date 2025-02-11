@@ -63,6 +63,14 @@
           text-align: center;
         }
 
+        .username {
+          width: 140px;
+        }
+
+        .options-wrapper {
+          width: 120px;
+        }
+
         th {
           text-align: left;
           margin: 0;
@@ -85,6 +93,7 @@
 
         .options {
           @include flex(center, center, row);
+          width: 100%;
           gap: 8px;
 
           .icon {

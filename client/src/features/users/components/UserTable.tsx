@@ -122,7 +122,7 @@ export const UserTable = () => {
     columnHelper.display({
       id: 'actions',
       header: t('table.options'),
-      meta: { className: 'center end' },
+      meta: { className: 'options-wrapper center end' },
       cell: ({ row }) => (
         <div className="options center">
           <div onClick={() => onOpenModal('edit', row.original.id)}>

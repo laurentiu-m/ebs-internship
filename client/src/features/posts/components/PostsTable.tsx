@@ -104,13 +104,20 @@ export const PostsTable = () => {
           })
         ]
       : []),
-    ...(userRole !== Roles.User ? [columnHelper.accessor('username', { header: 'Username' })] : []),
+    ...(userRole !== Roles.User
+      ? [
+          columnHelper.accessor('username', {
+            header: t('form.label.username'),
+            meta: { className: 'username center' }
+          })
+        ]
+      : []),
     columnHelper.accessor('title', { header: t('form.label.title') }),
     columnHelper.accessor('body', { header: t('form.label.body') }),
     columnHelper.display({
       id: 'actions',
       header: t('table.options'),
-      meta: { className: 'center end' },
+      meta: { className: 'options-wrapper center end' },
       cell: ({ row }) => (
         <div className="options center">
           <div onClick={() => onOpenModal('edit', row.original.id)}>
