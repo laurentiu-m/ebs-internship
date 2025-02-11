@@ -65,7 +65,7 @@
           fill: map-get($primary, base);
         }
 
-        h1 {
+        .text {
           font-size: map-get($h5, font-size);
           font-weight: map-get(map-get($h5, font-weight), medium);
           color: map-get($neutral, 100);
@@ -90,6 +90,7 @@
         width: 1em;
         height: 1em;
         fill: map-get($neutral, 100);
+        transition: all 0.2s ease-in-out;
       }
 
       .text {
@@ -103,6 +104,16 @@
 
         &--closed {
           opacity: 0;
+        }
+      }
+
+      &--active {
+        .icon {
+          fill: map-get($primary, selected);
+        }
+
+        .text {
+          color: map-get($primary, selected);
         }
       }
     }

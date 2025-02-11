@@ -22,7 +22,7 @@
     "label": {
       "name": "Nume",
       "first_name": "Prenume",
-      "last_name": "Nume de familie",
+      "last_name": "Nume",
       "username": "Nume de utilizator",
       "title": "Titlu",
       "body": "Conținut",
@@ -96,9 +96,8 @@
 
   "error": {
     "first_name_empty": "Prenumele este obligatoriu.",
-    "first_name_min": "Prenumele trebuie să aibă cel puțin 2 caractere.",
-    "last_name_empty": "Numele de familie este obligatoriu.",
-    "last_name_min": "Numele de familie trebuie să aibă cel puțin 2 caractere.",
+    "last_name_empty": "Numele este obligatoriu.",
+    "name_letters": "Trebuie să conțină doar litere",
     "username_empty": "Numele de utilizator este obligatoriu.",
     "username_min": "Numele de utilizator trebuie să aibă cel puțin 4 caractere.",
     "username_server": "Acest nume de utilizator este deja folosit. Te rugăm să alegi altul.",

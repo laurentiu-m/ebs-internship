@@ -50,78 +50,88 @@ export const Register = () => {
         <p className="description">{t('form.register.description')}</p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
-        <FormInput
-          name="first_name"
-          type="text"
-          label={t('form.label.first_name')}
-          register={register}
-          placeholder={t('form.label.first_name')}
-          error={errors.first_name}
-        />
-        <FormInput
-          name="last_name"
-          type="text"
-          label={t('form.label.last_name')}
-          register={register}
-          placeholder={t('form.label.last_name')}
-          error={errors.last_name}
-        />
-        <FormInput
-          name="email"
-          type="email"
-          label="Email"
-          register={register}
-          placeholder="Email"
-          error={errors.email}
-        />
-        <FormInput
-          name="username"
-          type="text"
-          label={t('form.label.username')}
-          register={register}
-          placeholder={t('form.label.username')}
-          error={errors.username}
-        />
-        <FormInput
-          name="phone"
-          type="text"
-          label={t('form.label.phone')}
-          register={register}
-          placeholder={t('form.label.phone')}
-          error={errors.phone}
-        />
-        <FormSelect
-          name="gender"
-          label={t('form.label.gender.label')}
-          placeholder={t('form.label.gender.default')}
-          control={control}
-          options={genderOptions}
-          error={errors.gender}
-        />
-        <FormInput
-          name="password"
-          type="password"
-          label={t('form.label.password')}
-          register={register}
-          placeholder={t('form.label.password')}
-          error={errors.password}
-        />
-        <FormInput
-          name="confirm_password"
-          type="password"
-          label={t('form.label.confirm_password')}
-          register={register}
-          placeholder={t('form.label.confirm_password')}
-          error={errors.confirm_password}
-        />
+      <div className="auth__register">
+        <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
+          <div className="form__wrapper">
+            <FormInput
+              name="first_name"
+              type="text"
+              label={t('form.label.first_name')}
+              register={register}
+              placeholder={t('form.label.first_name')}
+              error={errors.first_name}
+            />
+            <FormInput
+              name="last_name"
+              type="text"
+              label={t('form.label.last_name')}
+              register={register}
+              placeholder={t('form.label.last_name')}
+              error={errors.last_name}
+            />
+          </div>
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t('form.register.submit')} />
+          <FormInput
+            name="email"
+            type="email"
+            label="Email"
+            register={register}
+            placeholder="Email"
+            error={errors.email}
+          />
+          <FormInput
+            name="username"
+            type="text"
+            label={t('form.label.username')}
+            register={register}
+            placeholder={t('form.label.username')}
+            error={errors.username}
+          />
 
-        <div className="form__redirect">
-          {t('form.redirect.title-register')} <Link to="/login">{t('form.login.title')}</Link>
-        </div>
-      </form>
+          <div className="form__wrapper">
+            <FormInput
+              name="phone"
+              type="text"
+              label={t('form.label.phone')}
+              register={register}
+              placeholder={t('form.label.phone')}
+              error={errors.phone}
+            />
+            <FormSelect
+              name="gender"
+              label={t('form.label.gender.label')}
+              placeholder={t('form.label.gender.default')}
+              control={control}
+              options={genderOptions}
+              error={errors.gender}
+            />
+          </div>
+
+          <FormInput
+            name="password"
+            type="password"
+            label={t('form.label.password')}
+            register={register}
+            placeholder={t('form.label.password')}
+            error={errors.password}
+          />
+          <FormInput
+            name="confirm_password"
+            type="password"
+            label={t('form.label.confirm_password')}
+            register={register}
+            placeholder={t('form.label.confirm_password')}
+            error={errors.confirm_password}
+          />
+
+          <div className="form__submit">
+            <input disabled={isSubmitting} type="submit" className="button" value={t('form.register.submit')} />
+            <div className="redirect">
+              {t('form.redirect.title-register')} <Link to="/login">{t('form.login.title')}</Link>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

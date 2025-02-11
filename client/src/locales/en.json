@@ -104,9 +104,8 @@
 
   "error": {
     "first_name_empty": "First name is required.",
-    "first_name_min": "First name should be at least 2 characters long.",
     "last_name_empty": "Last name is required.",
-    "last_name_min": "Last name should be at least 2 characters long.",
+    "name_letters": "Must contain only letters",
     "username_empty": "Username is required.",
     "username_min": "Username should be at least 4 characters long.",
     "username_server": "This username is already taken. Please choose another.",

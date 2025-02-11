@@ -108,7 +108,7 @@ export const PostsTable = () => {
       ? [
           columnHelper.accessor('username', {
             header: t('form.label.username'),
-            meta: { className: 'username center' }
+            meta: { className: 'username' }
           })
         ]
       : []),

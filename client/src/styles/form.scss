@@ -7,12 +7,18 @@
   .form {
     @include flex(space-between, center, column);
     width: $width;
-    gap: 16px;
+
+    &__wrapper {
+      width: $width;
+      height: 100%;
+      @include flex(center, center, row);
+      gap: 16px;
+    }
 
     &__input,
-    &__select,
-    &__textarea {
+    &__select {
       width: 100%;
+      min-height: 100px;
       &-wrapper {
         width: 100%;
         @include flex(center, flex-start, column);
@@ -34,27 +40,28 @@
       }
     }
 
-    &__textarea-field {
-      resize: vertical;
-      min-height: 200px;
-      max-height: 400px;
-    }
-
     &__submit {
-      @include button-style(100%, $gradient);
-    }
+      width: 100%;
+      @include flex(center, center, column);
+      gap: 8px;
+      padding-block: 8px;
 
-    &__redirect {
-      color: map-get($neutral, 100);
-      a {
-        color: map-get($primary, base);
-        text-decoration: none;
-        transition: color 0.2s ease;
-        &:hover {
-          color: map-get($primary, hover);
-        }
-        &:active {
-          color: map-get($primary, active);
+      .button {
+        @include button-style(100%, $gradient);
+      }
+
+      .redirect {
+        color: map-get($neutral, 100);
+        a {
+          color: map-get($primary, base);
+          text-decoration: none;
+          transition: color 0.2s ease;
+          &:hover {
+            color: map-get($primary, hover);
+          }
+          &:active {
+            color: map-get($primary, active);
+          }
         }
       }
     }
