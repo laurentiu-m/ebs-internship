@@ -7,7 +7,7 @@ import EditIcon from '@src/assets/icons/edit_icon.svg?react';
 import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
-import { Posts } from '@src/types';
+import { PostsTable as Posts } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
@@ -96,11 +96,15 @@ export const PostsTable = () => {
   };
 
   const columns = [
-    columnHelper.accessor('id', {
-      enableGlobalFilter: false,
-      meta: { className: 'center start post-col' }
-    }),
-    columnHelper.accessor('userId', { header: 'userId' }),
+    ...(userRole !== Roles.User
+      ? [
+          columnHelper.accessor('id', {
+            enableGlobalFilter: false,
+            meta: { className: 'center start post-col' }
+          })
+        ]
+      : []),
+    ...(userRole !== Roles.User ? [columnHelper.accessor('username', { header: 'Username' })] : []),
     columnHelper.accessor('title', { header: t('form.label.title') }),
     columnHelper.accessor('body', { header: t('form.label.body') }),
     columnHelper.display({

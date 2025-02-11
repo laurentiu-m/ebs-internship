@@ -5,8 +5,20 @@ export type Posts = {
   body: string;
 };
 
+export type PostsTable = {
+  username: string;
+  id: number;
+  title: string;
+  body: string;
+};
+
 export type PostsList = {
-  results: [Posts];
+  results: {
+    username: string;
+    id: number;
+    title: string;
+    body: string;
+  }[];
   count: number;
 };
 
