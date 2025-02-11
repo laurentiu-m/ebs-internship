@@ -27,7 +27,7 @@ export type PostForm = Omit<Posts, 'id' | 'userId'>;
 export type PostCreate = Omit<Posts, 'id'>;
 
 export type TopPosts = {
-  postId: number;
+  title: string;
   commentCount: number;
 };
 

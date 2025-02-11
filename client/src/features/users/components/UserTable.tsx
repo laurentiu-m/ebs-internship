@@ -94,7 +94,6 @@ export const UserTable = () => {
 
   const columns = [
     columnHelper.accessor('id', {
-      enableGlobalFilter: false,
       meta: { className: 'center start' }
     }),
     columnHelper.accessor('name', { header: t('form.label.name') }),

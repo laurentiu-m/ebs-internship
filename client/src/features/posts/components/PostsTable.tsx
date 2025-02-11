@@ -99,7 +99,6 @@ export const PostsTable = () => {
     ...(userRole !== Roles.User
       ? [
           columnHelper.accessor('id', {
-            enableGlobalFilter: false,
             meta: { className: 'center start post-col' }
           })
         ]

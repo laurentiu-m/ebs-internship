@@ -95,7 +95,7 @@ export type UserLoginRes = {
 };
 
 export type TopUser = {
-  postId: number;
+  title: string;
   commentCount: number;
 };
 

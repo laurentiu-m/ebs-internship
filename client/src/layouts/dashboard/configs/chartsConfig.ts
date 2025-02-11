@@ -11,15 +11,15 @@ export const configBar = {
   },
   postCommented: {
     queryKey: 'top_posts',
-    axisKey: { yKey: 'commentCount', xKey: 'postId' },
-    tooltip: { xKey: 'PostId', yKey: 'Comments' },
+    axisKey: { yKey: 'commentCount', xKey: 'title' },
+    tooltip: { xKey: 'Title', yKey: 'Comments' },
     fetchFunction: () => apiClient.posts.getTopPosts(),
     requiredRoles: [Roles.Admin, Roles.Moderator]
   },
   userPostCommented: {
     queryKey: 'user_post_commented',
-    axisKey: { yKey: 'commentCount', xKey: 'postId' },
-    tooltip: { xKey: 'PostId', yKey: 'Comments' },
+    axisKey: { yKey: 'commentCount', xKey: 'title' },
+    tooltip: { xKey: 'Title', yKey: 'Comments' },
     fetchFunction: async (userId: number) => {
       const { commentsCounts } = await apiClient.posts.getUserPostComments(userId);
       return commentsCounts;
