@@ -167,12 +167,14 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
           />
         </div>
 
-        <input
-          disabled={isSubmitting || !isDirty}
-          type="submit"
-          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
-          value={t(submitButton)}
-        />
+        <div className="form__submit">
+          <input
+            disabled={isSubmitting || !isDirty}
+            type="submit"
+            className={`button ${!isDirty && 'button--disable'}`}
+            value={t(submitButton)}
+          />
+        </div>
       </form>
     </>
   );

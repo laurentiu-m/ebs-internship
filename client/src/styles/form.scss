@@ -72,18 +72,18 @@
   .form {
     @include flex(center, flex-start, column);
     width: 100%;
-    gap: 16px;
 
     &__wrapper {
       width: 100%;
       @include flex(space-between, center, row);
-      gap: 32px;
+      gap: 24px;
     }
 
     &__input,
     &__select,
     &__textarea {
       width: 100%;
+      min-height: 100px;
       &-wrapper {
         width: 100%;
         @include flex(center, flex-start, column);
@@ -112,11 +112,16 @@
     }
 
     &__submit {
-      @include button-style(200px, $gradient);
+      .button {
+        @include button-style(200px, $gradient);
+        &--disable {
+          background: map-get($primary, disabled);
+          cursor: default;
+        }
+      }
 
-      &--disable {
-        background: map-get($primary, disabled);
-        cursor: default;
+      &--post {
+        margin-block: 16px;
       }
     }
   }

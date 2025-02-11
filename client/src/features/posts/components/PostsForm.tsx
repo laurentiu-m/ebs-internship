@@ -75,12 +75,15 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
           placeholder={t('form.label.body')}
           error={errors.body}
         />
-        <input
-          disabled={isSubmitting || !isDirty}
-          type="submit"
-          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
-          value={t('form.button.create')}
-        />
+
+        <div className="form__submit form__submit--post">
+          <input
+            disabled={isSubmitting || !isDirty}
+            type="submit"
+            className={`button ${!isDirty && 'button--disable'}`}
+            value={t('form.button.create')}
+          />
+        </div>
       </form>
     </>
   );
