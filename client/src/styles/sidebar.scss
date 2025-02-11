@@ -56,7 +56,8 @@
         @include flex(center, center, row);
         gap: 6px;
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        transition-delay: 0.2s;
 
         .icon {
           width: 1em;
@@ -73,6 +74,7 @@
 
         &--closed {
           opacity: 0;
+          transition-delay: 0s;
         }
       }
     }

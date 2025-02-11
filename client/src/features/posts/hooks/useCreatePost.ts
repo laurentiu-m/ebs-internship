@@ -9,13 +9,13 @@ export const useCreatePost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data }: { data: PostCreate; reset: () => void }) => {
+    mutationFn: async ({ data }: { data: PostCreate; onCloseModal: () => void }) => {
       await apiClient.posts.create(data);
     },
-    onSuccess: (_, { reset }) => {
+    onSuccess: (_, { onCloseModal }) => {
       queryClient.invalidateQueries({ queryKey: ['posts_table'] });
       toast.success(t('notification.post_create'));
-      reset();
+      onCloseModal();
     }
   });
 };

@@ -17,7 +17,7 @@ export const useCreateUser = () => {
     }: {
       data: UserCreate;
       setError: UseFormSetError<UserCreateForm>;
-      reset: () => void;
+      onCloseModal: () => void;
     }) => {
       try {
         await apiClient.users.create(data);
@@ -37,9 +37,9 @@ export const useCreateUser = () => {
         throw err;
       }
     },
-    onSuccess: (_, { reset }) => {
+    onSuccess: (_, { onCloseModal }) => {
       queryClient.invalidateQueries({ queryKey: ['user_table'] });
-      reset();
+      onCloseModal();
     }
   });
 };
