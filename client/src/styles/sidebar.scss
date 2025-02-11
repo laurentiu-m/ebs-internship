@@ -53,11 +53,21 @@
       }
 
       .logo {
+        @include flex(center, center, row);
+        gap: 6px;
         opacity: 1;
         transition: opacity 0.3s ease-in-out;
 
+        .icon {
+          width: 1em;
+          height: 1em;
+          font-size: 24px;
+          fill: map-get($primary, base);
+        }
+
         h1 {
-          font-size: map-get($h3, font-size);
+          font-size: map-get($h5, font-size);
+          font-weight: map-get(map-get($h5, font-weight), medium);
           color: map-get($neutral, 100);
         }
 
