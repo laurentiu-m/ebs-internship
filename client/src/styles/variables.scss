@@ -1,36 +1,64 @@
-@use './colors' as *;
+// Colors
+$primary: (
+  base: #6c72ff,
+  hover: #5a60e6,
+  active: #494ecc,
+  selected: #7c82ff,
+  disabled: #aeb3ff
+);
 
-$primary-selected: $blue-100;
-$primary-hover: $blue-400;
-$primary-normal: $blue-500;
-$primary-click: $blue-600;
+$secondary: (
+  1: #0b1739,
+  2: #9a91fb,
+  3: #00c2ff,
+  4: #343b4f,
+  5: #fdb52a
+);
 
-$error-normal: $red-500;
+$neutral: (
+  100: #ffffff,
+  200: #d9e1fa,
+  300: #d1dbf9,
+  400: #aeb9e1,
+  500: #7e89ac,
+  600: #0b1739,
+  700: #0a1330,
+  800: #081028
+);
 
-$white: #ffffff;
+$pie-chart-colors: (
+  violet: #8951ff,
+  aqua: #21c3fc,
+  blue: #0e43fb
+);
 
-$text-heading: $gray-900;
-$text-normal: $gray-800;
-$text-secondary: $gray-600;
-$text-disable: $gray-400;
+$gradient: linear-gradient(to right, #6c72ff 0%, #494ecc 51%, #6c72ff 100%);
 
-$background: $gray-100;
+$error: #ff3b41;
 
+$shadow: (
+  1: 1px 1px 1px 0px rgba(16, 25, 52, 0.4),
+  2: 0px 2px 12px 0px rgba(1, 5, 17, 0.55)
+);
+
+// Sidebar
 $sidebar-width: 260px;
 $sidebar-width-closed: 112px;
 $sidebar-close-transition: 0.5s;
-$sidebar-background: $gray-900;
-$sidebar-hover: $gray-800;
-$sidebar-clicked: $gray-700;
 
-$border-color: $gray-400;
-$border-radius: 8px;
+// Border
+$border-color: map-get($secondary, 4);
+$border-radius: 4px;
 
-$width-sm: 1100px;
-$width-md: 1150px;
-$width-lg: 1200px;
-$width-xl: 1300px;
+// Width
+$width: 1050px;
+$width-sm: 1170px;
+$width-md: 1250px;
+$width-lg: 1350px;
+$width-xl: 1450px;
+$width-2xl: 1550px;
 
+// Fonts
 $h1: (
   font-size: 46px,
   font-weight: (
@@ -86,7 +114,7 @@ $text-button: (
   font-size: 14px,
   font-weight: 500,
   line-height: 24px,
-  text-transform: uppercase
+  text-transform: capitalize
 );
 $text-caption: (
   font-size: 12px,

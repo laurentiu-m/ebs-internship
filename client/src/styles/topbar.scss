@@ -4,7 +4,7 @@
 @mixin topbar-style {
   .topbar {
     @include flex(flex-end, center, row);
-    width: $width-sm;
+    width: $width;
     height: 96px;
     padding: 12px 0px;
     gap: 16px;
@@ -16,6 +16,20 @@
     &__user {
       @include flex(space-between, center, row);
       gap: 8px;
+      padding-inline: 8px;
+
+      span {
+        color: map-get($neutral, 400);
+        transition: color 0.2s ease;
+      }
+
+      &:hover span {
+        color: map-get($neutral, 100);
+      }
+    }
+
+    @include respond-to('sm') {
+      width: $width-sm;
     }
 
     @include respond-to('md') {
@@ -28,6 +42,10 @@
 
     @include respond-to('xl') {
       width: $width-xl;
+    }
+
+    @include respond-to('2xl') {
+      width: $width-2xl;
     }
   }
 }

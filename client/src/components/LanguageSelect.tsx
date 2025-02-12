@@ -7,6 +7,30 @@ const options = [
   { value: 'ro', label: 'Română' }
 ];
 
+const style = {
+  container: {
+    width: '100px'
+  },
+  control: {
+    border: '0px',
+    background: 'transparent',
+    padding: '0px'
+  },
+  menu: {
+    width: '100%',
+    margin: '0px'
+  },
+  option: {
+    font_size: '14px'
+  },
+  singleValue: {
+    font_size: '14px',
+    width: '100%',
+    align: 'center',
+    color: '#aeb9e1'
+  }
+};
+
 export const LanguageSelect = () => {
   const { i18n } = useTranslation();
 
@@ -19,6 +43,12 @@ export const LanguageSelect = () => {
   };
 
   return (
-    <CustomSelect options={options} defaultValue={i18n.language} placeholder="Language" onChange={onChangeLanguage} />
+    <CustomSelect
+      options={options}
+      style={style}
+      defaultValue={i18n.language}
+      placeholder="Language"
+      onChange={onChangeLanguage}
+    />
   );
 };

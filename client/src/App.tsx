@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 
 import { Dashboard } from '@src/layouts/dashboard/Dashboard';
 import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { Roles, Routes } from './app-constants';
 import { Layout, Error, Loading } from './components';
@@ -11,6 +12,7 @@ import { Login, Register } from './features/auth/pages';
 import { Posts, PostsCreate, PostEdit } from './features/posts/pages/';
 import { Users, UsersCreate, UsersEdit } from './features/users/pages';
 import { TokenAuth, RoleAccess } from './router';
+import ScrollToTop from './utils/ScrollToTop';
 
 // Routes Config
 const routesConfig = [
@@ -36,6 +38,18 @@ export const App = () => {
     <AppProvider>
       <Suspense fallback={<Loading />}>
         <Router>
+          <ToastContainer
+            autoClose={2000}
+            closeOnClick={true}
+            draggable={false}
+            position="top-center"
+            hideProgressBar={true}
+            limit={3}
+            theme="dark"
+            stacked
+            className="custom-toast-container"
+          />
+          <ScrollToTop />
           <RouterPaths>
             {/* Auth */}
             <Route path="/" element={<Navigate to={Routes.Dashboard} />} />

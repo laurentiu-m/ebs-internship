@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Routes } from '@src/app-constants';
-import { Loading, Table } from '@src/components';
+import { DeleteIcon, Loading, Table, EditIcon } from '@src/components';
 import { UserTable as UserTableTypes } from '@src/types';
+import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
@@ -77,7 +78,11 @@ export const UserTable = () => {
     columnHelper.accessor('name', { header: t('form.label.name') }),
     columnHelper.accessor('username', { header: t('form.label.username') }),
     columnHelper.accessor('email', { header: 'Email' }),
-    columnHelper.accessor('phone', { header: t('form.label.phone'), enableSorting: false }),
+    columnHelper.accessor('phone', {
+      header: t('form.label.phone'),
+      enableSorting: false,
+      meta: { className: 'center' }
+    }),
     columnHelper.accessor('gender', {
       header: undefined,
       filterFn: exactTextFilter,
@@ -98,10 +103,13 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
-          <button className="options__button" onClick={() => onDelete(row.original.id)}>
-            Delete
-          </button>
+          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>
+            <EditIcon styleClass="icon" />
+          </Link>
+
+          <div>
+            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
+          </div>
         </div>
       )
     })
@@ -126,6 +134,7 @@ export const UserTable = () => {
 
   return (
     <div className="users__table">
+      <ScrollToTop pagination={pagination} />
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}

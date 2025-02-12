@@ -6,6 +6,7 @@ import { Loading } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type TokenAuthProps = {
   element: JSX.Element;
@@ -26,6 +27,9 @@ export const TokenAuth = ({ element }: TokenAuthProps) => {
   useEffect(() => {
     if (isError) {
       localStorage.clear();
+
+      toast.error('Session expired. Please log in again.');
+
       navigate(Routes.Login);
     }
 

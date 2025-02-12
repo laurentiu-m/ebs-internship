@@ -6,7 +6,7 @@
 
 .layout {
   min-height: 100vh;
-  background: $background;
+  background: map-get($neutral, 800);
 
   @include sidebar-style;
 
@@ -15,10 +15,10 @@
     margin-left: $sidebar-width;
     @include topbar-style;
     @include error-style;
-    transition: margin $sidebar-close-transition ease;
+    transition: margin-left $sidebar-close-transition ease;
 
     &--sidebar-closed {
-      margin-left: 112px;
+      margin-left: $sidebar-width-closed;
     }
   }
 }

@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Roles, Routes } from '@src/app-constants';
-import { Loading, Table } from '@src/components';
+import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
+import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
@@ -78,7 +79,7 @@ export const PostsTable = () => {
   const columns = [
     columnHelper.accessor('id', {
       enableGlobalFilter: false,
-      meta: { className: 'center start' }
+      meta: { className: 'center start post-col' }
     }),
     columnHelper.accessor('userId', { header: 'userId' }),
     columnHelper.accessor('title', { header: t('form.label.title') }),
@@ -89,10 +90,13 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>{t('table.edit')}</Link>
-          <button className="options__button" onClick={() => onDelete(row.original.id)}>
-            Delete
-          </button>
+          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>
+            <EditIcon styleClass="icon" />
+          </Link>
+
+          <div>
+            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
+          </div>
         </div>
       )
     })
@@ -117,6 +121,7 @@ export const PostsTable = () => {
 
   return (
     <div className="posts__table">
+      <ScrollToTop pagination={pagination} />
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
