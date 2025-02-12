@@ -1,11 +1,22 @@
-import { AuthResponse, JwtPayload, User, UserLogin, UserRegister, ValidResponse, UserEdit } from '@src/types';
+import {
+  AuthResponse,
+  JwtPayload,
+  User,
+  UserLogin,
+  UserRegister,
+  ValidResponse,
+  UserEdit,
+  TopUser,
+  UserPie,
+  UserList
+} from '@src/types';
 
 import api from './axios';
 
 export const users = {
-  getList: async (): Promise<User[]> => {
-    const { data } = await api.get<User[]>('/users');
-    return data;
+  getList: async (params?: { id?: number }): Promise<UserList> => {
+    const { data } = await api.get('/api/users', { params });
+    return { result: data.result, count: data.count };
   },
 
   getById: async (id: number): Promise<User | UserEdit> => {
@@ -13,33 +24,23 @@ export const users = {
     return data;
   },
 
-  getTotalUsers: async () => {
-    const { headers } = await api.get('/users?_page=1&_limit=1');
-    return headers['x-total-count'];
-  },
-
-  getAdminCount: async () => {
-    const { data } = await api.get('/users?role=admin');
-    return data.length;
-  },
-
-  getModeratorCount: async () => {
-    const { data } = await api.get('/users?role=moderator');
-    return data.length;
-  },
-
-  getUserCount: async () => {
-    const { data } = await api.get('/users?role=user');
-    return data.length;
-  },
-
-  getTopUsers: async () => {
-    const { data } = await api.get('/api/charts/top-users');
+  getTopUsers: async (): Promise<TopUser[]> => {
+    const { data } = await api.get('/api/charts/users/top');
     return data;
   },
 
-  getGenderCount: async () => {
-    const { data } = await api.get('/api/charts/gender-count');
+  getGenderCount: async (): Promise<UserPie> => {
+    const { data } = await api.get('/api/charts/gender');
+    return data;
+  },
+
+  getRolesCount: async (): Promise<UserPie> => {
+    const { data } = await api.get('/api/charts/roles');
+    return data;
+  },
+
+  getTotalAlbums: async (userId: number): Promise<number> => {
+    const { data } = await api.get(`/api/charts/users/${userId}/albums/total`);
     return data;
   },
 
@@ -58,12 +59,12 @@ export const users = {
     return data.decodedToken;
   },
 
-  update: async (userId: string, userData: UserRegister) => {
+  update: async (userId: string, userData: UserRegister): Promise<void> => {
     const { data } = await api.put(`/api/users/edit/${userId}`, userData);
     return data;
   },
 
-  delete: async (id: number) => {
+  delete: async (id: number): Promise<void> => {
     const { data } = await api.delete(`/users/${id}`);
     return data;
   }

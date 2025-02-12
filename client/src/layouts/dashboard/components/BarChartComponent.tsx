@@ -1,43 +1,23 @@
 import { Loading } from '@src/components';
+import { BarChartProps } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer } from 'recharts';
 
-type BarChartProps = {
-  title: string;
-  queryKey: string;
-  axisKey: { yKey: string; xKey: string };
-  tooltip: { xKey: string; yKey: string };
-  fetchFunction: () => Promise<undefined>;
-};
+import { CustomBarShape, CustomCursor, CustomTooltip } from './BarCustomComponents';
 
-type CustomTooltipProps = {
-  active?: boolean;
-  payload?: { value: number; name: string }[];
-  label?: string | number;
-};
-
-export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
+export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
+  const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
 
   if (isLoading) return <Loading />;
 
-  const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="tooltip">
-          <p>{`${tooltip.xKey}: ${label}`}</p>
-          <p>{`${tooltip.yKey}: ${payload[0].value}`}</p>
-        </div>
-      );
-    }
-
-    return null;
-  };
+  if (data?.length === 0) return;
 
   return (
     <div className="bar-chart">
       <div className="header">
-        <h1 className="header__title">{title}</h1>
+        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
 
         <div className="header__info">
           <p>X: {axisKey.xKey}</p>
@@ -47,17 +27,11 @@ export const BarChartComponent = ({ title, queryKey, axisKey, tooltip, fetchFunc
 
       <div className="bar-chart__main">
         <ResponsiveContainer>
-          <BarChart data={data} barSize={10}>
+          <BarChart data={data} barSize={20}>
             <YAxis width={30} axisLine={false} tickLine={false} />
             <XAxis dataKey={axisKey.xKey} axisLine={false} tickLine={false} />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={{
-                stroke: '#e9ecef',
-                fill: '#e9ecef'
-              }}
-            />
-            <Bar dataKey={axisKey.yKey} radius={4} />
+            <Tooltip cursor={<CustomCursor />} content={<CustomTooltip tooltip={tooltip} />} />
+            <Bar dataKey={axisKey.yKey} shape={<CustomBarShape />} barSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>

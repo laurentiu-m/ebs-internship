@@ -59,6 +59,21 @@
     "title-create": "Crează postare",
     "title-edit": "Editează postare"
   },
+  "dashboard": {
+    "top_users": "Utilizatorii cu Cele Mai Multe Postări",
+    "top_posts": "Postările cu Cele Mai Multe Comentarii",
+    "user_post_commented": "Postările Tale cu Cele Mai Multe Comentarii",
+    "gender_number": "Distribuția Genului Utilizatorilor",
+    "roles_number": "Distribuția Rolurilor Utilizatorilor",
+    "total_users": "Numărul Total de Utilizatori",
+    "total_posts": "Numărul Total de Postări",
+    "total_comments": "Numărul Total de Comentarii",
+    "total_user_posts": "Numărul Tău Total de Postări",
+    "total_user_comments": "Totalul Comentariilor la Postările Tale",
+    "user_post_comments": "Totalul Postărilor pe Care le-ai Comentat",
+    "user_total_albums": "Numărul Tău Total de Albume"
+  },
+
   "table": {
     "button-users": "Adaugă utilizator",
     "button-posts": "Crează postare",

@@ -94,6 +94,27 @@ export type UserLoginRes = {
   role: string;
 };
 
+export type TopUser = {
+  postId: number;
+  commentCount: number;
+};
+
+export type UserPie = {
+  total: number;
+  result: [
+    {
+      name: string;
+      value: number;
+      percentage: number;
+    }
+  ];
+};
+
+export type UserList = {
+  result: [User];
+  count: number;
+};
+
 export type UserLoginSubmit = (
   data: UserLogin,
   setError: UseFormSetError<UserLogin>,

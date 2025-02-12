@@ -3,10 +3,10 @@
 @use '@styles/charts.scss' as *;
 
 .dashboard {
+  width: $width-sm;
   @include flex(flex-start, flex-start, column);
   gap: 32px;
   padding-bottom: 72px;
-  padding-inline: 32px;
 
   &__header {
     font-size: map-get($h1, font-size);
@@ -15,50 +15,73 @@
     color: $text-heading;
   }
 
-  &__stats {
-    width: 100%;
-    @include flex(flex-start, center, row);
-    gap: 16px;
-
-    .stat {
-      @include flex(flex-start, flex-start, column);
-      gap: 16px;
-      width: 250px;
-      border: 1px solid $border-color;
-      border-radius: $border-radius;
-      background: white;
-      padding: 16px;
-
-      &__title {
-        font-size: map-get($text-caption, font-size);
-        font-weight: map-get(map-get($text-caption, font-weight), medium);
-        line-height: map-get($text-caption, line-height);
-        color: $text-secondary;
-      }
-
-      &__result {
-        font-size: map-get($h4, font-size);
-        font-weight: map-get(map-get($h4, font-weight), medium);
-        line-height: map-get($h4, line-height);
-        color: $primary-normal;
-      }
-    }
-  }
-
   &__charts {
     width: 100%;
-    height: 500;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns */
-    grid-template-rows: repeat(2, 1fr); /* 2 rows */
+    @include flex(space-between, flex-start, column);
     gap: 32px;
 
-    .bar-chart {
-      @include bar-chart-style();
+    .charts-top {
+      @include flex(space-between, flex-start, row);
+      gap: 16px;
+      width: 100%;
+      height: 450px;
+
+      .bar-chart {
+        @include bar-chart-style(100%, 100%);
+      }
+    }
+
+    .charts-middle {
+      @include flex(center, center, row);
+      gap: 16px;
+      width: 100%;
+      height: 480px;
+
+      .wrapper {
+        @include flex(center, flex-start, column);
+        width: 100%;
+        height: 100%;
+        gap: 16px;
+
+        .bar-chart {
+          @include bar-chart-style(75%, 100%);
+        }
+
+        .stats {
+          @include stats-style(row, 25%, 100%);
+        }
+      }
+    }
+
+    .chart-bottom {
+      width: 100%;
+      height: 500px;
+      @include flex(flex-start, flex, column);
+      gap: 16px;
+
+      .stats {
+        @include stats-style(row, 23%, 100%);
+      }
+
+      .bar-chart {
+        @include bar-chart-style(75%, 100%);
+      }
     }
 
     .pie-chart {
       @include pie-chart-style();
     }
+  }
+
+  @include respond-to('md') {
+    width: $width-md;
+  }
+
+  @include respond-to('lg') {
+    width: $width-lg;
+  }
+
+  @include respond-to('xl') {
+    width: $width-xl;
   }
 }

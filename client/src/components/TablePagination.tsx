@@ -2,7 +2,7 @@ import { Table } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-import { ArrowSidebar } from './ArrowSidebar';
+import { ArrowIcon } from './Icons';
 
 type TableProps<TData> = {
   table: Table<TData>;
@@ -21,10 +21,10 @@ export const TablePagination = <TData,>({ table }: TableProps<TData>) => {
       <div className="active">
         <div className="active__buttons">
           <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            <ArrowSidebar styleClass={cn('icon', { 'icon--disabled': !table.getCanPreviousPage() })} />
+            <ArrowIcon styleClass={cn('icon', { 'icon--disabled': !table.getCanPreviousPage() })} />
           </button>
           <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            <ArrowSidebar styleClass={cn('icon icon--right', { 'icon--disabled': !table.getCanNextPage() })} />
+            <ArrowIcon styleClass={cn('icon icon--right', { 'icon--disabled': !table.getCanNextPage() })} />
           </button>
         </div>
 

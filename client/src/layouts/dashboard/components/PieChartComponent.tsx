@@ -1,60 +1,97 @@
 import { Loading } from '@src/components';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 type PieChartData = {
-  name: string;
-  value: number;
+  total: number;
+  result: [
+    {
+      name: string;
+      value: number;
+      percentage: number;
+    }
+  ];
 };
 
-type PieChartComponentProps = {
-  title: string;
+type Props = {
   queryKey: string;
-  fetchFunction: () => Promise<PieChartData[]>;
-  colors: string[];
+  fetchFunction: () => Promise<PieChartData>;
 };
 
-export const PieChartComponent = ({ title, queryKey, fetchFunction, colors }: PieChartComponentProps) => {
-  const { data, isLoading } = useQuery<PieChartData[]>({ queryKey: [queryKey], queryFn: fetchFunction });
+export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
+  const { t } = useTranslation();
+  const { data, isLoading } = useQuery<PieChartData>({ queryKey: [queryKey], queryFn: fetchFunction });
 
-  if (!data) return;
   if (isLoading) return <Loading />;
+  if (!data) return;
+
+  const CustomTooltip = ({
+    active,
+    payload
+  }: {
+    active?: boolean;
+    payload?: {
+      payload: {
+        name: string;
+        value: number;
+      };
+    }[];
+  }) => {
+    if (active && payload && payload.length) {
+      const { name, value } = payload[0].payload;
+
+      return (
+        <div className="custom-tooltip">
+          <p>
+            {name}: <span>{value}</span>
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="pie-chart">
       <div className="header">
-        <h1 className="header__title">{title}</h1>
+        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
       </div>
 
       <div className="pie-chart__main">
         <ResponsiveContainer>
           <PieChart>
             <Pie
-              data={data}
+              data={data.result}
               dataKey="value"
               nameKey="name"
               startAngle={360}
               endAngle={0}
-              innerRadius={100}
-              outerRadius={150}
+              innerRadius={80}
+              outerRadius={100}
               paddingAngle={0}
               cx="50%"
               cy="50%"
             >
-              {data.map((_, index) => (
-                <Cell key={`cell-${index}`} fill={colors[index]} />
+              {data.result.map((_, index) => (
+                <Cell key={`cell-${index}`} className={`color-${index}`} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
           </PieChart>
         </ResponsiveContainer>
+        <div className="total">{data.total}</div>
       </div>
 
       <div className="pie-chart__legends">
-        {data.map(({ name }, index) => (
+        {data.result.map(({ name, percentage }, index) => (
           <div className="legend" key={name}>
-            <span className="legend__dot" style={{ background: `${colors[index]}` }} />
-            <p className="legend__item">{name}</p>
+            <div className="legend__title">
+              <span className={`dot color-${index}`} />
+              <p className="item">{name}</p>
+            </div>
+            <p className="legend__percentage">{percentage}%</p>
           </div>
         ))}
       </div>

@@ -67,6 +67,21 @@
     "title-edit": "Edit Post"
   },
 
+  "dashboard": {
+    "top_users": "Users with the Highest Number of Posts",
+    "top_posts": "Posts with the Most Comments",
+    "user_post_commented": "Your Posts with the Most Comments",
+    "gender_number": "User Gender Distribution",
+    "roles_number": "User Roles Distribution",
+    "total_users": "Total Number of Users",
+    "total_posts": "Total Number of Posts",
+    "total_comments": "Total Number of Comments",
+    "total_user_posts": "Your Total Number of Posts",
+    "total_user_comments": "Total Comments on Your Posts",
+    "user_post_comments": "Total Posts You Have Commented On",
+    "user_total_albums": "Your Total Number of Albums"
+  },
+
   "table": {
     "button-users": "Add User",
     "button-posts": "Create Post",

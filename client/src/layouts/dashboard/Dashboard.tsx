@@ -1,4 +1,4 @@
-import { ChartsComponent, StatsComponent } from './components/';
+import { ChartsComponent } from './components/';
 import './index.scss';
 
 export const Dashboard = () => {
@@ -6,7 +6,6 @@ export const Dashboard = () => {
     <div className="dashboard">
       <h1 className="dashboard__header">Dashboard</h1>
 
-      <StatsComponent />
       <ChartsComponent />
     </div>
   );
