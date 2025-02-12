@@ -10,7 +10,12 @@ export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }:
   const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="bar-chart">
+        <Loading />
+      </div>
+    );
 
   if (data?.length === 0) return;
 
