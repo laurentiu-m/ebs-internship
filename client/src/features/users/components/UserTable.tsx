@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import DeleteIcon from '@src/assets/icons/delete_icon.svg?react';
-import EditIcon from '@src/assets/icons/edit_icon.svg?react';
+import { DeleteIcon, EditIcon } from '@src/assets/icons';
 import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';

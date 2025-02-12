@@ -1,0 +1,12 @@
+export { default as AccountIcon } from './account_icon.svg?react';
+export { default as AlbumIcon } from './album_icon.svg?react';
+export { default as ArrowIcon } from './arrow_icon.svg?react';
+export { default as CloseIcon } from './close_icon.svg?react';
+export { default as CommentIcon } from './comment_icon.svg?react';
+export { default as DeleteIcon } from './delete_icon.svg?react';
+export { default as EditIcon } from './edit_icon.svg?react';
+export { default as HomeIcon } from './home_icon.svg?react';
+export { default as PostsIcon } from './posts_icon.svg?react';
+export { default as SearchIcon } from './search_icon.svg?react';
+export { default as UsersIcon } from './users_icon.svg?react';
+export { default as Logo } from './logo.svg?react';

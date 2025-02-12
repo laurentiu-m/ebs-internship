@@ -1,5 +1,5 @@
 import { Routes } from '@src/app-constants';
-import AccountIcon from '@src/assets/icons/account_icon.svg?react';
+import { AccountIcon } from '@src/assets/icons';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';

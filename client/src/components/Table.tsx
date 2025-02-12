@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { SearchIcon } from '@src/assets/icons';
 import { ModalMode } from '@src/types';
 import { flexRender, Table as TanStackTable } from '@tanstack/react-table';
 import cn from 'classnames';
@@ -7,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
-import searchIcon from '../assets/icons/search_icon.svg';
 
 type TableProps<TData> = {
   table: TanStackTable<TData>;
@@ -28,7 +28,7 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
           {header.title}
         </button>
         <div className="input-wrapper">
-          <img src={searchIcon} alt="search-icon" />
+          <SearchIcon className="icon" />
           <input
             value={state?.globalFilter || ''}
             className="input"

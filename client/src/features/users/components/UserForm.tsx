@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders, Roles } from '@src/app-constants';
-import CloseIcon from '@src/assets/icons/close_icon.svg?react';
+import { CloseIcon } from '@src/assets/icons';
 import { FormInput, FormSelect } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { getUsersSchema } from '@src/schemas/';

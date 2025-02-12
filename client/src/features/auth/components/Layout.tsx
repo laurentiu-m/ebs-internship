@@ -1,4 +1,4 @@
-import Logo from '@src/assets/icons/logo.svg?react';
+import { Logo } from '@src/assets/icons';
 import { LanguageSelect } from '@src/components';
 import { Outlet } from 'react-router-dom';
 

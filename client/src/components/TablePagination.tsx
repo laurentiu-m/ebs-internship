@@ -1,4 +1,4 @@
-import ArrowIcon from '@src/assets/icons/arrow_icon.svg?react';
+import { ArrowIcon } from '@src/assets/icons';
 import { Table } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';

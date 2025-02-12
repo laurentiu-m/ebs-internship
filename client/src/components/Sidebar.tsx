@@ -1,10 +1,6 @@
 import { Roles, Routes } from '@src/app-constants';
 import '@src/styles/sidebar.scss';
-import ArrowIcon from '@src/assets/icons/arrow_icon.svg?react';
-import Home from '@src/assets/icons/home_icon.svg?react';
-import Logo from '@src/assets/icons/logo.svg?react';
-import PostsIcon from '@src/assets/icons/posts_icon.svg?react';
-import UsersIcon from '@src/assets/icons/users_icon.svg?react';
+import { ArrowIcon, HomeIcon, PostsIcon, UsersIcon, Logo } from '@src/assets/icons';
 import { useAppContext } from '@src/hooks/useAppContext';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +22,7 @@ export const Sidebar = () => {
   const buttonsConfig = [
     {
       text: 'dashboard',
-      icon: <Home className="icon" />,
+      icon: <HomeIcon className="icon" />,
       link: Routes.Dashboard,
       requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
     },
