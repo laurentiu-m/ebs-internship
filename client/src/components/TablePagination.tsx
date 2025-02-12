@@ -53,7 +53,8 @@ export const TablePagination = ({ page }: TableProps) => {
   return (
     <div className="table__pagination">
       <div className="pages">
-        Page {page.pageIndex + 1} {t('table.page')} {page.totalPages > 0 ? page.totalPages : page.totalPages + 1}
+        {t('table.page')} {page.pageIndex + 1} {t('table.page_of')}{' '}
+        {page.totalPages > 0 ? page.totalPages : page.totalPages + 1}
       </div>
 
       <div className="active">
@@ -76,7 +77,7 @@ export const TablePagination = ({ page }: TableProps) => {
 
           <CustomSelect
             defaultValue={page.pageSize}
-            placement="top"
+            placement={page.totalPages > 0 ? 'top' : 'bottom'}
             style={style}
             options={options}
             onChange={(selectedOption) => {
