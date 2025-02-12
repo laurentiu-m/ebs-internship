@@ -16,9 +16,17 @@ type TableProps<TData> = {
     setGlobalFilter: Dispatch<SetStateAction<string | null>>;
   };
   header: { title: string; onClick: (mode?: ModalMode, id?: number) => void };
+  page: {
+    pageIndex: number;
+    pageSize: number;
+    currentTotalPages: number;
+    totalPages: number;
+    onPageChange: (index: number) => void;
+    onRowsChange: (index: number) => void;
+  };
 };
 
-export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
+export const Table = <TData,>({ table, state, header, page }: TableProps<TData>) => {
   const { t } = useTranslation();
 
   return (
@@ -85,7 +93,7 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
         </tbody>
       </table>
 
-      <TablePagination table={table} />
+      <TablePagination page={page} />
     </div>
   );
 };

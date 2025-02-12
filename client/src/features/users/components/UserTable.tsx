@@ -15,7 +15,6 @@ import {
   getCoreRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   PaginationState,
   Row,
@@ -63,22 +62,27 @@ export const UserTable = () => {
   };
 
   const { data, isLoading } = useQuery({
-    queryKey: ['user_table'],
+    queryKey: ['user_table', pagination.pageIndex, pagination.pageSize, globalFilter],
     queryFn: async () => {
-      const { result } = await apiClient.users.getList();
-      return result;
-    }
+      if (globalFilter) {
+        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+      }
+
+      return await apiClient.users.getList({
+        page: pagination.pageIndex + 1,
+        rows: pagination.pageSize,
+        search: globalFilter || undefined
+      });
+    },
+    placeholderData: (previousData) => previousData
   });
 
   const { mutate: deleteUser } = useMutation({
     mutationFn: async (userId: number) => {
       await apiClient.users.delete(userId);
-      return userId;
     },
-    onSuccess: (userId: number) => {
-      queryClient.setQueryData(['user_table'], (oldData: UserTableTypes[]) =>
-        oldData.filter((user) => user.id !== userId)
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user_table'] });
       onCloseModal();
       toast.success(t('notification.user_delete'));
     }
@@ -132,18 +136,16 @@ export const UserTable = () => {
   ];
 
   const table = useReactTable({
-    data: data || [],
+    data: data?.result || [],
     columns,
-    state: { columnFilters, pagination, globalFilter },
+    state: { columnFilters, pagination },
     autoResetPageIndex: false,
     onColumnFiltersChange: setColumnFilters,
-    onPaginationChange: setPagination,
-    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    getPaginationRowModel: getPaginationRowModel()
+    getSortedRowModel: getSortedRowModel(),
+    onPaginationChange: setPagination
   });
 
   if (isLoading) return <Loading />;
@@ -151,10 +153,19 @@ export const UserTable = () => {
   return (
     <div className="users__table">
       <ScrollToTop pagination={pagination} />
+
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
         header={{ title: t('table.button-users'), onClick: () => onOpenModal('create') }}
+        page={{
+          pageIndex: pagination.pageIndex,
+          pageSize: pagination.pageSize,
+          currentTotalPages: data?.result.length || 0,
+          totalPages: data?.totalPages || 0,
+          onPageChange: (pageIndex: number) => setPagination((prev) => ({ ...prev, pageIndex })),
+          onRowsChange: (pageSize: number) => setPagination(() => ({ pageIndex: 0, pageSize }))
+        }}
       />
 
       <Modal
