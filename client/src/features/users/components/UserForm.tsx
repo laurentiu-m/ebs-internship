@@ -71,10 +71,18 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
       : createUser({ data: registerData, setError, reset });
   };
 
+  const onTitle = () => {
+    if (userId) {
+      return `${t('users.title-edit')} ${userId}`;
+    } else {
+      return t('users.title-create');
+    }
+  };
+
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{userId ? `${t('table.edit')} ${initialValues?.username}` : t('users.title-create')}</h1>
+        <h1 className="title">{onTitle()}</h1>
         <CloseIcon className="icon" onClick={onCloseModal} />
       </div>
 

@@ -12,6 +12,10 @@ const db = jsonServer.router(config.db).db;
 
 const router = Router();
 
+const onPercentage = (value: number, total: number) => {
+  return Math.round(((value * 100) / total) * 100) / 100;
+};
+
 router.get("/users/top", (req: Request, res: Response) => {
   const posts = db.get("posts").value();
   const users = db.get("users").value();
@@ -62,17 +66,17 @@ router.get("/gender", (req: Request, res: Response) => {
       {
         name: "female",
         value: female,
-        percentage: Math.round(((female * 100) / total) * 100) / 100,
+        percentage: onPercentage(female, total),
       },
       {
         name: "male",
         value: male,
-        percentage: Math.round(((male * 100) / total) * 100) / 100,
+        percentage: onPercentage(male, total),
       },
       {
         name: "prefer_not_to_say",
         value: prefer_not_to_say,
-        percentage: Math.round(((prefer_not_to_say * 100) / total) * 100) / 100,
+        percentage: onPercentage(prefer_not_to_say, total),
       },
     ],
   });
@@ -94,17 +98,17 @@ router.get("/roles", (req: Request, res: Response) => {
       {
         name: "admin",
         value: admin,
-        percentage: Math.round(((admin * 100) / total) * 100) / 100,
+        percentage: onPercentage(admin, total),
       },
       {
         name: "moderator",
         value: moderator,
-        percentage: Math.round(((moderator * 100) / total) * 100) / 100,
+        percentage: onPercentage(moderator, total),
       },
       {
         name: "user",
         value: user,
-        percentage: Math.round(((user * 100) / total) * 100) / 100,
+        percentage: onPercentage(user, total),
       },
     ],
   });
