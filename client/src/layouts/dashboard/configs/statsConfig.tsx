@@ -1,9 +1,6 @@
 import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
-import AlbumIcon from '@src/assets/icons/album_icon.svg?react';
-import CommentIcon from '@src/assets/icons/comment_icon.svg?react';
-import PostIcon from '@src/assets/icons/posts_icon.svg?react';
-import UserIcon from '@src/assets/icons/users_icon.svg?react';
+import { AlbumIcon, CommentIcon, PostsIcon, UsersIcon } from '@src/assets/icons';
 
 export const configStats = {
   totalUsers: {
@@ -13,7 +10,7 @@ export const configStats = {
       return count;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator],
-    icon: <UserIcon className="icon" />
+    icon: <UsersIcon className="icon" />
   },
   totalPosts: {
     queryKey: 'total_posts',
@@ -22,7 +19,7 @@ export const configStats = {
       return count;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator],
-    icon: <PostIcon className="icon" />
+    icon: <PostsIcon className="icon" />
   },
   totalComments: {
     queryKey: 'total_comments',
@@ -37,7 +34,7 @@ export const configStats = {
       return count;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User],
-    icon: <PostIcon className="icon" />
+    icon: <PostsIcon className="icon" />
   },
   totalUserComments: {
     queryKey: 'total_user_comments',

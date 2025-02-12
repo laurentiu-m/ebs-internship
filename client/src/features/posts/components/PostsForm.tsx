@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import CloseIcon from '@src/assets/icons/close_icon.svg?react';
+import { CloseIcon } from '@src/assets/icons';
 import { FormInput, FormTextarea } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { getPostsSchema } from '@src/schemas';

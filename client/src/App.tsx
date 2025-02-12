@@ -9,7 +9,7 @@ import { Layout, Error, Loading } from './components';
 import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
-import { Posts } from './features/posts/pages/';
+import { Posts } from './features/posts/pages';
 import { Users } from './features/users/pages';
 import { TokenAuth, RoleAccess } from './router';
 import ScrollToTop from './utils/ScrollToTop';
