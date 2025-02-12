@@ -5,9 +5,10 @@ import { getUsersSchema } from '@src/schemas/';
 import { UserCreate, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-import { createUser, editUser } from '../utils/userUtils';
+import { useCreateUser, useEditUser } from '../hooks/';
 
 type Props = {
   mainClass: string;
@@ -18,6 +19,9 @@ type Props = {
 
 export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
   const { t } = useTranslation();
+
+  const { mutate: createUser } = useCreateUser();
+  const { mutate: editUser } = useEditUser();
 
   const schema = getUsersSchema(t);
 
@@ -59,15 +63,20 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
         ([key, value]) => initialValues[key as keyof UserFormTypes] !== value
       );
 
-      if (!hasChanged) return;
+      if (!hasChanged) {
+        toast.info("You haven't made any changes.");
+        return;
+      }
     }
 
     if (userId) {
-      await editUser(registerData, setError, userId);
+      editUser({ userId: userId, data: registerData, setError });
+      toast.success('User details updated successfully.');
       return;
     }
 
-    await createUser(registerData, setError);
+    createUser({ data: registerData, setError });
+    toast.success('New user was created successfully.');
     reset();
   };
 

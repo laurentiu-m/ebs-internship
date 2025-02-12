@@ -126,9 +126,3 @@ export type UserRegisterSubmit = (
   setError: UseFormSetError<UserRegisterForm>,
   navigate: NavigateFunction
 ) => Promise<void>;
-
-export type UserFormSubmit = (
-  registerData: UserCreate,
-  setError: UseFormSetError<UserCreateForm>,
-  userId?: string
-) => Promise<void | boolean>;

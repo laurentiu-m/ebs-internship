@@ -5,9 +5,10 @@ import { getPostsSchema } from '@src/schemas';
 import { PostForm } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-import { createPost, editPost } from '../utils/postsUtils';
+import { useCreatePost, useEditPost } from '../hooks';
 
 type Props = {
   mainClass: string;
@@ -19,6 +20,8 @@ type Props = {
 export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Props) => {
   const { t } = useTranslation();
   const { tokenData } = useAppContext();
+  const { mutate: createPost } = useCreatePost();
+  const { mutate: editPost } = useEditPost();
 
   const schema = getPostsSchema(t);
 
@@ -42,15 +45,20 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
 
     if (initialValues) {
       const hasChanged = Object.entries(data).some(([key, value]) => initialValues[key as keyof PostForm] !== value);
-      if (!hasChanged) return;
+      if (!hasChanged) {
+        toast.info("You haven't made any changes.");
+        return;
+      }
     }
 
     if (postId) {
-      await editPost(postData, postId);
+      editPost({ data: postData, postId });
+      toast.success('Post details updated successfully.');
       return;
     }
 
-    await createPost(postData);
+    createPost({ data: postData });
+    toast.success('New post was created successfully.');
     reset();
   };
 
