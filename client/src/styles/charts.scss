@@ -5,6 +5,7 @@
   @include flex(flex-start, flex-start, column);
   width: $width;
   height: $height;
+  position: relative;
   gap: 32px;
   background: map-get($secondary, 1);
   border: none;
@@ -79,6 +80,7 @@
   @include flex(center, center, column);
   width: 450px;
   height: 100%;
+  position: relative;
   padding: 24px;
   border: none;
   border-radius: $border-radius;
@@ -207,6 +209,7 @@
 
   .stat {
     @include flex(center, flex-start, column);
+    position: relative;
     gap: 8px;
     padding-inline: 16px;
     width: 100%;

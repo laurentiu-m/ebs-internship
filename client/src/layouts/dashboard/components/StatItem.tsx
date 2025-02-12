@@ -11,7 +11,12 @@ type Props = {
 export const StatItem = ({ queryKey, fetchFunction, icon }: Props) => {
   const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="stat">
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="stat">
