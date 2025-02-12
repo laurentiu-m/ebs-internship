@@ -52,10 +52,18 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
     return postId ? editPost({ data: postData, postId, onCloseModal }) : createPost({ data: postData, onCloseModal });
   };
 
+  const onTitle = () => {
+    if (postId) {
+      return t('posts.title-edit');
+    } else {
+      return t('posts.title-create');
+    }
+  };
+
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{postId ? `${t('posts.title-edit')} ${postId}` : t('posts.title-create')}</h1>
+        <h1 className="title">{onTitle()}</h1>
         <CloseIcon className="icon" onClick={onCloseModal} />
       </div>
 

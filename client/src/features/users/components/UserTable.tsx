@@ -7,6 +7,7 @@ import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { UserTable as UserTableTypes } from '@src/types';
+import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
@@ -49,10 +50,6 @@ export const UserTable = () => {
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pagination]);
 
   useEffect(() => {
     if (isModalOpen) {
@@ -154,6 +151,7 @@ export const UserTable = () => {
 
   return (
     <div className="users__table">
+      <ScrollToTop pagination={pagination} />
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
