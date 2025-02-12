@@ -8,11 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 
-<<<<<<< HEAD
-import { createUser, editUser } from '../utils/';
-=======
 import { useCreateUser, useEditUser } from '../hooks/';
->>>>>>> feature/notification
 
 type Props = {
   mainClass: string;
