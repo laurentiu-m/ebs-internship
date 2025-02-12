@@ -26,8 +26,18 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
   if (isLoading) return <Loading />;
   if (!data) return;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({
+    active,
+    payload
+  }: {
+    active?: boolean;
+    payload?: {
+      payload: {
+        name: string;
+        value: number;
+      };
+    }[];
+  }) => {
     if (active && payload && payload.length) {
       const { name, value } = payload[0].payload;
 
