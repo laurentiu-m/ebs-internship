@@ -24,27 +24,26 @@ router.get("", (req: Request, res: Response) => {
   let users = dbData.users;
 
   if (search) {
-    const searchStr = String(search).toLowerCase();
+    const searchValue = String(search).toLowerCase();
     users = users.filter(
       (user) =>
-        user.name.toLowerCase().includes(searchStr) ||
-        user.username.toLowerCase().includes(searchStr) ||
-        user.email.toLowerCase().includes(searchStr)
+        user.name.toLowerCase().includes(searchValue) ||
+        user.username.toLowerCase().includes(searchValue) ||
+        user.email.toLowerCase().includes(searchValue)
     );
   }
 
   const totalCount = users.length;
   const totalPages = Math.ceil(totalCount / rowsNumber);
 
-  const validPage = totalPages > 0 ? Math.min(pageNumber, totalPages) : 0;
+  const validPage = totalPages > 0 ? pageNumber : 0;
 
-  // Slice the users array for the current page
   const startIndex = (validPage - 1) * rowsNumber;
   const endIndex = startIndex + rowsNumber;
-  const paginatedUsers = users.slice(startIndex, endIndex);
+  users = users.slice(startIndex, endIndex);
 
   res.json({
-    result: paginatedUsers,
+    result: users,
     count: totalCount,
     totalPages,
     currentPage: validPage,

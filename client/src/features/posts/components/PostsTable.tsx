@@ -16,7 +16,6 @@ import {
   getCoreRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   PaginationState,
   RowData
@@ -60,28 +59,30 @@ export const PostsTable = () => {
   }, [isModalOpen]);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['posts_table', userRole, userId],
+    queryKey: ['posts_table', userRole, userId, pagination, globalFilter],
     queryFn: async () => {
-      if (userRole === Roles.User) {
-        const { results } = await apiClient.posts.getList({ userId });
-        return results;
-      } else {
-        const { results } = await apiClient.posts.getList();
-        return results;
+      if (globalFilter) {
+        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
       }
+
+      return userRole === Roles.User
+        ? await apiClient.posts.getList({ userId })
+        : await apiClient.posts.getList({
+            page: pagination.pageIndex + 1,
+            rows: pagination.pageSize,
+            search: globalFilter || undefined
+          });
     },
+    placeholderData: (previousData) => previousData,
     enabled: !!userRole && !!userId
   });
 
   const { mutate: deletePost } = useMutation({
     mutationFn: async (postId: number) => {
       await apiClient.posts.delete(postId);
-      return postId;
     },
-    onSuccess: (postId: number) => {
-      queryClient.setQueryData(['posts_table', userRole, userId], (oldData: Posts[]) =>
-        oldData.filter((post) => post.id !== postId)
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts_table'] });
       onCloseModal();
       toast.success(t('notification.post_delete'));
     }
@@ -127,18 +128,16 @@ export const PostsTable = () => {
   ];
 
   const table = useReactTable({
-    data: data || [],
+    data: data?.result || [],
     columns,
-    state: { columnFilters, pagination, globalFilter },
+    state: { columnFilters, pagination },
     autoResetPageIndex: false,
     onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
-    onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
-    getPaginationRowModel: getPaginationRowModel()
+    getFacetedUniqueValues: getFacetedUniqueValues()
   });
 
   if (isLoading) return <Loading />;
@@ -150,6 +149,14 @@ export const PostsTable = () => {
         table={table}
         state={{ globalFilter, setGlobalFilter }}
         header={{ title: t('table.button-posts'), onClick: () => onOpenModal('create') }}
+        page={{
+          pageIndex: pagination.pageIndex,
+          pageSize: pagination.pageSize,
+          currentTotalPages: data?.result.length || 0,
+          totalPages: data?.totalPages || 0,
+          onPageChange: (pageIndex: number) => setPagination((prev) => ({ ...prev, pageIndex })),
+          onRowsChange: (pageSize: number) => setPagination(() => ({ pageIndex: 0, pageSize }))
+        }}
       />
 
       <Modal

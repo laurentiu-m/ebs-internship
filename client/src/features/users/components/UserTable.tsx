@@ -62,7 +62,7 @@ export const UserTable = () => {
   };
 
   const { data, isLoading } = useQuery({
-    queryKey: ['user_table', pagination.pageIndex, pagination.pageSize, globalFilter],
+    queryKey: ['user_table', pagination, globalFilter],
     queryFn: async () => {
       if (globalFilter) {
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
