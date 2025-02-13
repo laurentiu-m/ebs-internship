@@ -19,7 +19,7 @@ export const useEditUser = () => {
       userId: number;
       data: UserCreate;
       setError: UseFormSetError<UserCreateForm>;
-      onCloseModal: () => void;
+      onClose: () => void;
     }) => {
       try {
         await apiClient.users.update(userId, data);
@@ -38,10 +38,10 @@ export const useEditUser = () => {
         }
       }
     },
-    onSuccess: async (_, { userId, onCloseModal }) => {
+    onSuccess: async (_, { userId, onClose }) => {
       queryClient.invalidateQueries({ queryKey: [`edit_user_${userId}`] });
       queryClient.invalidateQueries({ queryKey: ['user_table'] });
-      onCloseModal();
+      onClose();
     }
   });
 };

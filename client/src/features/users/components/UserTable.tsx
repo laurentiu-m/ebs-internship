@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
+import { Modal as ModalEnum } from '@src/app-constants';
 import { DeleteIcon, EditIcon } from '@src/assets/icons';
 import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
-import { useAppContext } from '@src/hooks/useAppContext';
 import { UserTable as UserTableTypes } from '@src/types';
 import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -26,6 +26,7 @@ import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 
 import { UsersCreate, UsersEdit } from '../pages';
+import { UserDelete } from './UserDelete';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -41,12 +42,15 @@ Modal.setAppElement('#root');
 
 export const UserTable = () => {
   const { t } = useTranslation();
-  const { isModalOpen, onOpenModal, onCloseModal, selectedCell, modalMode } = useAppContext();
   const queryClient = useQueryClient();
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCell, setSelectedCell] = useState<number | null>(null);
+  const [modalType, setModalType] = useState<ModalEnum | null>(null);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
 
@@ -60,6 +64,18 @@ export const UserTable = () => {
 
   const exactTextFilter = <TData,>(row: Row<TData>, columnId: string, filterValue: undefined) => {
     return row.getValue(columnId) === filterValue;
+  };
+
+  const onOpenModal = (type: ModalEnum, id?: number) => {
+    setSelectedCell(id as number);
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    setModalType(null);
+    setSelectedCell(null);
   };
 
   const { data, isLoading } = useQuery({
@@ -86,6 +102,16 @@ export const UserTable = () => {
 
   const onDelete = (userId: number) => {
     deleteUser(userId);
+  };
+
+  const modalConfig = {
+    [ModalEnum.Create]: <UsersCreate onClose={() => onCloseModal()} />,
+    [ModalEnum.Edit]: selectedCell !== null && <UsersEdit id={selectedCell} onClose={() => onCloseModal()} />,
+    [ModalEnum.Delete]: selectedCell !== null && (
+      <DeleteModal onClose={() => onCloseModal()} onDelete={() => onDelete(selectedCell)}>
+        <UserDelete id={selectedCell} />
+      </DeleteModal>
+    )
   };
 
   const columns = [
@@ -121,10 +147,10 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <div onClick={() => onOpenModal('edit', row.original.id)}>
+          <div onClick={() => onOpenModal(ModalEnum.Edit, row.original.id)}>
             <EditIcon className="icon" />
           </div>
-          <div onClick={() => onOpenModal('delete_user', row.original.id)}>
+          <div onClick={() => onOpenModal(ModalEnum.Delete, row.original.id)}>
             <DeleteIcon className="icon" />
           </div>
         </div>
@@ -155,21 +181,17 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-users'), onClick: () => onOpenModal('create') }}
+        header={{ title: t('table.button-users'), onClick: () => onOpenModal(ModalEnum.Create) }}
       />
 
       <Modal
         isOpen={isModalOpen}
         onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
-        className={modalMode === 'delete_user' ? 'modal-content--delete' : 'modal-content'}
+        className={modalType === ModalEnum.Delete ? 'modal-content--delete' : 'modal-content'}
         overlayClassName="modal-overlay"
       >
-        {modalMode === 'create' && <UsersCreate />}
-        {modalMode === 'edit' && selectedCell !== null && <UsersEdit id={selectedCell} />}
-        {modalMode === 'delete_user' && selectedCell !== null && (
-          <DeleteModal id={selectedCell} modalMode={modalMode} onDelete={() => onDelete(selectedCell)} />
-        )}
+        {modalType && modalConfig[modalType]}
       </Modal>
     </div>
   );
