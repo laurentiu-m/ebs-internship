@@ -14,14 +14,15 @@ import { useCreatePost, useEditPost } from '../hooks';
 
 type Props = {
   mainClass: string;
+  onClose: () => void;
   initialValues?: PostForm;
   postId?: number;
   postUserId?: number;
 };
 
-export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Props) => {
+export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClose }: Props) => {
   const { t } = useTranslation();
-  const { tokenData, onCloseModal } = useAppContext();
+  const { tokenData } = useAppContext();
   const { mutate: createPost } = useCreatePost();
   const { mutate: editPost } = useEditPost();
 
@@ -49,7 +50,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
   const onSubmit = async (data: FormData) => {
     const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
 
-    return postId ? editPost({ data: postData, postId, onCloseModal }) : createPost({ data: postData, onCloseModal });
+    return postId ? editPost({ data: postData, postId, onClose }) : createPost({ data: postData, onClose });
   };
 
   const onTitle = () => {
@@ -64,7 +65,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{onTitle()}</h1>
-        <CloseIcon className="icon" onClick={onCloseModal} />
+        <CloseIcon className="icon" onClick={onClose} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

@@ -19,3 +19,9 @@ export enum Genders {
   Female = 'female',
   PreferNotToSay = 'prefer_not_to_say'
 }
+
+export enum Modal {
+  Create = 'create',
+  Edit = 'edit',
+  Delete = 'delete'
+}
