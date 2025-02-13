@@ -66,13 +66,8 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
     };
 
     return userId
-<<<<<<< HEAD
-      ? editUser({ userId: userId, data: registerData, setError, onCloseModal })
-      : createUser({ data: registerData, setError, onCloseModal });
-=======
       ? editUser({ userId: userId, data: registerData, setError, onClose })
-      : createUser({ data: registerData, setError, reset });
->>>>>>> feature/modal
+      : createUser({ data: registerData, setError, onClose });
   };
 
   const onTitle = () => {
