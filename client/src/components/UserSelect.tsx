@@ -1,6 +1,7 @@
 import { Routes } from '@src/app-constants';
 import { AccountIcon } from '@src/assets/icons';
 import { useAppContext } from '@src/hooks/useAppContext';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,6 +34,7 @@ const style = {
 
 export const UserSelect = () => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { tokenData } = useAppContext();
 
@@ -55,6 +57,7 @@ export const UserSelect = () => {
   );
 
   const handleLogout = () => {
+    queryClient.clear();
     localStorage.clear();
     navigate(Routes.Login);
   };
