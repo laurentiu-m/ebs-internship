@@ -83,13 +83,12 @@ export const PostsTable = () => {
         setPagination((prev) => ({ ...prev, pageIndex: 0 }));
       }
 
-      return userRole === Roles.User
-        ? await apiClient.posts.getList({ userId })
-        : await apiClient.posts.getList({
-            page: pagination.pageIndex + 1,
-            rows: pagination.pageSize,
-            search: globalFilter || undefined
-          });
+      return await apiClient.posts.getList({
+        ...(userRole === Roles.User && { userId }),
+        page: pagination.pageIndex + 1,
+        rows: pagination.pageSize,
+        search: globalFilter || undefined
+      });
     },
     placeholderData: (previousData) => previousData,
     enabled: !!userRole && !!userId

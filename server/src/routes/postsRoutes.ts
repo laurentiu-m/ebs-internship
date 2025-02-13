@@ -23,7 +23,7 @@ router.get("", (req: Request, res: Response) => {
 
   if (userId) {
     posts = posts.filter((post) => post.userId === Number(userId));
-    res.json({ results: posts, count: posts.length });
+    res.json({ result: posts, count: posts.length });
     return;
   }
 
