@@ -1,14 +1,13 @@
+import { PropsWithChildren } from 'react';
+
 import { useTranslation } from 'react-i18next';
 
-export const DeleteModal = ({
-  onClose,
-  onDelete,
-  children
-}: {
+type Props = PropsWithChildren & {
   onClose: () => void;
   onDelete: () => void;
-  children: React.ReactNode;
-}) => {
+};
+
+export const DeleteModal = ({ onClose, onDelete, children }: Props) => {
   const { t } = useTranslation();
 
   return (
