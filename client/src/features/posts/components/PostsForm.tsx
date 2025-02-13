@@ -14,14 +14,15 @@ import { useCreatePost, useEditPost } from '../hooks';
 
 type Props = {
   mainClass: string;
+  onClose: () => void;
   initialValues?: PostForm;
   postId?: number;
   postUserId?: number;
 };
 
-export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Props) => {
+export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClose }: Props) => {
   const { t } = useTranslation();
-  const { tokenData, onCloseModal } = useAppContext();
+  const { tokenData } = useAppContext();
   const { mutate: createPost } = useCreatePost();
   const { mutate: editPost } = useEditPost();
 
@@ -49,14 +50,14 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId }: Prop
   const onSubmit = async (data: FormData) => {
     const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
 
-    return postId ? editPost({ data: postData, postId, onCloseModal }) : createPost({ data: postData, reset });
+    return postId ? editPost({ data: postData, postId, onClose }) : createPost({ data: postData, reset });
   };
 
   return (
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{postId ? `${t('posts.title-edit')} ${postId}` : t('posts.title-create')}</h1>
-        <CloseIcon className="icon" onClick={onCloseModal} />
+        <CloseIcon className="icon" onClick={onClose} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">

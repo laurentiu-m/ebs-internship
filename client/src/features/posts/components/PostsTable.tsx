@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
+import { Modal as ModalEnum } from '@src/app-constants';
 import { DeleteIcon, EditIcon } from '@src/assets/icons';
 import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
@@ -26,6 +27,7 @@ import Modal from 'react-modal';
 import { toast } from 'react-toastify';
 
 import { PostEdit, PostsCreate } from '../pages';
+import { PostDelete } from './PostDelete';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -39,7 +41,7 @@ declare module '@tanstack/react-table' {
 
 export const PostsTable = () => {
   const { t } = useTranslation();
-  const { isModalOpen, onOpenModal, onCloseModal, selectedCell, modalMode, tokenData } = useAppContext();
+  const { tokenData } = useAppContext();
   const queryClient = useQueryClient();
 
   const userRole = tokenData?.role;
@@ -48,6 +50,10 @@ export const PostsTable = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCell, setSelectedCell] = useState<number | null>(null);
+  const [modalType, setModalType] = useState<ModalEnum | null>(null);
 
   const columnHelper = createColumnHelper<Posts>();
 
@@ -58,6 +64,18 @@ export const PostsTable = () => {
       document.body.style.overflow = '';
     }
   }, [isModalOpen]);
+
+  const onOpenModal = (type: ModalEnum, id?: number) => {
+    setSelectedCell(id as number);
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpen(false);
+    setModalType(null);
+    setSelectedCell(null);
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
@@ -91,6 +109,16 @@ export const PostsTable = () => {
     deletePost(postId);
   };
 
+  const modalConfig = {
+    [ModalEnum.Create]: <PostsCreate onClose={() => onCloseModal()} />,
+    [ModalEnum.Edit]: selectedCell !== null && <PostEdit id={selectedCell} onClose={() => onCloseModal()} />,
+    [ModalEnum.Delete]: selectedCell !== null && (
+      <DeleteModal onClose={() => onCloseModal()} onDelete={() => onDelete(selectedCell)}>
+        <PostDelete id={selectedCell} />
+      </DeleteModal>
+    )
+  };
+
   const columns = [
     columnHelper.accessor('id', {
       enableGlobalFilter: false,
@@ -105,10 +133,10 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <div onClick={() => onOpenModal('edit', row.original.id)}>
+          <div onClick={() => onOpenModal(ModalEnum.Edit, row.original.id)}>
             <EditIcon className="icon" />
           </div>
-          <div onClick={() => onOpenModal('delete_post', row.original.id)}>
+          <div onClick={() => onOpenModal(ModalEnum.Delete, row.original.id)}>
             <DeleteIcon className="icon" />
           </div>
         </div>
@@ -139,21 +167,17 @@ export const PostsTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-posts'), onClick: () => onOpenModal('create') }}
+        header={{ title: t('table.button-posts'), onClick: () => onOpenModal(ModalEnum.Create) }}
       />
 
       <Modal
         isOpen={isModalOpen}
         onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
-        className={modalMode === 'delete_post' ? 'modal-content--delete' : 'modal-content'}
+        className={modalType === ModalEnum.Delete ? 'modal-content--delete' : 'modal-content'}
         overlayClassName="modal-overlay"
       >
-        {modalMode === 'create' && <PostsCreate />}
-        {modalMode === 'edit' && selectedCell !== null && <PostEdit id={selectedCell} />}
-        {modalMode === 'delete_post' && selectedCell !== null && (
-          <DeleteModal id={selectedCell} modalMode={modalMode} onDelete={() => onDelete(selectedCell)} />
-        )}
+        {modalType && modalConfig[modalType]}
       </Modal>
     </div>
   );

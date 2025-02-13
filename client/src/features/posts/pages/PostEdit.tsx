@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { PostsForm } from '../components';
 
-export const PostEdit = ({ id }: { id: number }) => {
+export const PostEdit = ({ id, onClose }: { id: number; onClose: () => void }) => {
   const { data, isLoading } = useQuery<Posts>({
     queryKey: [`edit_post_${id}`],
     queryFn: () => apiClient.posts.getById(id)
@@ -21,7 +21,13 @@ export const PostEdit = ({ id }: { id: number }) => {
 
   return (
     <div className="posts-edit">
-      <PostsForm mainClass="posts-edit" initialValues={formData} postId={id} postUserId={data.userId} />
+      <PostsForm
+        mainClass="posts-edit"
+        initialValues={formData}
+        postId={id}
+        postUserId={data.userId}
+        onClose={onClose}
+      />
     </div>
   );
 };
