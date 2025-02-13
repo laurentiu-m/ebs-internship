@@ -20,7 +20,7 @@ export enum Genders {
   PreferNotToSay = 'prefer_not_to_say'
 }
 
-export enum Modal {
+export enum ModalTypeEnum {
   Create = 'create',
   Edit = 'edit',
   Delete = 'delete'

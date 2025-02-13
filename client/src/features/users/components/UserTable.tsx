@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Modal as ModalEnum } from '@src/app-constants';
+import { ModalTypeEnum } from '@src/app-constants';
 import { DeleteIcon, EditIcon } from '@src/assets/icons';
 import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
@@ -48,34 +48,31 @@ export const UserTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCell, setSelectedCell] = useState<number | null>(null);
-  const [modalType, setModalType] = useState<ModalEnum | null>(null);
+  const [selectedCell, setSelectedCell] = useState<number | undefined>(undefined);
+  const [modalType, setModalType] = useState<ModalTypeEnum | undefined>(undefined);
 
   const columnHelper = createColumnHelper<UserTableTypes>();
 
   useEffect(() => {
-    if (isModalOpen) {
+    if (modalType) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
     }
-  }, [isModalOpen]);
+  }, [modalType]);
 
   const exactTextFilter = <TData,>(row: Row<TData>, columnId: string, filterValue: undefined) => {
     return row.getValue(columnId) === filterValue;
   };
 
-  const onOpenModal = (type: ModalEnum, id?: number) => {
+  const onOpenModal = (type: ModalTypeEnum, id?: number) => {
     setSelectedCell(id as number);
     setModalType(type);
-    setIsModalOpen(true);
   };
 
   const onCloseModal = () => {
-    setIsModalOpen(false);
-    setModalType(null);
-    setSelectedCell(null);
+    setModalType(undefined);
+    setSelectedCell(undefined);
   };
 
   const { data, isLoading } = useQuery({
@@ -105,10 +102,10 @@ export const UserTable = () => {
   };
 
   const modalConfig = {
-    [ModalEnum.Create]: <UsersCreate onClose={() => onCloseModal()} />,
-    [ModalEnum.Edit]: selectedCell !== null && <UsersEdit id={selectedCell} onClose={() => onCloseModal()} />,
-    [ModalEnum.Delete]: selectedCell !== null && (
-      <DeleteModal onClose={() => onCloseModal()} onDelete={() => onDelete(selectedCell)}>
+    [ModalTypeEnum.Create]: <UsersCreate onClose={onCloseModal} />,
+    [ModalTypeEnum.Edit]: selectedCell !== undefined && <UsersEdit id={selectedCell} onClose={onCloseModal} />,
+    [ModalTypeEnum.Delete]: selectedCell !== undefined && (
+      <DeleteModal onClose={onCloseModal} onDelete={() => onDelete(selectedCell)}>
         <UserDelete id={selectedCell} />
       </DeleteModal>
     )
@@ -146,12 +143,8 @@ export const UserTable = () => {
       meta: { className: 'options-wrapper center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <div onClick={() => onOpenModal(ModalEnum.Edit, row.original.id)}>
-            <EditIcon className="icon" />
-          </div>
-          <div onClick={() => onOpenModal(ModalEnum.Delete, row.original.id)}>
-            <DeleteIcon className="icon" />
-          </div>
+          <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />
+          <DeleteIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Delete, row.original.id)} />
         </div>
       )
     })
@@ -180,14 +173,14 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-users'), onClick: () => onOpenModal(ModalEnum.Create) }}
+        header={{ title: t('table.button-users'), onClick: () => onOpenModal(ModalTypeEnum.Create) }}
       />
 
       <Modal
-        isOpen={isModalOpen}
+        isOpen={!!modalType}
         onRequestClose={onCloseModal}
         shouldCloseOnOverlayClick={true}
-        className={modalType === ModalEnum.Delete ? 'modal-content--delete' : 'modal-content'}
+        className={modalType === ModalTypeEnum.Delete ? 'modal-content--delete' : 'modal-content'}
         overlayClassName="modal-overlay"
       >
         {modalType && modalConfig[modalType]}
