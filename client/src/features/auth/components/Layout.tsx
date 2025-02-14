@@ -9,7 +9,7 @@ export const Layout = () => {
     <div className="auth">
       <div className="auth__logo">
         <Logo className="icon" />
-        <h1 className="text">NexaPanel</h1>
+        <h2 className="text">NexaPanel</h2>
       </div>
       <div className="auth__language">
         <LanguageSelect />

@@ -70,7 +70,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
       : createUser({ data: registerData, setError, onClose });
   };
 
-  const onTitle = () => {
+  const getTitle = () => {
     if (userId) {
       return initialValues?.username;
     } else {
@@ -81,7 +81,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{onTitle()}</h1>
+        <h3 className="title">{getTitle()}</h3>
         <CloseIcon className="icon" onClick={onClose} />
       </div>
 

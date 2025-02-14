@@ -53,7 +53,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
     return postId ? editPost({ data: postData, postId, onClose }) : createPost({ data: postData, onClose });
   };
 
-  const onTitle = () => {
+  const getTitle = () => {
     if (postId) {
       return t('posts.title-edit');
     } else {
@@ -64,7 +64,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{onTitle()}</h1>
+        <h3 className="title">{getTitle()}</h3>
         <CloseIcon className="icon" onClick={onClose} />
       </div>
 

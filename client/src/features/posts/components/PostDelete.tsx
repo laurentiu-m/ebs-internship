@@ -17,7 +17,7 @@ export const PostDelete = ({ id }: { id: number }) => {
 
   return (
     <>
-      <h1 className="title">{t('error.modal.title_post')}</h1>
+      <h3 className="title">{t('error.modal.title_post')}</h3>
       <p className="warning">
         {t('error.modal.warning')} <span>{data?.title}</span>
       </p>

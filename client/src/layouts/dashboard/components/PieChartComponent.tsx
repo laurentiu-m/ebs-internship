@@ -67,7 +67,7 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
   return (
     <div className="pie-chart">
       <div className="header">
-        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
+        <h4 className="header__title">{t(`dashboard.${queryKey}`)}</h4>
       </div>
 
       <div className="pie-chart__main">

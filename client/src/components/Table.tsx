@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { SearchIcon } from '@src/assets/icons';
-import { ModalMode } from '@src/types';
 import { flexRender, Table as TanStackTable } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +14,7 @@ type TableProps<TData> = {
     globalFilter: string | null;
     setGlobalFilter: Dispatch<SetStateAction<string | null>>;
   };
-  header: { title: string; onClick: (mode?: ModalMode, id?: number) => void };
+  header: { title: string; onClick: (id?: number) => void };
   page: {
     pageIndex: number;
     pageSize: number;
