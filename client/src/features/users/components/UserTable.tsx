@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Routes } from '@src/app-constants';
-import { DeleteIcon, Loading, Table, EditIcon } from '@src/components';
+import { ModalTypeEnum } from '@src/app-constants';
+import { DeleteIcon, EditIcon } from '@src/assets/icons';
+import { Loading, Table } from '@src/components';
+import { DeleteModal } from '@src/components/DeleteModal';
 import { UserTable as UserTableTypes } from '@src/types';
 import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -20,7 +22,11 @@ import {
   RowData
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+import { toast } from 'react-toastify';
+
+import { UsersCreate, UsersEdit } from '../pages';
+import { UserDelete } from './UserDelete';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -32,6 +38,8 @@ declare module '@tanstack/react-table' {
   }
 }
 
+Modal.setAppElement('#root');
+
 export const UserTable = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -40,10 +48,31 @@ export const UserTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
+  const [selectedCell, setSelectedCell] = useState<number | undefined>(undefined);
+  const [modalType, setModalType] = useState<ModalTypeEnum | undefined>(undefined);
+
   const columnHelper = createColumnHelper<UserTableTypes>();
+
+  useEffect(() => {
+    if (modalType) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [modalType]);
 
   const exactTextFilter = <TData,>(row: Row<TData>, columnId: string, filterValue: undefined) => {
     return row.getValue(columnId) === filterValue;
+  };
+
+  const onOpenModal = (type: ModalTypeEnum, id?: number) => {
+    setSelectedCell(id as number);
+    setModalType(type);
+  };
+
+  const onCloseModal = () => {
+    setModalType(undefined);
+    setSelectedCell(undefined);
   };
 
   const { data, isLoading } = useQuery({
@@ -63,11 +92,23 @@ export const UserTable = () => {
       queryClient.setQueryData(['user_table'], (oldData: UserTableTypes[]) =>
         oldData.filter((user) => user.id !== userId)
       );
+      onCloseModal();
+      toast.success(t('notification.user_delete'));
     }
   });
 
   const onDelete = (userId: number) => {
     deleteUser(userId);
+  };
+
+  const modalConfig = {
+    [ModalTypeEnum.Create]: <UsersCreate onClose={onCloseModal} />,
+    [ModalTypeEnum.Edit]: selectedCell !== undefined && <UsersEdit id={selectedCell} onClose={onCloseModal} />,
+    [ModalTypeEnum.Delete]: selectedCell !== undefined && (
+      <DeleteModal onClose={onCloseModal} onDelete={() => onDelete(selectedCell)}>
+        <UserDelete id={selectedCell} />
+      </DeleteModal>
+    )
   };
 
   const columns = [
@@ -103,13 +144,8 @@ export const UserTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.UsersEdit.replace(':id', String(row.original.id))}>
-            <EditIcon styleClass="icon" />
-          </Link>
-
-          <div>
-            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
-          </div>
+          <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />
+          <DeleteIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Delete, row.original.id)} />
         </div>
       )
     })
@@ -138,8 +174,18 @@ export const UserTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-users'), link: Routes.UsersCreate }}
+        header={{ title: t('table.button-users'), onClick: () => onOpenModal(ModalTypeEnum.Create) }}
       />
+
+      <Modal
+        isOpen={!!modalType}
+        onRequestClose={onCloseModal}
+        shouldCloseOnOverlayClick={true}
+        className={modalType === ModalTypeEnum.Delete ? 'modal-content--delete' : 'modal-content'}
+        overlayClassName="modal-overlay"
+      >
+        {modalType && modalConfig[modalType]}
+      </Modal>
     </div>
   );
 };

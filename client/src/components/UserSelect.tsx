@@ -1,5 +1,5 @@
 import { Routes } from '@src/app-constants';
-import account_icon from '@src/assets/icons/account_icon.svg';
+import { AccountIcon } from '@src/assets/icons';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -49,7 +49,7 @@ export const UserSelect = () => {
 
   const CustomPlaceholder = () => (
     <div className="topbar__user">
-      <img src={account_icon} alt="user_icon" />
+      <AccountIcon />
       <span>{tokenData.username}</span>
     </div>
   );

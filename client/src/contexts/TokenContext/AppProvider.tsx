@@ -9,9 +9,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isSidebarClosed, setIsSidebarClosed] = useState(false);
 
   const onToggleSidebar = () => setIsSidebarClosed((prev) => !prev);
-
   return (
-    <AppContext.Provider value={{ tokenData, setTokenData, isSidebarClosed, onToggleSidebar }}>
+    <AppContext.Provider
+      value={{
+        tokenData,
+        setTokenData,
+        isSidebarClosed,
+        onToggleSidebar
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

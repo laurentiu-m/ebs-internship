@@ -41,6 +41,8 @@
         }
 
         .icon {
+          width: 1em;
+          height: 1em;
           font-size: 32px;
           fill: map-get($neutral, 400);
           transition: transform 0.1s ease;
@@ -73,6 +75,12 @@
 
     &__button {
       @include button-sidebar-style;
+      .icon {
+        font-size: 24px;
+        width: 1em;
+        height: 1em;
+        fill: map-get($neutral, 100);
+      }
 
       .text {
         font-size: map-get($text-button, font-size);

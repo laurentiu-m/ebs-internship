@@ -8,7 +8,7 @@ export const posts = {
     return { results: data.results, count: data.count };
   },
 
-  getById: async (id: string): Promise<Posts> => {
+  getById: async (id: number): Promise<Posts> => {
     const { data } = await api.get(`/posts/${id}`);
     return data;
   },
@@ -28,7 +28,7 @@ export const posts = {
     return data;
   },
 
-  edit: async (postData: PostCreate, id: string) => {
+  edit: async (postData: PostCreate, id: number) => {
     const { data } = await api.patch(`/posts/${id}`, postData);
     return data;
   },

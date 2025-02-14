@@ -52,8 +52,7 @@
     "logout": "Deconectare"
   },
   "users": {
-    "title-create": "Crează utilizator",
-    "title-edit": "Editează utilizator"
+    "title-create": "Crează utilizator"
   },
   "posts": {
     "title-create": "Crează postare",
@@ -84,6 +83,17 @@
     "edit": "Editează",
     "delete": "Șterge"
   },
+
+  "notification": {
+    "user_create": "Utilizatorul nou a fost creat cu succes.",
+    "user_edit": "Detaliile utilizatorului au fost actualizate cu succes.",
+    "user_delete": "Utilizatorul a fost șters cu succes!",
+    "post_create": "Postarea nouă a fost creată cu succes.",
+    "post_edit": "Detaliile postării au fost actualizate cu succes.",
+    "post_delete": "Postarea a fost ștearsă cu succes!",
+    "session": "Sesiunea a expirat. Vă rugăm să vă autentificați din nou."
+  },
+
   "error": {
     "first_name_empty": "Prenumele este obligatoriu.",
     "first_name_min": "Prenumele trebuie să aibă cel puțin 2 caractere.",
@@ -110,6 +120,13 @@
     "max_title": "Maximum 50 de caractere.",
     "max_body": "Maximum 500 de caractere.",
     "none": "",
+    "modal": {
+      "title_user": "Șterge utilizator",
+      "title_post": "Șterge postare",
+      "warning": "Sigur vrei să ștergi?",
+      "cancel": "Anulează",
+      "delete": "Șterge"
+    },
     "403": {
       "message": "Acces interzis",
       "description": "Nu ai permisiunea să vizualizezi această pagină."

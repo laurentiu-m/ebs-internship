@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import jsonServer from "json-server";
 import dotenv from "dotenv";
+import { readFileSync } from "fs";
 
 dotenv.config();
 
@@ -14,7 +15,8 @@ const router = Router();
 
 router.get("", (req: Request, res: Response) => {
   const { userId } = req.query;
-  let posts = db.get("posts").value();
+  const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
+  let posts = dbData.posts;
 
   if (userId) {
     posts = posts.filter((post) => post.userId === Number(userId));

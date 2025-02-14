@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders, Roles } from '@src/app-constants';
+import { CloseIcon } from '@src/assets/icons';
 import { FormInput, FormSelect } from '@src/components';
 import { getUsersSchema } from '@src/schemas/';
 import { UserCreate, UserFormTypes } from '@src/types';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 import { useCreateUser, useEditUser } from '../hooks/';
@@ -13,11 +15,12 @@ import { useCreateUser, useEditUser } from '../hooks/';
 type Props = {
   mainClass: string;
   submitButton: string;
+  onClose: () => void;
   initialValues?: UserFormTypes;
-  userId?: string;
+  userId?: number;
 };
 
-export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Props) => {
+export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClose }: Props) => {
   const { t } = useTranslation();
 
   const { mutate: createUser } = useCreateUser();
@@ -33,11 +36,15 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     handleSubmit,
     setError,
     control,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting, isDirty }
   } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: initialValues
   });
+
+  useEffect(() => {
+    reset(initialValues);
+  }, [initialValues, reset]);
 
   const genderOptions = [
     { value: Genders.Male, label: t('form.label.gender.male') },
@@ -58,26 +65,9 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
       name: `${first_name} ${last_name}`
     };
 
-    if (initialValues) {
-      const hasChanged = Object.entries(data).some(
-        ([key, value]) => initialValues[key as keyof UserFormTypes] !== value
-      );
-
-      if (!hasChanged) {
-        toast.info("You haven't made any changes.");
-        return;
-      }
-    }
-
-    if (userId) {
-      editUser({ userId: userId, data: registerData, setError });
-      toast.success('User details updated successfully.');
-      return;
-    }
-
-    createUser({ data: registerData, setError });
-    toast.success('New user was created successfully.');
-    reset();
+    return userId
+      ? editUser({ userId: userId, data: registerData, setError, onClose })
+      : createUser({ data: registerData, setError, reset });
   };
 
   const onTitle = () => {
@@ -92,25 +82,29 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
     <>
       <div className={`${mainClass}__header`}>
         <h1 className="title">{onTitle()}</h1>
+        <CloseIcon className="icon" onClick={onClose} />
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="form" autoComplete="off">
-        <FormInput
-          name="first_name"
-          type="text"
-          label={t('form.label.first_name')}
-          register={register}
-          placeholder={t('form.label.first_name')}
-          error={errors.first_name}
-        />
-        <FormInput
-          name="last_name"
-          type="text"
-          label={t('form.label.last_name')}
-          register={register}
-          placeholder={t('form.label.last_name')}
-          error={errors.last_name}
-        />
+        <div className="form__wrapper">
+          <FormInput
+            name="first_name"
+            type="text"
+            label={t('form.label.first_name')}
+            register={register}
+            placeholder={t('form.label.first_name')}
+            error={errors.first_name}
+          />
+          <FormInput
+            name="last_name"
+            type="text"
+            label={t('form.label.last_name')}
+            register={register}
+            placeholder={t('form.label.last_name')}
+            error={errors.last_name}
+          />
+        </div>
+
         <FormInput
           name="email"
           type="email"
@@ -119,60 +113,73 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId }: Pro
           placeholder="Email"
           error={errors.email}
         />
-        <FormInput
-          name="username"
-          type="text"
-          label={t('form.label.username')}
-          register={register}
-          placeholder={t('form.label.username')}
-          error={errors.username}
-        />
-        <FormInput
-          name="phone"
-          type="text"
-          label={t('form.label.phone')}
-          register={register}
-          placeholder={t('form.label.phone')}
-          error={errors.phone}
-        />
-        <FormSelect
-          name="gender"
-          label={t('form.label.gender.label')}
-          placeholder={t('form.label.gender.label')}
-          control={control}
-          options={genderOptions}
-          defaultValue={initialValues?.gender}
-          error={errors.gender}
-        />
 
-        <FormSelect
-          name="role"
-          label={t('form.label.roles')}
-          placeholder={t('form.label.roles-placeholder')}
-          control={control}
-          options={roleOptions}
-          defaultValue={initialValues?.role}
-          error={errors.role}
-        />
+        <div className="form__wrapper">
+          <FormInput
+            name="username"
+            type="text"
+            label={t('form.label.username')}
+            register={register}
+            placeholder={t('form.label.username')}
+            error={errors.username}
+          />
+          <FormInput
+            name="phone"
+            type="text"
+            label={t('form.label.phone')}
+            register={register}
+            placeholder={t('form.label.phone')}
+            error={errors.phone}
+          />
+        </div>
 
-        <FormInput
-          name="password"
-          type="password"
-          label={t('form.label.password')}
-          register={register}
-          placeholder={t('form.label.password')}
-          error={errors.password}
-        />
-        <FormInput
-          name="confirm_password"
-          type="password"
-          label={t('form.label.confirm_password')}
-          register={register}
-          placeholder={t('form.label.confirm_password')}
-          error={errors.confirm_password}
-        />
+        <div className="form__wrapper">
+          <FormSelect
+            name="gender"
+            label={t('form.label.gender.label')}
+            placeholder={t('form.label.gender.label')}
+            control={control}
+            options={genderOptions}
+            defaultValue={initialValues?.gender}
+            error={errors.gender}
+          />
 
-        <input disabled={isSubmitting} type="submit" className="form__submit" value={t(submitButton)} />
+          <FormSelect
+            name="role"
+            label={t('form.label.roles')}
+            placeholder={t('form.label.roles-placeholder')}
+            control={control}
+            options={roleOptions}
+            defaultValue={initialValues?.role}
+            error={errors.role}
+          />
+        </div>
+
+        <div className="form__wrapper">
+          <FormInput
+            name="password"
+            type="password"
+            label={t('form.label.password')}
+            register={register}
+            placeholder={t('form.label.password')}
+            error={errors.password}
+          />
+          <FormInput
+            name="confirm_password"
+            type="password"
+            label={t('form.label.confirm_password')}
+            register={register}
+            placeholder={t('form.label.confirm_password')}
+            error={errors.confirm_password}
+          />
+        </div>
+
+        <input
+          disabled={isSubmitting || !isDirty}
+          type="submit"
+          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
+          value={t(submitButton)}
+        />
       </form>
     </>
   );

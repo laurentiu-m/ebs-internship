@@ -5,14 +5,15 @@ import { ACCESS_TOKEN, Routes } from '@src/app-constants';
 import { Loading } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
 type TokenAuthProps = {
   element: JSX.Element;
 };
 
 export const TokenAuth = ({ element }: TokenAuthProps) => {
+  const { t } = useTranslation();
   const token = localStorage.getItem(ACCESS_TOKEN);
 
   const { setTokenData } = useAppContext();
@@ -28,7 +29,7 @@ export const TokenAuth = ({ element }: TokenAuthProps) => {
     if (isError) {
       localStorage.clear();
 
-      toast.error('Session expired. Please log in again.');
+      toast.error(t('notification.session'));
 
       navigate(Routes.Login);
     }
@@ -36,7 +37,7 @@ export const TokenAuth = ({ element }: TokenAuthProps) => {
     if (isSuccess) {
       setTokenData(data);
     }
-  }, [isError, isSuccess, navigate, data, setTokenData]);
+  }, [isError, isSuccess, navigate, data, setTokenData, t]);
 
   if (isLoading) return <Loading />;
 

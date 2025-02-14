@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Roles, Routes } from '@src/app-constants';
-import { DeleteIcon, EditIcon, Loading, Table } from '@src/components';
+import { Roles } from '@src/app-constants';
+import { ModalTypeEnum } from '@src/app-constants';
+import { DeleteIcon, EditIcon } from '@src/assets/icons';
+import { Loading, Table } from '@src/components';
+import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { Posts } from '@src/types';
 import ScrollToTop from '@src/utils/ScrollToTop';
@@ -20,7 +23,11 @@ import {
   RowData
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import Modal from 'react-modal';
+import { toast } from 'react-toastify';
+
+import { PostEdit, PostsCreate } from '../pages';
+import { PostDelete } from './PostDelete';
 
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -44,7 +51,28 @@ export const PostsTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const [globalFilter, setGlobalFilter] = useState<string | null>(null);
 
+  const [selectedCell, setSelectedCell] = useState<number | undefined>(undefined);
+  const [modalType, setModalType] = useState<ModalTypeEnum | undefined>(undefined);
+
   const columnHelper = createColumnHelper<Posts>();
+
+  useEffect(() => {
+    if (modalType) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [modalType]);
+
+  const onOpenModal = (type: ModalTypeEnum, id?: number) => {
+    setSelectedCell(id as number);
+    setModalType(type);
+  };
+
+  const onCloseModal = () => {
+    setModalType(undefined);
+    setSelectedCell(undefined);
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId],
@@ -69,11 +97,23 @@ export const PostsTable = () => {
       queryClient.setQueryData(['posts_table', userRole, userId], (oldData: Posts[]) =>
         oldData.filter((post) => post.id !== postId)
       );
+      onCloseModal();
+      toast.success(t('notification.post_delete'));
     }
   });
 
   const onDelete = (postId: number) => {
     deletePost(postId);
+  };
+
+  const modalConfig = {
+    [ModalTypeEnum.Create]: <PostsCreate onClose={onCloseModal} />,
+    [ModalTypeEnum.Edit]: selectedCell !== undefined && <PostEdit id={selectedCell} onClose={onCloseModal} />,
+    [ModalTypeEnum.Delete]: selectedCell !== undefined && (
+      <DeleteModal onClose={onCloseModal} onDelete={() => onDelete(selectedCell)}>
+        <PostDelete id={selectedCell} />
+      </DeleteModal>
+    )
   };
 
   const columns = [
@@ -90,13 +130,8 @@ export const PostsTable = () => {
       meta: { className: 'center end' },
       cell: ({ row }) => (
         <div className="options center">
-          <Link to={Routes.PostsEdit.replace(':id', String(row.original.id))}>
-            <EditIcon styleClass="icon" />
-          </Link>
-
-          <div>
-            <DeleteIcon styleClass="icon" onDelete={() => onDelete(row.original.id)} />
-          </div>
+          <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />
+          <DeleteIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Delete, row.original.id)} />
         </div>
       )
     })
@@ -125,8 +160,18 @@ export const PostsTable = () => {
       <Table
         table={table}
         state={{ globalFilter, setGlobalFilter }}
-        header={{ title: t('table.button-posts'), link: Routes.PostsCreate }}
+        header={{ title: t('table.button-posts'), onClick: () => onOpenModal(ModalTypeEnum.Create) }}
       />
+
+      <Modal
+        isOpen={!!modalType}
+        onRequestClose={onCloseModal}
+        shouldCloseOnOverlayClick={true}
+        className={modalType === ModalTypeEnum.Delete ? 'modal-content--delete' : 'modal-content'}
+        overlayClassName="modal-overlay"
+      >
+        {modalType && modalConfig[modalType]}
+      </Modal>
     </div>
   );
 };

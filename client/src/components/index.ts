@@ -8,7 +8,6 @@ export * from './CustomSelect';
 export * from './Sidebar';
 export * from './Topbar';
 export * from './UserSelect';
-export * from './Icons';
 export * from './Table';
 export * from './TablePagination';
 export * from './Filter';

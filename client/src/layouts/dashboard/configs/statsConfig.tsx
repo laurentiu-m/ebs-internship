@@ -1,6 +1,6 @@
 import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
-import { AlbumIcon, CommentIcon, PostIcon, UserIcon } from '@src/components';
+import { AlbumIcon, CommentIcon, PostsIcon, UsersIcon } from '@src/assets/icons';
 
 export const configStats = {
   totalUsers: {
@@ -10,7 +10,7 @@ export const configStats = {
       return count;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator],
-    icon: (styleClass: string) => <UserIcon styleClass={styleClass} />
+    icon: <UsersIcon className="icon" />
   },
   totalPosts: {
     queryKey: 'total_posts',
@@ -19,13 +19,13 @@ export const configStats = {
       return count;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator],
-    icon: (styleClass: string) => <PostIcon styleClass={styleClass} />
+    icon: <PostsIcon className="icon" />
   },
   totalComments: {
     queryKey: 'total_comments',
     fetchFunction: () => apiClient.comments.getTotalComments(),
     requiredRoles: [Roles.Admin, Roles.Moderator],
-    icon: (styleClass: string) => <CommentIcon styleClass={styleClass} />
+    icon: <CommentIcon className="icon" />
   },
   totalUserPosts: {
     queryKey: 'total_user_posts',
@@ -34,7 +34,7 @@ export const configStats = {
       return count;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User],
-    icon: (styleClass: string) => <PostIcon styleClass={styleClass} />
+    icon: <PostsIcon className="icon" />
   },
   totalUserComments: {
     queryKey: 'total_user_comments',
@@ -43,12 +43,12 @@ export const configStats = {
       return totalComments;
     },
     requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User],
-    icon: (styleClass: string) => <CommentIcon styleClass={styleClass} />
+    icon: <CommentIcon className="icon" />
   },
   totalAlbums: {
     queryKey: 'user_total_albums',
     fetchFunction: (userId: number) => apiClient.users.getTotalAlbums(userId),
     requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User],
-    icon: (styleClass: string) => <AlbumIcon styleClass={styleClass} />
+    icon: <AlbumIcon className="icon" />
   }
 };

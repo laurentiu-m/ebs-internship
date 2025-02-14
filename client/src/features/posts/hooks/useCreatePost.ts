@@ -1,16 +1,21 @@
 import { apiClient } from '@src/api';
 import { PostCreate } from '@src/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 export const useCreatePost = () => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data }: { data: PostCreate }) => {
+    mutationFn: async ({ data }: { data: PostCreate; reset: () => void }) => {
       await apiClient.posts.create(data);
     },
-    onSuccess: () => {
+    onSuccess: (_, { reset }) => {
       queryClient.invalidateQueries({ queryKey: ['posts_table'] });
+      toast.success(t('notification.post_create'));
+      reset();
     }
   });
 };

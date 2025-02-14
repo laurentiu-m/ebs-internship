@@ -1,14 +1,11 @@
 import { Roles, Routes } from '@src/app-constants';
 import '@src/styles/sidebar.scss';
-import home_icon from '@src/assets/icons/home_icon.svg';
-import posts_icon from '@src/assets/icons/posts_icon.svg';
-import users_icon from '@src/assets/icons/users_icon.svg';
+import { ArrowIcon, HomeIcon, PostsIcon, UsersIcon } from '@src/assets/icons';
 import { useAppContext } from '@src/hooks/useAppContext';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
-import { ArrowIcon } from './Icons';
 import { Loading } from './Loading';
 
 export const Sidebar = () => {
@@ -25,19 +22,19 @@ export const Sidebar = () => {
   const buttonsConfig = [
     {
       text: 'dashboard',
-      icon: home_icon,
+      icon: <HomeIcon className="icon" />,
       link: Routes.Dashboard,
       requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
     },
     {
       text: t('sidebar.users'),
-      icon: users_icon,
+      icon: <UsersIcon className="icon" />,
       link: Routes.Users,
       requiredRoles: [Roles.Admin]
     },
     {
       text: t('sidebar.posts'),
-      icon: posts_icon,
+      icon: <PostsIcon className="icon" />,
       link: Routes.Posts,
       requiredRoles: [Roles.Admin, Roles.Moderator, Roles.User]
     }
@@ -51,7 +48,7 @@ export const Sidebar = () => {
         </div>
 
         <div className={cn('toggle', { 'toggle--rotated': isSidebarClosed })} onClick={onToggleSidebar}>
-          <ArrowIcon styleClass={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
+          <ArrowIcon className={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
         </div>
       </div>
 
@@ -64,7 +61,8 @@ export const Sidebar = () => {
               className={cn('sidebar__button', { 'sidebar__button--active ': pathname === button.link })}
               to={button.link}
             >
-              <img src={button.icon} alt={`button-${button.text}`} />
+              <div className="icon">{button.icon}</div>
+
               <p className={cn('text', { 'text--closed': isSidebarClosed })}>{button.text}</p>
             </Link>
           ))}
