@@ -49,9 +49,7 @@ export const CustomTooltip = ({
   return (
     <div className="tooltip">
       <p>
-        {username ? (
-          username
-        ) : (
+        {username ?? (
           <>
             {tooltip?.xKey}: <span>{label}</span>
           </>
