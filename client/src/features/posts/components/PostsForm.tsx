@@ -64,7 +64,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{onTitle()}</h1>
+        <h3 className="title">{onTitle()}</h3>
         <CloseIcon className="icon" onClick={onClose} />
       </div>
 

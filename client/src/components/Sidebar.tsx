@@ -45,7 +45,7 @@ export const Sidebar = () => {
       <div className="sidebar__header">
         <div className={cn('logo', { 'logo--closed': isSidebarClosed })}>
           <Logo className="icon" />
-          <h1 className="text">NexaPanel</h1>
+          <h2 className="text">NexaPanel</h2>
         </div>
 
         <div className={cn('toggle', { 'toggle--rotated': isSidebarClosed })} onClick={onToggleSidebar}>

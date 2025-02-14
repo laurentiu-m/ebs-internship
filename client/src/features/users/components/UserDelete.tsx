@@ -17,7 +17,7 @@ export const UserDelete = ({ id }: { id: number }) => {
 
   return (
     <>
-      <h1 className="title">{t('error.modal.title_user')}</h1>
+      <h3 className="title">{t('error.modal.title_user')}</h3>
       <p className="warning">
         {t('error.modal.warning')} <span>{data?.username}</span>
       </p>

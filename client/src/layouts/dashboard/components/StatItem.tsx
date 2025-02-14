@@ -22,9 +22,9 @@ export const StatItem = ({ queryKey, fetchFunction, icon }: Props) => {
     <div className="stat">
       <div className="stat__title">
         {icon}
-        <h3 className="text">{t(`dashboard.${queryKey}`)}</h3>
+        <h4 className="text">{t(`dashboard.${queryKey}`)}</h4>
       </div>
-      <h2 className="stat__result">{data}</h2>
+      <h3 className="stat__result">{data}</h3>
     </div>
   );
 };

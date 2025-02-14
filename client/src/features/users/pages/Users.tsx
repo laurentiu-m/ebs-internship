@@ -8,7 +8,7 @@ export const Users = () => {
 
   return (
     <div className="users">
-      <h1 className="users__header">{t('sidebar.users')}</h1>
+      <h3 className="users__header">{t('sidebar.users')}</h3>
 
       <UserTable />
     </div>

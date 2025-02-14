@@ -22,7 +22,7 @@ export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }:
   return (
     <div className="bar-chart">
       <div className="header">
-        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
+        <h4 className="header__title">{t(`dashboard.${queryKey}`)}</h4>
       </div>
 
       <div className="bar-chart__main">

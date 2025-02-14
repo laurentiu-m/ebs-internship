@@ -8,7 +8,7 @@ export const Posts = () => {
 
   return (
     <div className="posts">
-      <h1 className="posts__header">{t('sidebar.posts')}</h1>
+      <h3 className="posts__header">{t('sidebar.posts')}</h3>
 
       <PostsTable />
     </div>

@@ -9,7 +9,7 @@ export const Dashboard = () => {
 
   return (
     <div className={cn('dashboard', { 'dashboard--wide': isSidebarClosed })}>
-      <h1 className="dashboard__header">Dashboard</h1>
+      <h3 className="dashboard__header">Dashboard</h3>
 
       <ChartsComponent />
     </div>
