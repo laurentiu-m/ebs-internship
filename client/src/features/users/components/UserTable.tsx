@@ -113,7 +113,6 @@ export const UserTable = () => {
 
   const columns = [
     columnHelper.accessor('id', {
-      enableGlobalFilter: false,
       meta: { className: 'center start' }
     }),
     columnHelper.accessor('name', { header: t('form.label.name') }),
@@ -141,7 +140,7 @@ export const UserTable = () => {
     columnHelper.display({
       id: 'actions',
       header: t('table.options'),
-      meta: { className: 'center end' },
+      meta: { className: 'options-wrapper center end' },
       cell: ({ row }) => (
         <div className="options center">
           <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />

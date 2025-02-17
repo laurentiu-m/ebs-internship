@@ -9,3 +9,4 @@ export { default as HomeIcon } from './home_icon.svg?react';
 export { default as PostsIcon } from './posts_icon.svg?react';
 export { default as SearchIcon } from './search_icon.svg?react';
 export { default as UsersIcon } from './users_icon.svg?react';
+export { default as Logo } from './logo.svg?react';

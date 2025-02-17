@@ -50,13 +50,21 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
   const onSubmit = async (data: FormData) => {
     const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
 
-    return postId ? editPost({ data: postData, postId, onClose }) : createPost({ data: postData, reset });
+    return postId ? editPost({ data: postData, postId, onClose }) : createPost({ data: postData, onClose });
+  };
+
+  const getTitle = () => {
+    if (postId) {
+      return t('posts.title-edit');
+    } else {
+      return t('posts.title-create');
+    }
   };
 
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{postId ? `${t('posts.title-edit')} ${postId}` : t('posts.title-create')}</h1>
+        <h3 className="title">{getTitle()}</h3>
         <CloseIcon className="icon" onClick={onClose} />
       </div>
 
@@ -76,12 +84,15 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
           placeholder={t('form.label.body')}
           error={errors.body}
         />
-        <input
-          disabled={isSubmitting || !isDirty}
-          type="submit"
-          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
-          value={t('form.button.create')}
-        />
+
+        <div className="form__submit form__submit--post">
+          <input
+            disabled={isSubmitting || !isDirty}
+            type="submit"
+            className={`button ${!isDirty && 'button--disable'}`}
+            value={t('form.button.create')}
+          />
+        </div>
       </form>
     </>
   );

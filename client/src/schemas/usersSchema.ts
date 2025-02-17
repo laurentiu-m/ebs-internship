@@ -4,8 +4,8 @@ import { z } from 'zod';
 export const getRegisterSchema = (t: (key: string) => string) => {
   return z
     .object({
-      first_name: z.string().nonempty(t('error.first_name_empty')).min(2, t('error.first_name_min')),
-      last_name: z.string().nonempty(t('error.last_name_empty')).min(2, t('error.last_name_min')),
+      first_name: z.string().nonempty(t('error.first_name_empty')).refine(validator.isAlpha, t('error.name_letters')),
+      last_name: z.string().nonempty(t('error.last_name_empty')).refine(validator.isAlpha, t('error.name_letters')),
       username: z.string().nonempty(t('error.username_empty')).min(4, t('error.username_min')),
       email: z.string().nonempty(t('error.email_empty')).email(t('error.email_invalid')),
       phone: z.string().nonempty(t('error.phone_empty')).refine(validator.isMobilePhone, t('error.phone_invalid')),
@@ -22,8 +22,8 @@ export const getRegisterSchema = (t: (key: string) => string) => {
 export const getUsersSchema = (t: (key: string) => string) => {
   return z
     .object({
-      first_name: z.string().nonempty(t('error.first_name_empty')).min(2, t('error.first_name_min')),
-      last_name: z.string().nonempty(t('error.last_name_empty')).min(2, t('error.last_name_min')),
+      first_name: z.string().nonempty(t('error.first_name_empty')).refine(validator.isAlpha, t('error.name_letters')),
+      last_name: z.string().nonempty(t('error.last_name_empty')).refine(validator.isAlpha, t('error.name_letters')),
       username: z.string().nonempty(t('error.username_empty')).min(4, t('error.username_min')),
       email: z.string().nonempty(t('error.email_empty')).email(t('error.email_invalid')),
       phone: z.string().nonempty(t('error.phone_empty')).refine(validator.isMobilePhone, t('error.phone_invalid')),

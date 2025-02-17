@@ -67,12 +67,12 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
 
     return userId
       ? editUser({ userId: userId, data: registerData, setError, onClose })
-      : createUser({ data: registerData, setError, reset });
+      : createUser({ data: registerData, setError, onClose });
   };
 
-  const onTitle = () => {
+  const getTitle = () => {
     if (userId) {
-      return `${t('users.title-edit')} ${userId}`;
+      return initialValues?.username;
     } else {
       return t('users.title-create');
     }
@@ -81,7 +81,7 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
   return (
     <>
       <div className={`${mainClass}__header`}>
-        <h1 className="title">{onTitle()}</h1>
+        <h3 className="title">{getTitle()}</h3>
         <CloseIcon className="icon" onClick={onClose} />
       </div>
 
@@ -174,12 +174,14 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
           />
         </div>
 
-        <input
-          disabled={isSubmitting || !isDirty}
-          type="submit"
-          className={`form__submit ${!isDirty && 'form__submit--disable'}`}
-          value={t(submitButton)}
-        />
+        <div className="form__submit">
+          <input
+            disabled={isSubmitting || !isDirty}
+            type="submit"
+            className={`button ${!isDirty && 'button--disable'}`}
+            value={t(submitButton)}
+          />
+        </div>
       </form>
     </>
   );

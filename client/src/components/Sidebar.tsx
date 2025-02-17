@@ -1,6 +1,6 @@
 import { Roles, Routes } from '@src/app-constants';
 import '@src/styles/sidebar.scss';
-import { ArrowIcon, HomeIcon, PostsIcon, UsersIcon } from '@src/assets/icons';
+import { ArrowIcon, HomeIcon, PostsIcon, UsersIcon, Logo } from '@src/assets/icons';
 import { useAppContext } from '@src/hooks/useAppContext';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -44,7 +44,8 @@ export const Sidebar = () => {
     <div className={cn('sidebar', { 'sidebar--closed': isSidebarClosed })}>
       <div className="sidebar__header">
         <div className={cn('logo', { 'logo--closed': isSidebarClosed })}>
-          <h1>Logo.</h1>
+          <Logo className="icon" />
+          <h2 className="text">NexaPanel</h2>
         </div>
 
         <div className={cn('toggle', { 'toggle--rotated': isSidebarClosed })} onClick={onToggleSidebar}>

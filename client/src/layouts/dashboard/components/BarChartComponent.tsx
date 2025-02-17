@@ -10,26 +10,26 @@ export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }:
   const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="bar-chart">
+        <Loading />
+      </div>
+    );
 
   if (data?.length === 0) return;
 
   return (
     <div className="bar-chart">
       <div className="header">
-        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
-
-        <div className="header__info">
-          <p>X: {axisKey.xKey}</p>
-          <p>Y: {axisKey.yKey}</p>
-        </div>
+        <h4 className="header__title">{t(`dashboard.${queryKey}`)}</h4>
       </div>
 
       <div className="bar-chart__main">
         <ResponsiveContainer>
           <BarChart data={data} barSize={20}>
             <YAxis width={30} axisLine={false} tickLine={false} />
-            <XAxis dataKey={axisKey.xKey} axisLine={false} tickLine={false} />
+            <XAxis hide={true} dataKey={axisKey.xKey} />
             <Tooltip cursor={<CustomCursor />} content={<CustomTooltip tooltip={tooltip} />} />
             <Bar dataKey={axisKey.yKey} shape={<CustomBarShape />} barSize={20} />
           </BarChart>

@@ -49,30 +49,33 @@ export const Login = () => {
         <p className="description">{t('form.login.description')}</p>
       </div>
 
-      <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
-        <FormInput
-          name="email"
-          type="email"
-          label="Email"
-          register={register}
-          placeholder={t('form.login.label')}
-          error={errors.email}
-        />
-        <FormInput
-          name="password"
-          type="password"
-          label={t('form.label.password')}
-          register={register}
-          placeholder="********"
-          error={errors.password}
-        />
+      <div className="auth__login">
+        <form className="form" onSubmit={handleSubmit(onSubmit)} autoComplete="off">
+          <FormInput
+            name="email"
+            type="email"
+            label="Email"
+            register={register}
+            placeholder={t('form.login.label')}
+            error={errors.email}
+          />
+          <FormInput
+            name="password"
+            type="password"
+            label={t('form.label.password')}
+            register={register}
+            placeholder="********"
+            error={errors.password}
+          />
+          <div className="form__submit">
+            <input disabled={isSubmitting} className="button" type="submit" value={t('form.login.submit')} />
 
-        <input disabled={isSubmitting} className="form__submit" type="submit" value={t('form.login.submit')} />
-
-        <div className="form__redirect">
-          {t('form.redirect.title-login')} <Link to="/register">{t('form.register.title')}</Link>
-        </div>
-      </form>
+            <div className="redirect">
+              {t('form.redirect.title-login')} <Link to="/register">{t('form.register.title')}</Link>
+            </div>
+          </div>
+        </form>
+      </div>
     </>
   );
 };

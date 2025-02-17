@@ -53,16 +53,28 @@
       }
 
       .logo {
+        @include flex(center, center, row);
+        gap: 6px;
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: all 0.2s ease-in-out;
+        transition-delay: 0.2s;
 
-        h1 {
-          font-size: map-get($h3, font-size);
+        .icon {
+          width: 1em;
+          height: 1em;
+          font-size: 24px;
+          fill: map-get($primary, base);
+        }
+
+        .text {
+          font-size: map-get($h5, font-size);
+          font-weight: map-get(map-get($h5, font-weight), medium);
           color: map-get($neutral, 100);
         }
 
         &--closed {
           opacity: 0;
+          transition-delay: 0s;
         }
       }
     }
@@ -80,6 +92,7 @@
         width: 1em;
         height: 1em;
         fill: map-get($neutral, 100);
+        transition: all 0.2s ease-in-out;
       }
 
       .text {
@@ -93,6 +106,16 @@
 
         &--closed {
           opacity: 0;
+        }
+      }
+
+      &--active {
+        .icon {
+          fill: map-get($primary, selected);
+        }
+
+        .text {
+          color: map-get($primary, selected);
         }
       }
     }

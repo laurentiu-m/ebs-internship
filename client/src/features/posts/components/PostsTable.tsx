@@ -7,7 +7,7 @@ import { DeleteIcon, EditIcon } from '@src/assets/icons';
 import { Loading, Table } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
-import { Posts } from '@src/types';
+import { PostsTable as Posts } from '@src/types';
 import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -117,17 +117,23 @@ export const PostsTable = () => {
   };
 
   const columns = [
-    columnHelper.accessor('id', {
-      enableGlobalFilter: false,
-      meta: { className: 'center start post-col' }
-    }),
-    columnHelper.accessor('userId', { header: 'userId' }),
+    ...(userRole !== Roles.User
+      ? [
+          columnHelper.accessor('id', {
+            meta: { className: 'center start post-col' }
+          }),
+          columnHelper.accessor('username', {
+            header: t('form.label.username'),
+            meta: { className: 'username' }
+          })
+        ]
+      : []),
     columnHelper.accessor('title', { header: t('form.label.title') }),
     columnHelper.accessor('body', { header: t('form.label.body') }),
     columnHelper.display({
       id: 'actions',
       header: t('table.options'),
-      meta: { className: 'center end' },
+      meta: { className: 'options-wrapper center end' },
       cell: ({ row }) => (
         <div className="options center">
           <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />

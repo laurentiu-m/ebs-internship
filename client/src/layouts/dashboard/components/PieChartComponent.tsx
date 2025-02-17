@@ -23,7 +23,12 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
   const { t } = useTranslation();
   const { data, isLoading } = useQuery<PieChartData>({ queryKey: [queryKey], queryFn: fetchFunction });
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="pie-chart">
+        <Loading />
+      </div>
+    );
   if (!data) return;
 
   const CustomTooltip = ({
@@ -56,7 +61,7 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
   return (
     <div className="pie-chart">
       <div className="header">
-        <h1 className="header__title">{t(`dashboard.${queryKey}`)}</h1>
+        <h4 className="header__title">{t(`dashboard.${queryKey}`)}</h4>
       </div>
 
       <div className="pie-chart__main">

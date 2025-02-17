@@ -40,7 +40,7 @@ router.get("/posts/top", (req: Request, res: Response) => {
     const commentCount = comments.filter(
       (comment) => comment.postId === post.id
     ).length;
-    return { postId: post.id, commentCount };
+    return { title: post.title, commentCount };
   });
 
   const topPosts = commentCounts
@@ -118,30 +118,29 @@ router.get("/users/:id/posts/comments", (req: Request, res: Response) => {
   const { id } = req.params;
 
   const comments = db.get("comments").value();
-  const postsId = db
+  const posts = db
     .get("posts")
     .filter((post) => post.userId === Number(id))
-    .map((post) => post.id)
     .value();
 
-  const totalComments = db
-    .get("comments")
-    .filter((comment) => postsId.includes(comment.postId))
-    .value().length;
+  const totalComments = posts.reduce((acc, post) => {
+    const count = comments.filter(
+      (comment) => comment.postId === post.id
+    ).length;
+    return acc + count;
+  }, 0);
 
-  const commentsCounts = postsId
-    .map((postId) => {
+  const commentsCounts = posts
+    .map((post) => {
       const commentCount = comments.filter(
-        (comment) => comment.postId === postId
+        (comment) => comment.postId === post.id
       ).length;
-
       if (commentCount > 0) {
-        return { postId, commentCount };
+        return { title: post.title, commentCount };
       }
-
       return null;
     })
-    .filter((comment) => comment !== null);
+    .filter((item) => item !== null);
 
   res.json({ totalComments, commentsCounts });
 });

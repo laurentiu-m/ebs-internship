@@ -11,15 +11,20 @@ type Props = {
 export const StatItem = ({ queryKey, fetchFunction, icon }: Props) => {
   const { t } = useTranslation();
   const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div className="stat">
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="stat">
       <div className="stat__title">
         {icon}
-        <h3 className="text">{t(`dashboard.${queryKey}`)}</h3>
+        <h4 className="text">{t(`dashboard.${queryKey}`)}</h4>
       </div>
-      <h2 className="stat__result">{data}</h2>
+      <h3 className="stat__result">{data}</h3>
     </div>
   );
 };
