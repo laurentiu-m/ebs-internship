@@ -4,11 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 import { CustomSelect } from './CustomSelect';
 
-type TableProps = {
+type Props = {
   page: {
     pageIndex: number;
     pageSize: number;
-    currentTotalPages: number;
     totalPages: number;
     onPageChange: (index: number) => void;
     onRowsChange: (index: number) => void;
@@ -47,28 +46,23 @@ const style = {
   }
 };
 
-export const TablePagination = ({ page }: TableProps) => {
+export const TablePagination = ({ page }: Props) => {
   const { t } = useTranslation();
+  const { pageIndex, pageSize, totalPages, onPageChange, onRowsChange } = page;
 
   return (
     <div className="table__pagination">
       <div className="pages">
-        {t('table.page')} {page.pageIndex + 1} {t('table.page_of')}{' '}
-        {page.totalPages > 0 ? page.totalPages : page.totalPages + 1}
+        {t('table.page')} {pageIndex + 1} {t('table.page_of')} {totalPages > 0 ? totalPages : totalPages + 1}
       </div>
 
       <div className="active">
         <div className="active__buttons">
-          <button onClick={() => page.onPageChange(page.pageIndex - 1)} disabled={page.pageIndex === 0}>
-            <ArrowIcon className={cn('icon', { 'icon--disabled': page.pageIndex === 0 })} />
+          <button onClick={() => onPageChange(pageIndex - 1)} disabled={pageIndex === 0}>
+            <ArrowIcon className={cn('icon', { 'icon--disabled': pageIndex === 0 })} />
           </button>
-          <button
-            onClick={() => page.onPageChange(page.pageIndex + 1)}
-            disabled={page.pageIndex + 1 >= page.totalPages}
-          >
-            <ArrowIcon
-              className={cn('icon icon--right', { 'icon--disabled': page.pageIndex + 1 >= page.totalPages })}
-            />
+          <button onClick={() => onPageChange(pageIndex + 1)} disabled={pageIndex + 1 >= totalPages}>
+            <ArrowIcon className={cn('icon icon--right', { 'icon--disabled': pageIndex + 1 >= totalPages })} />
           </button>
         </div>
 
@@ -76,12 +70,12 @@ export const TablePagination = ({ page }: TableProps) => {
           <p className="text">{t('table.rows')}</p>
 
           <CustomSelect
-            defaultValue={page.pageSize}
-            placement={page.totalPages > 0 ? 'top' : 'bottom'}
+            defaultValue={pageSize}
+            placement={totalPages > 0 ? 'top' : 'bottom'}
             style={style}
             options={options}
             onChange={(selectedOption) => {
-              page.onRowsChange((selectedOption as { value: number }).value);
+              onRowsChange((selectedOption as { value: number }).value);
             }}
           />
         </div>

@@ -23,14 +23,12 @@ router.get("", (req: Request, res: Response) => {
 
   if (userId) {
     posts = posts.filter((post) => post.userId === Number(userId));
-    res.json({ result: posts, count: posts.length });
-    return;
+  } else {
+    posts = posts.map(({ userId, ...rest }) => ({
+      ...rest,
+      username: users.find((user) => user.id === userId).username,
+    }));
   }
-
-  posts = posts.map(({ userId, ...rest }) => ({
-    ...rest,
-    username: users.find((user) => user.id === userId).username,
-  }));
 
   if (search) {
     const searchValue = String(search).toLowerCase();

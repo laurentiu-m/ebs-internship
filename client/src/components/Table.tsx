@@ -18,7 +18,6 @@ type TableProps<TData> = {
   page: {
     pageIndex: number;
     pageSize: number;
-    currentTotalPages: number;
     totalPages: number;
     onPageChange: (index: number) => void;
     onRowsChange: (index: number) => void;

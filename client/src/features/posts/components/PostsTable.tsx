@@ -168,7 +168,6 @@ export const PostsTable = () => {
         page={{
           pageIndex: pagination.pageIndex,
           pageSize: pagination.pageSize,
-          currentTotalPages: data?.result.length || 0,
           totalPages: data?.totalPages || 0,
           onPageChange: (pageIndex: number) => setPagination((prev) => ({ ...prev, pageIndex })),
           onRowsChange: (pageSize: number) => setPagination(() => ({ pageIndex: 0, pageSize }))

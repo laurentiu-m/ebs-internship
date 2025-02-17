@@ -23,6 +23,7 @@ export const PostEdit = ({ id, onClose }: { id: number; onClose: () => void }) =
     <div className="posts-edit">
       <PostsForm
         mainClass="posts-edit"
+        submitButton="form.button.edit"
         initialValues={formData}
         postId={id}
         postUserId={data.userId}

@@ -14,13 +14,14 @@ import { useCreatePost, useEditPost } from '../hooks';
 
 type Props = {
   mainClass: string;
+  submitButton: string;
   onClose: () => void;
   initialValues?: PostForm;
   postId?: number;
   postUserId?: number;
 };
 
-export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClose }: Props) => {
+export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClose, submitButton }: Props) => {
   const { t } = useTranslation();
   const { tokenData } = useAppContext();
   const { mutate: createPost } = useCreatePost();
@@ -90,7 +91,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
             disabled={isSubmitting || !isDirty}
             type="submit"
             className={`button ${!isDirty && 'button--disable'}`}
-            value={t('form.button.create')}
+            value={t(submitButton)}
           />
         </div>
       </form>
