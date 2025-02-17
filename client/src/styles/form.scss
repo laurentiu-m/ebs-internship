@@ -116,7 +116,7 @@
         @include button-style(200px, $gradient);
         &--disable {
           background: map-get($primary, disabled);
-          cursor: default;
+          cursor: not-allowed;
         }
       }
 

@@ -182,7 +182,7 @@
 
               &--disabled {
                 fill: map-get($neutral, 500);
-                cursor: default;
+                cursor: not-allowed;
 
                 &:hover {
                   fill: map-get($neutral, 500);
