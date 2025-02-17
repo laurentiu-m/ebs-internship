@@ -10,19 +10,14 @@ import {
   UserPie,
   UserList
 } from '@src/types';
+import { StringifiableRecord } from 'query-string';
 
 import api from './axios';
 
 export const users = {
-  getList: async (params?: { page?: number; search?: string; rows?: number }): Promise<UserList> => {
+  getList: async (params?: StringifiableRecord): Promise<UserList> => {
     const { data } = await api.get('/api/users', { params });
-    return {
-      result: data.result,
-      count: data.count,
-      page: data.currentPage,
-      totalPages: data.totalPages,
-      rows: data.rows
-    };
+    return { ...data };
   },
 
   getById: async (id: number): Promise<User | UserEdit> => {

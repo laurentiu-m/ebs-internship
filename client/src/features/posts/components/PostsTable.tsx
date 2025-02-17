@@ -84,7 +84,7 @@ export const PostsTable = () => {
         ...(userRole === Roles.User && { userId }),
         page: pagination.pageIndex + 1,
         rows: pagination.pageSize,
-        search: globalFilter || undefined
+        ...(!!globalFilter && { search: globalFilter })
       });
     },
     placeholderData: (previousData) => previousData,

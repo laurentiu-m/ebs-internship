@@ -2,16 +2,11 @@ import { ArrowIcon } from '@src/assets/icons';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+import { TablePageTypes } from '../types';
 import { CustomSelect } from './CustomSelect';
 
 type Props = {
-  page: {
-    pageIndex: number;
-    pageSize: number;
-    totalPages: number;
-    onPageChange: (index: number) => void;
-    onRowsChange: (index: number) => void;
-  };
+  page: TablePageTypes;
 };
 
 const options = [
@@ -50,19 +45,31 @@ export const TablePagination = ({ page }: Props) => {
   const { t } = useTranslation();
   const { pageIndex, pageSize, totalPages, onPageChange, onRowsChange } = page;
 
+  const pageText = `${t('table.page')} ${pageIndex + 1} ${t('table.page_of')} ${totalPages > 0 ? totalPages : totalPages + 1}`;
+
+  const onPrev = () => {
+    onPageChange(pageIndex - 1);
+  };
+  const hasPrev = !pageIndex;
+
+  const onNext = () => {
+    onPageChange(pageIndex + 1);
+  };
+  const hasNext = pageIndex + 1 >= totalPages;
+
+  const getSelectPlacement = totalPages > 0 ? 'top' : 'bottom';
+
   return (
     <div className="table__pagination">
-      <div className="pages">
-        {t('table.page')} {pageIndex + 1} {t('table.page_of')} {totalPages > 0 ? totalPages : totalPages + 1}
-      </div>
+      <div className="pages">{pageText}</div>
 
       <div className="active">
         <div className="active__buttons">
-          <button onClick={() => onPageChange(pageIndex - 1)} disabled={pageIndex === 0}>
-            <ArrowIcon className={cn('icon', { 'icon--disabled': pageIndex === 0 })} />
+          <button onClick={onPrev} className={cn('button', { 'button--disabled': hasPrev })} disabled={hasPrev}>
+            <ArrowIcon className={cn('icon', { 'icon--disabled': hasPrev })} />
           </button>
-          <button onClick={() => onPageChange(pageIndex + 1)} disabled={pageIndex + 1 >= totalPages}>
-            <ArrowIcon className={cn('icon icon--right', { 'icon--disabled': pageIndex + 1 >= totalPages })} />
+          <button onClick={onNext} className={cn('button', { 'button--disabled': hasNext })} disabled={hasNext}>
+            <ArrowIcon className={cn('icon icon--right', { 'icon--disabled': hasNext })} />
           </button>
         </div>
 
@@ -71,7 +78,7 @@ export const TablePagination = ({ page }: Props) => {
 
           <CustomSelect
             defaultValue={pageSize}
-            placement={totalPages > 0 ? 'top' : 'bottom'}
+            placement={getSelectPlacement}
             style={style}
             options={options}
             onChange={(selectedOption) => {

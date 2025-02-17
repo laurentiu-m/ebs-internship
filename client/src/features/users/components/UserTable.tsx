@@ -84,7 +84,7 @@ export const UserTable = () => {
       return await apiClient.users.getList({
         page: pagination.pageIndex + 1,
         rows: pagination.pageSize,
-        search: globalFilter || undefined
+        ...(!!globalFilter && { search: globalFilter })
       });
     },
     placeholderData: (previousData) => previousData
