@@ -1,11 +1,12 @@
 import { PostComments, PostCreate, Posts, PostsList, TopPosts } from '@src/types';
-import { StringifiableRecord } from 'query-string';
+import queryString, { StringifiableRecord } from 'query-string';
 
 import api from './axios';
 
 export const posts = {
-  getList: async (params?: StringifiableRecord): Promise<PostsList> => {
-    const { data } = await api.get('/api/posts', { params });
+  getList: async (params: StringifiableRecord): Promise<PostsList> => {
+    const query = queryString.stringify(params, { skipNull: true });
+    const { data } = await api.get(`/api/posts?${query}`);
     return { ...data };
   },
 

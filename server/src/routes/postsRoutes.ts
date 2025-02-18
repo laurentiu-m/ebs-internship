@@ -26,15 +26,19 @@ router.get("", (req: Request, res: Response) => {
   } else {
     posts = posts.map(({ userId, ...rest }) => ({
       ...rest,
-      username: users.find((user) => user.id === userId).username,
+      username: users.find((user) => user.id === userId)?.username,
     }));
   }
 
   if (search) {
     const searchValue = String(search).toLowerCase();
-    posts = posts.filter((post) =>
-      post.title.toLowerCase().includes(searchValue)
-    );
+    posts = posts.filter((post) => {
+      const title = post.title.toLowerCase().includes(searchValue);
+      const username =
+        !userId && post.username.toLowerCase().includes(searchValue);
+
+      return title || username;
+    });
   }
 
   const totalCount = posts.length;
@@ -44,6 +48,7 @@ router.get("", (req: Request, res: Response) => {
 
   const startIndex = (validPage - 1) * rowsNumber;
   const endIndex = startIndex + rowsNumber;
+
   posts = posts.slice(startIndex, endIndex);
 
   res.json({

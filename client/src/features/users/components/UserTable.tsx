@@ -74,13 +74,13 @@ export const UserTable = () => {
     setSelectedCell(undefined);
   };
 
+  useEffect(() => {
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  }, [globalFilter]);
+
   const { data, isLoading } = useQuery({
     queryKey: ['user_table', pagination, globalFilter],
     queryFn: async () => {
-      if (globalFilter) {
-        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-      }
-
       return await apiClient.users.getList({
         page: pagination.pageIndex + 1,
         rows: pagination.pageSize,

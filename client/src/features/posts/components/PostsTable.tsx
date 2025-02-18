@@ -63,6 +63,10 @@ export const PostsTable = () => {
     }
   }, [modalType]);
 
+  useEffect(() => {
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  }, [globalFilter]);
+
   const onOpenModal = (type: ModalTypeEnum, id?: number) => {
     setSelectedCell(id as number);
     setModalType(type);
@@ -76,10 +80,6 @@ export const PostsTable = () => {
   const { data, isLoading } = useQuery({
     queryKey: ['posts_table', userRole, userId, pagination, globalFilter],
     queryFn: async () => {
-      if (globalFilter) {
-        setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-      }
-
       return await apiClient.posts.getList({
         ...(userRole === Roles.User && { userId }),
         page: pagination.pageIndex + 1,

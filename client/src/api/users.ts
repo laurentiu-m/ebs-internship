@@ -10,13 +10,14 @@ import {
   UserPie,
   UserList
 } from '@src/types';
-import { StringifiableRecord } from 'query-string';
+import queryString, { StringifiableRecord } from 'query-string';
 
 import api from './axios';
 
 export const users = {
-  getList: async (params?: StringifiableRecord): Promise<UserList> => {
-    const { data } = await api.get('/api/users', { params });
+  getList: async (params: StringifiableRecord): Promise<UserList> => {
+    const query = queryString.stringify(params, { skipNull: true });
+    const { data } = await api.get(`/api/users?${query}`);
     return { ...data };
   },
 
