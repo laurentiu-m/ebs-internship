@@ -4,11 +4,10 @@ import { apiClient } from '@src/api';
 import { Roles } from '@src/app-constants';
 import { ModalTypeEnum } from '@src/app-constants';
 import { DeleteIcon, EditIcon } from '@src/assets/icons';
-import { Loading, Table } from '@src/components';
+import { Loading, Table, ScrollToTop } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { PostsTable as Posts } from '@src/types';
-import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,

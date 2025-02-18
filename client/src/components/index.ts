@@ -12,3 +12,4 @@ export * from './Table';
 export * from './TablePagination';
 export * from './Filter';
 export * from './FormTextarea';
+export * from './ScrollToTop';

@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import { apiClient } from '@src/api';
 import { ModalTypeEnum } from '@src/app-constants';
 import { DeleteIcon, EditIcon } from '@src/assets/icons';
-import { Loading, Table } from '@src/components';
+import { Loading, Table, ScrollToTop } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { UserTable as UserTableTypes } from '@src/types';
-import ScrollToTop from '@src/utils/ScrollToTop';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   useReactTable,
