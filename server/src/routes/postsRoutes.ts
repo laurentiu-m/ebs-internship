@@ -11,7 +11,11 @@ const config = {
 const router = Router();
 
 router.get("", (req: Request, res: Response) => {
-  const { userId } = req.query;
+  const { userId, search, page, rows } = req.query;
+
+  const pageNumber = Number(page) || 1;
+  const rowsNumber = Number(rows) || 10;
+
   const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
   const users = dbData.users;
 
@@ -19,16 +23,41 @@ router.get("", (req: Request, res: Response) => {
 
   if (userId) {
     posts = posts.filter((post) => post.userId === Number(userId));
-    res.json({ results: posts, count: posts.length });
-    return;
+  } else {
+    posts = posts.map(({ userId, ...rest }) => ({
+      ...rest,
+      username: users.find((user) => user.id === userId)?.username,
+    }));
   }
 
-  posts = posts.map(({ userId, ...rest }) => ({
-    ...rest,
-    username: users.find((user) => user.id === userId).username,
-  }));
+  if (search) {
+    const searchValue = String(search).toLowerCase();
+    posts = posts.filter((post) => {
+      const title = post.title.toLowerCase().includes(searchValue);
+      const username =
+        !userId && post.username.toLowerCase().includes(searchValue);
 
-  res.json({ results: posts, count: posts.length });
+      return title || username;
+    });
+  }
+
+  const totalCount = posts.length;
+  const totalPages = Math.ceil(totalCount / rowsNumber);
+
+  const validPage = totalPages > 0 ? pageNumber : 0;
+
+  const startIndex = (validPage - 1) * rowsNumber;
+  const endIndex = startIndex + rowsNumber;
+
+  posts = posts.slice(startIndex, endIndex);
+
+  res.json({
+    result: posts,
+    count: totalCount,
+    totalPages,
+    currentPage: validPage,
+    rows: rowsNumber,
+  });
 });
 
 export default router;

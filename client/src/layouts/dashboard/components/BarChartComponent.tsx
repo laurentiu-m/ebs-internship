@@ -1,4 +1,5 @@
 import { Loading } from '@src/components';
+import { useAppContext } from '@src/hooks/useAppContext';
 import { BarChartProps } from '@src/types';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +9,9 @@ import { CustomBarShape, CustomCursor, CustomTooltip } from './BarCustomComponen
 
 export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
   const { t } = useTranslation();
-  const { data, isLoading } = useQuery({ queryKey: [queryKey], queryFn: fetchFunction });
+  const { tokenData } = useAppContext();
+
+  const { data, isLoading } = useQuery({ queryKey: [queryKey, tokenData?.userId], queryFn: fetchFunction });
 
   if (isLoading)
     return (

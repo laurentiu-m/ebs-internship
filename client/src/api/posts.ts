@@ -1,11 +1,13 @@
 import { PostComments, PostCreate, Posts, PostsList, TopPosts } from '@src/types';
+import { StringifiableRecord } from 'query-string';
 
 import api from './axios';
+import { stringifyUrl } from './queryString';
 
 export const posts = {
-  getList: async (params?: { userId?: number }): Promise<PostsList> => {
-    const { data } = await api.get('/api/posts', { params });
-    return { results: data.results, count: data.count };
+  getList: async (params: StringifiableRecord): Promise<PostsList> => {
+    const { data } = await api.get(stringifyUrl('/api/posts', params));
+    return { ...data };
   },
 
   getById: async (id: number): Promise<Posts> => {

@@ -5,14 +5,13 @@ import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 
 import { ToastContainer } from 'react-toastify';
 
 import { Roles, Routes } from './app-constants';
-import { Layout, Error, Loading } from './components';
+import { Layout, Error, Loading, ScrollToTop } from './components';
 import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
 import { Posts } from './features/posts/pages';
 import { Users } from './features/users/pages';
 import { TokenAuth, RoleAccess } from './router';
-import ScrollToTop from './utils/ScrollToTop';
 
 // Routes Config
 const routesConfig = [

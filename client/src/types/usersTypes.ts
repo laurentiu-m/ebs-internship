@@ -113,6 +113,9 @@ export type UserPie = {
 export type UserList = {
   result: [User];
   count: number;
+  page: number;
+  totalPages: number;
+  rows: number;
 };
 
 export type UserLoginSubmit = (

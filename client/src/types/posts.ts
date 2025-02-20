@@ -13,13 +13,16 @@ export type PostsTable = {
 };
 
 export type PostsList = {
-  results: {
+  result: {
     username: string;
     id: number;
     title: string;
     body: string;
   }[];
   count: number;
+  page: number;
+  totalPages: number;
+  rows: number;
 };
 
 export type PostForm = Omit<Posts, 'id' | 'userId'>;

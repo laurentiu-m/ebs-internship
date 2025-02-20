@@ -10,13 +10,15 @@ import {
   UserPie,
   UserList
 } from '@src/types';
+import { StringifiableRecord } from 'query-string';
 
 import api from './axios';
+import { stringifyUrl } from './queryString';
 
 export const users = {
-  getList: async (params?: { id?: number }): Promise<UserList> => {
-    const { data } = await api.get('/api/users', { params });
-    return { result: data.result, count: data.count };
+  getList: async (params: StringifiableRecord): Promise<UserList> => {
+    const { data } = await api.get(stringifyUrl('/api/users', params));
+    return { ...data };
   },
 
   getById: async (id: number): Promise<User | UserEdit> => {

@@ -78,7 +78,8 @@
     "button-posts": "Crează postare",
     "search": "Caută...",
     "rows": "Rânduri pe pagină:",
-    "page": "din",
+    "page": "Pagină",
+    "page_of": "din",
     "options": "Opțiuni",
     "edit": "Editează",
     "delete": "Șterge"

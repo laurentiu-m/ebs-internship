@@ -15,15 +15,40 @@ const db = jsonServer.router(config.db).db;
 const router = Router();
 
 router.get("", (req: Request, res: Response) => {
-  const { id } = req.query;
+  const { search, page, rows } = req.query;
+
+  const pageNumber = Number(page) || 1;
+  const rowsNumber = Number(rows) || 10;
+
   const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
   let users = dbData.users;
 
-  if (id) {
-    users = users.filter((user) => user.id === Number(id));
+  if (search) {
+    const searchValue = String(search).toLowerCase();
+    users = users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(searchValue) ||
+        user.username.toLowerCase().includes(searchValue) ||
+        user.email.toLowerCase().includes(searchValue)
+    );
   }
 
-  res.json({ result: users, count: users.length });
+  const totalCount = users.length;
+  const totalPages = Math.ceil(totalCount / rowsNumber);
+
+  const validPage = totalPages > 0 ? pageNumber : 0;
+
+  const startIndex = (validPage - 1) * rowsNumber;
+  const endIndex = startIndex + rowsNumber;
+  users = users.slice(startIndex, endIndex);
+
+  res.json({
+    result: users,
+    count: totalCount,
+    totalPages,
+    currentPage: validPage,
+    rows: rowsNumber,
+  });
 });
 
 router.put("/edit/:id", async (req: Request, res: Response) => {

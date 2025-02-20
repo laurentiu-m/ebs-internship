@@ -86,7 +86,8 @@
     "button-posts": "Create Post",
     "search": "Search...",
     "rows": "Rows per page:",
-    "page": "of",
+    "page": "Page",
+    "page_of": "of",
     "options": "Options",
     "edit": "Edit",
     "delete": "Delete"

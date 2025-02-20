@@ -5,6 +5,7 @@ import { flexRender, Table as TanStackTable } from '@tanstack/react-table';
 import cn from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+import { TablePageTypes } from '../types';
 import { Filter } from './Filter';
 import { TablePagination } from './TablePagination';
 
@@ -15,9 +16,10 @@ type TableProps<TData> = {
     setGlobalFilter: Dispatch<SetStateAction<string | null>>;
   };
   header: { title: string; onClick: (id?: number) => void };
+  page: TablePageTypes;
 };
 
-export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
+export const Table = <TData,>({ table, state, header, page }: TableProps<TData>) => {
   const { t } = useTranslation();
 
   return (
@@ -84,7 +86,7 @@ export const Table = <TData,>({ table, state, header }: TableProps<TData>) => {
         </tbody>
       </table>
 
-      <TablePagination table={table} />
+      <TablePagination page={page} />
     </div>
   );
 };
