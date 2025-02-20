@@ -63,6 +63,18 @@
     "comments": "Comentarii",
     "title": "Titlu"
   },
+
+  "select": {
+    "male": "Masculin",
+    "female": "Feminin",
+    "prefer_not_to_say": "Prefer să nu specific",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "user": "Utilizator",
+    "gender": "Gen",
+    "role": "Roluri"
+  },
+
   "dashboard": {
     "top_users": "Utilizatorii cu Cele Mai Multe Postări",
     "top_posts": "Postările cu Cele Mai Multe Comentarii",

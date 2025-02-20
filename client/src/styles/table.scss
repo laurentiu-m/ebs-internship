@@ -45,9 +45,7 @@
 
       thead {
         .select-head {
-          .filter-container {
-            @include flex(center, center, row);
-          }
+          width: 160px;
         }
 
         .post-col {

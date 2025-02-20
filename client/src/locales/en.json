@@ -71,6 +71,17 @@
     "title": "Title"
   },
 
+  "select": {
+    "male": "Male",
+    "female": "Female",
+    "prefer_not_to_say": "Prefer not to say",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "user": "User",
+    "gender": "Gender",
+    "role": "Role"
+  },
+
   "dashboard": {
     "top_users": "Users with the Highest Number of Posts",
     "top_posts": "Posts with the Most Comments",

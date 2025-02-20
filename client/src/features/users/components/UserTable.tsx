@@ -129,16 +129,24 @@ export const UserTable = () => {
     columnHelper.accessor('gender', {
       header: undefined,
       filterFn: exactTextFilter,
-      meta: { filterVariant: 'select', placeholder: t('form.label.gender.label'), className: 'select-head' },
+      meta: { filterVariant: 'select', placeholder: 'gender', className: 'select-head' },
       enableSorting: false,
-      enableGlobalFilter: false
+      enableGlobalFilter: false,
+      cell: ({ getValue }) => {
+        const gender = getValue();
+        return t(`form.label.gender.${gender}`);
+      }
     }),
     columnHelper.accessor('role', {
       header: undefined,
       filterFn: exactTextFilter,
-      meta: { filterVariant: 'select', placeholder: t('form.label.roles'), className: 'select-head' },
+      meta: { filterVariant: 'select', placeholder: 'role', className: 'select-head' },
       enableSorting: false,
-      enableGlobalFilter: false
+      enableGlobalFilter: false,
+      cell: ({ getValue }) => {
+        const role = getValue();
+        return t(`select.${role}`);
+      }
     }),
     columnHelper.display({
       id: 'actions',
