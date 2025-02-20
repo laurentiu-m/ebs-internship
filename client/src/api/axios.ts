@@ -10,10 +10,11 @@ const apiClient = axios.create({
 });
 
 export const setLanguage = (lang: string) => {
-  apiClient.defaults.headers.common['Accept-Language'] = lang;
+  apiClient.defaults.headers.common['Accept-Language'] = lang || 'en';
 };
 
-const currentLanguage = i18next.language;
-setLanguage(currentLanguage);
+i18next.on('languageChanged', (lang) => {
+  setLanguage(lang);
+});
 
 export default apiClient;

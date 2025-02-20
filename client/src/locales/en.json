@@ -66,6 +66,11 @@
     "title-edit": "Edit Post"
   },
 
+  "chart": {
+    "comments": "Comments",
+    "title": "Title"
+  },
+
   "dashboard": {
     "top_users": "Users with the Highest Number of Posts",
     "top_posts": "Posts with the Most Comments",

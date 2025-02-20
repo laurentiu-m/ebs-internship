@@ -58,6 +58,11 @@
     "title-create": "Crează postare",
     "title-edit": "Editează postare"
   },
+
+  "chart": {
+    "comments": "Comentarii",
+    "title": "Titlu"
+  },
   "dashboard": {
     "top_users": "Utilizatorii cu Cele Mai Multe Postări",
     "top_posts": "Postările cu Cele Mai Multe Comentarii",

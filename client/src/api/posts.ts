@@ -5,7 +5,7 @@ import api from './axios';
 import { stringifyUrl } from './queryString';
 
 export const posts = {
-  getList: async (params: StringifiableRecord): Promise<PostsList> => {
+  getList: async (params?: StringifiableRecord): Promise<PostsList> => {
     const { data } = await api.get(stringifyUrl('/api/posts', params));
     return { ...data };
   },

@@ -12,5 +12,13 @@
   "token_not_found": "Nu ești conectat pentru a accesa această pagină.",
   "token_valid": "Token-ul este valid.",
   "token_invalid": "Token-ul este invalid sau expirat. Te rog să te loghezi din nou.",
-  "invalid_email_or_password": "Email sau parolă invalidă."
+  "invalid_email_or_password": "Email sau parolă invalidă.",
+
+  "gender": {
+    "female": "feminin",
+    "male": "masculin",
+    "prefer_not_to_say": "prefer să nu spun"
+  },
+
+  "user": "ultilizator"
 }

@@ -12,5 +12,13 @@
   "token_not_found": "You are not login to access this page",
   "token_valid": "Token is valid",
   "token_invalid": "Token is invalid or expired. Please log in again.",
-  "invalid_email_or_password": "Invalid email or password"
+  "invalid_email_or_password": "Invalid email or password",
+
+  "gender": {
+    "female": "female",
+    "male": "male",
+    "prefer_not_to_say": "prefer not to say"
+  },
+
+  "user": "user"
 }

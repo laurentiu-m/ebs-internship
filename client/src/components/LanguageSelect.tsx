@@ -41,8 +41,7 @@ export const LanguageSelect = () => {
 
     const lang = selectedValue.value;
     if (i18n.language === lang) return;
-    i18n.changeLanguage(lang);
-    setLanguage(lang);
+    i18n.changeLanguage(lang).then(() => setLanguage(lang));
   };
 
   return (
