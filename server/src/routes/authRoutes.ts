@@ -28,9 +28,9 @@ router.post("/login", (req: Request, res: Response) => {
     const invalidFields = [
       {
         field: "email",
-        messageKey: "invalid_email_or_password",
+        message: req.t("invalid_email_or_password"),
       },
-      { field: "password", messageKey: "none" },
+      { field: "password", message: "" },
     ];
     res.status(400).json({ errors: invalidFields });
     return;
@@ -68,7 +68,7 @@ router.post("/register", async (req: Request, res: Response) => {
       error: "form_invalid",
       fields: missingFields.map(({ field }) => ({
         field,
-        messageKey: `${field}_empty`,
+        messageKey: req.t(`${field}_empty`),
       })),
     });
     return;
@@ -83,7 +83,7 @@ router.post("/register", async (req: Request, res: Response) => {
     res.status(404).json({
       field: "email",
       type: "server",
-      messageKey: "email_server",
+      message: req.t("email_taken"),
     });
     return;
   }
@@ -95,7 +95,7 @@ router.post("/register", async (req: Request, res: Response) => {
     res.status(404).json({
       field: "username",
       type: "server",
-      messageKey: "username_server",
+      message: req.t("username_taken"),
     });
     return;
   }
@@ -118,11 +118,11 @@ router.post("/register", async (req: Request, res: Response) => {
       { expiresIn: config.jwtExpiration }
     );
     res.status(200).json({
-      message: "You've been registered successfully",
+      message: req.t("register_success"),
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: "An error occurred during registration" });
+    res.status(500).json({ message: req.t("register_error") });
   }
 });
 
@@ -131,18 +131,18 @@ router.post("/valid", (req: Request, res: Response) => {
 
   if (!token) {
     res.status(400).json({
-      message: "You are not login to access this page",
+      message: req.t("token_not_found"),
     });
     return;
   }
 
   try {
     const decodedToken = jwt.verify(token, config.jwtSecret);
-    res.status(200).json({ message: "Token is valid", decodedToken });
+    res.status(200).json({ message: req.t("token_valid"), decodedToken });
     return;
   } catch (error) {
     res.status(400).json({
-      message: "Token is invalid or expired. Please log in again.",
+      message: req.t("token_invalid"),
     });
   }
 });
