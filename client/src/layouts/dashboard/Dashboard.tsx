@@ -1,3 +1,4 @@
+import { Helmet } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 import cn from 'classnames';
 
@@ -9,6 +10,7 @@ export const Dashboard = () => {
 
   return (
     <div className={cn('dashboard', { 'dashboard--wide': isSidebarClosed })}>
+      <Helmet page="dashboard" />
       <h3 className="dashboard__header">Dashboard</h3>
 
       <ChartsComponent />
