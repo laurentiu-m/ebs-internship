@@ -36,6 +36,8 @@ export const useEditUser = () => {
           }
           setError(errData.field, { type: errData.type, message: errData.messageKey });
         }
+
+        throw err;
       }
     },
     onSuccess: async (_, { userId, onClose }) => {
