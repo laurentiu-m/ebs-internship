@@ -46,7 +46,7 @@ export const Filter = <TData,>({ column }: { column: Column<TData, unknown> }) =
           ...sortedUniqueValues.map((value) => ({ value, label: t(`select.${value}`) }))
         ]}
         onChange={(selectedOption, _actionMeta) =>
-          column.setFilterValue((selectedOption as { value: string } | null)?.value || '')
+          column.setFilterValue((selectedOption as { value: string } | null)?.value ?? '')
         }
       />
     )

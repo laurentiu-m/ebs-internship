@@ -31,7 +31,7 @@ export const Table = <TData,>({ table, state, header, page }: TableProps<TData>)
         <div className="input-wrapper">
           <SearchIcon className="icon" />
           <input
-            value={state?.globalFilter || ''}
+            value={state?.globalFilter ?? ''}
             className="input"
             onChange={(e) => state?.setGlobalFilter(e.target.value || null)}
             placeholder={t('table.search')}
@@ -75,7 +75,7 @@ export const Table = <TData,>({ table, state, header, page }: TableProps<TData>)
               <tr key={row.id} className={cn({ 'second-background': index % 2 === 0 })}>
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id} className={cell.column.columnDef.meta?.className || ''}>
+                    <td key={cell.id} className={cell.column.columnDef.meta?.className ?? ''}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   );

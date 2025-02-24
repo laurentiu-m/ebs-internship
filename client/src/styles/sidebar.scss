@@ -31,21 +31,24 @@
         position: absolute;
         right: 0;
         @include flex(center, center, row);
-        background: map-get($neutral, 800);
-        border: none;
-        border-radius: $border-radius;
-        padding: 8px;
         cursor: pointer;
         &:hover .icon {
           fill: map-get($neutral, 100);
         }
 
         .icon {
+          position: absolute;
+          right: 0;
           width: 1em;
           height: 1em;
           font-size: 32px;
           fill: map-get($neutral, 400);
           transition: transform 0.1s ease;
+
+          &:hover {
+            fill: map-get($neutral, 100);
+          }
+
           &--closed {
             transform: scaleX(-1);
           }
