@@ -6,7 +6,7 @@ type ErrorProps = {
   status_code: string;
 };
 
-export const Error = ({ status_code }: ErrorProps) => {
+export const ErrorMessage = ({ status_code }: ErrorProps) => {
   const { t } = useTranslation();
 
   return (

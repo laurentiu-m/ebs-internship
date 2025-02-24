@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 
 import { JwtPayload } from '@src/types';
 
@@ -9,16 +9,16 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [isSidebarClosed, setIsSidebarClosed] = useState(false);
 
   const onToggleSidebar = () => setIsSidebarClosed((prev) => !prev);
-  return (
-    <AppContext.Provider
-      value={{
-        tokenData,
-        setTokenData,
-        isSidebarClosed,
-        onToggleSidebar
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+
+  const contextValue = useMemo(
+    () => ({
+      tokenData,
+      setTokenData,
+      isSidebarClosed,
+      onToggleSidebar
+    }),
+    [tokenData, isSidebarClosed]
   );
+
+  return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;
 };
