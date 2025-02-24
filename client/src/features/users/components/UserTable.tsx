@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
 import { ModalTypeEnum } from '@src/app-constants';
-import { DeleteIcon, EditIcon } from '@src/assets/icons';
-import { Loading, Table, ScrollToTop } from '@src/components';
+import { Loading, Table, ScrollToTop, TableOptions } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { UserTable as UserTableTypes } from '@src/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -104,6 +103,10 @@ export const UserTable = () => {
     deleteUser(userId);
   };
 
+  const cellOptions = (row: Row<UserTableTypes>) => {
+    return <TableOptions id={row.original.id} onOpenModal={onOpenModal} />;
+  };
+
   const modalConfig = {
     [ModalTypeEnum.Create]: <UsersCreate onClose={onCloseModal} />,
     [ModalTypeEnum.Edit]: selectedCell !== undefined && <UsersEdit id={selectedCell} onClose={onCloseModal} />,
@@ -149,15 +152,10 @@ export const UserTable = () => {
       }
     }),
     columnHelper.display({
-      id: 'actions',
+      id: 'options',
       header: t('table.options'),
       meta: { className: 'options-wrapper center end' },
-      cell: ({ row }) => (
-        <div className="options center">
-          <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />
-          <DeleteIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Delete, row.original.id)} />
-        </div>
-      )
+      cell: ({ row }) => cellOptions(row)
     })
   ];
 
@@ -187,7 +185,7 @@ export const UserTable = () => {
         page={{
           pageIndex: pagination.pageIndex,
           pageSize: pagination.pageSize,
-          totalPages: data?.totalPages || 0,
+          totalPages: data?.totalPages ?? 0,
           onPageChange: (pageIndex: number) => setPagination((prev) => ({ ...prev, pageIndex })),
           onRowsChange: (pageSize: number) => setPagination(() => ({ pageIndex: 0, pageSize }))
         }}

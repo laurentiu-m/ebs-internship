@@ -49,7 +49,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
   const currentUserId = tokenData.userId;
 
   const onSubmit = async (data: FormData) => {
-    const postData = { ...data, userId: postUserId ? postUserId : currentUserId };
+    const postData = { ...data, userId: postUserId ?? currentUserId };
 
     return postId ? editPost({ data: postData, postId, onClose }) : createPost({ data: postData, onClose });
   };
