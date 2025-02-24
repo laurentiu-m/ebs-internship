@@ -73,11 +73,23 @@
           margin: 0;
           padding: 8px 16px;
 
-          .text {
+          .header-column {
             font-size: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
             font-weight: map-get(map-get($text-caption, font-weight), medium);
             line-height: map-get($text-caption, line-height);
             color: map-get($neutral, 100);
+            transition: color 0.1s ease-in-out;
+
+            &:hover {
+              color: map-get($primary, hover);
+            }
+
+            &--disable-sort {
+              pointer-events: none;
+            }
           }
         }
       }

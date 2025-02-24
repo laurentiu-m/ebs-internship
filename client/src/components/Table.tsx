@@ -44,13 +44,15 @@ export const Table = <TData,>({ table, state, header, page }: TableProps<TData>)
           {table.getHeaderGroups().map((headerGroup) => (
             <tr className="head-style" key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} colSpan={header.colSpan} className={header.column.columnDef.meta?.className || ''}>
+                <th key={header.id} colSpan={header.colSpan} className={header.column.columnDef.meta?.className ?? ''}>
                   {header.isPlaceholder ? null : (
                     <>
                       {header.column.columnDef.header != null ? (
-                        <div
+                        <button
                           {...{
-                            className: 'text',
+                            className: cn('header-column', {
+                              'header-column--disable-sort': !header.column.getCanSort()
+                            }),
                             onClick: header.column.getToggleSortingHandler()
                           }}
                         >
@@ -58,8 +60,8 @@ export const Table = <TData,>({ table, state, header, page }: TableProps<TData>)
                           {{
                             asc: ' 🔼',
                             desc: ' 🔽'
-                          }[header.column.getIsSorted() as string] || null}
-                        </div>
+                          }[header.column.getIsSorted() as string] ?? null}
+                        </button>
                       ) : null}
                       {header.column.getCanFilter() && <Filter column={header.column} />}
                     </>

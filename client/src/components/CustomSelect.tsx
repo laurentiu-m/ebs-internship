@@ -26,6 +26,7 @@ type Props = {
       width: string;
       align: string;
       color: string;
+      hover: string;
     };
   };
   options: {
@@ -118,7 +119,7 @@ export const CustomSelect = ({ placeholder, placement, options, style, onChange,
       color: style?.singleValue?.color ?? '#ffffff',
       transition: 'all 0.1s ease-in-out',
       ':hover': {
-        color: '#ffffff'
+        color: style?.singleValue?.hover ?? '#ffffff'
       }
     }),
     valueContainer: (provided) => ({

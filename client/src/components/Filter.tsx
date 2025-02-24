@@ -25,7 +25,8 @@ const style = {
     font_size: '10px',
     width: '100%',
     align: 'center',
-    color: '#ffffff'
+    color: '#ffffff',
+    hover: '#5a60e6'
   }
 };
 
