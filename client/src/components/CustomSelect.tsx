@@ -32,7 +32,7 @@ type Props = {
     value: string | number;
     label: string;
   }[];
-  error?: FieldError | undefined;
+  error?: FieldError;
   onChange?: (newValue: unknown, actionMeta: ActionMeta<unknown>) => void;
 };
 
@@ -40,24 +40,28 @@ export const CustomSelect = ({ placeholder, placement, options, style, onChange,
   const customStyles: StylesConfig = {
     container: (provided) => ({
       ...provided,
-      width: style?.container.width || '100%'
+      width: style?.container.width ?? '100%'
     }),
-    control: (provided, { selectProps }) => ({
-      ...provided,
-      backgroundColor: style?.control?.background || '#0b1739',
-      borderWidth: style?.control.border || '1px',
-      borderStyle: 'solid',
-      borderColor: error ? '#ff3b41' : selectProps.menuIsOpen ? '#494ecc' : '#343b4f',
-      borderRadius: '4px',
-      padding: style?.control.padding || '12px',
-      outline: 'none',
-      boxShadow: 'none',
-      overflow: 'hidden',
-      cursor: 'pointer',
-      ':hover': {
-        borderColor: error ? '#ff1f25' : selectProps.menuIsOpen ? '#494ecc' : '#343b4f'
-      }
-    }),
+    control: (provided, { selectProps }) => {
+      const borderColor = selectProps.menuIsOpen ? '#494ecc' : '#343b4f';
+
+      return {
+        ...provided,
+        backgroundColor: style?.control?.background ?? '#0b1739',
+        borderWidth: style?.control.border ?? '1px',
+        borderStyle: 'solid',
+        borderColor: error ? '#ff3b41' : borderColor,
+        borderRadius: '4px',
+        padding: style?.control.padding ?? '12px',
+        outline: 'none',
+        boxShadow: 'none',
+        overflow: 'hidden',
+        cursor: 'pointer',
+        ':hover': {
+          borderColor: error ? '#ff1f25' : borderColor
+        }
+      };
+    },
     indicatorsContainer: (provided) => ({
       ...provided,
       backgroundColor: 'transparent'
@@ -82,8 +86,8 @@ export const CustomSelect = ({ placeholder, placement, options, style, onChange,
     }),
     menu: (provided) => ({
       ...provided,
-      width: style?.menu?.width || '100%',
-      marginTop: style?.menu?.margin || '12px',
+      width: style?.menu?.width ?? '100%',
+      marginTop: style?.menu?.margin ?? '12px',
       backgroundColor: '#0b1739',
       boxShadow: '0px 2px 12px 0px rgba(1, 5, 17, 0.44)',
       overflow: 'hidden',
@@ -92,7 +96,7 @@ export const CustomSelect = ({ placeholder, placement, options, style, onChange,
     option: (provided) => ({
       ...provided,
       width: '100%',
-      fontSize: style?.option?.font_size || '14px',
+      fontSize: style?.option?.font_size ?? '14px',
       textAlign: 'center',
       backgroundColor: '#0b1739',
       color: '#ffffff',
@@ -107,11 +111,11 @@ export const CustomSelect = ({ placeholder, placement, options, style, onChange,
     }),
     singleValue: (provided) => ({
       ...provided,
-      fontSize: style?.singleValue?.font_size || '14px',
-      width: style?.singleValue?.width || '100%',
-      textAlign: (style?.singleValue?.align as React.CSSProperties['textAlign']) || 'left',
+      fontSize: style?.singleValue?.font_size ?? '14px',
+      width: style?.singleValue?.width ?? '100%',
+      textAlign: (style?.singleValue?.align as React.CSSProperties['textAlign']) ?? 'left',
       backgroundColor: 'transparent',
-      color: style?.singleValue?.color || '#ffffff',
+      color: style?.singleValue?.color ?? '#ffffff',
       transition: 'all 0.1s ease-in-out',
       ':hover': {
         color: '#ffffff'
