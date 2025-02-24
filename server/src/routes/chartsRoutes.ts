@@ -26,7 +26,7 @@ router.get("/users/top", (req: Request, res: Response) => {
   });
 
   const topUsers = postCounts
-    .sort((a, b) => b.postCount - a.postCount)
+    .toSorted((a, b) => b.postCount - a.postCount)
     .slice(0, 12);
 
   res.json(topUsers);
@@ -44,7 +44,7 @@ router.get("/posts/top", (req: Request, res: Response) => {
   });
 
   const topPosts = commentCounts
-    .sort((a, b) => b.commentCount - a.commentCount)
+    .toSorted((a, b) => b.commentCount - a.commentCount)
     .slice(0, 12);
 
   res.json(topPosts);

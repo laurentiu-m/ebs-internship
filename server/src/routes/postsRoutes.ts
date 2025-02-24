@@ -19,6 +19,8 @@ router.get("", (req: Request, res: Response) => {
   const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
   const users = dbData.users;
 
+  const searchValue = typeof search === "string" ? search.toLowerCase() : "";
+
   let posts = dbData.posts;
 
   if (userId) {
@@ -30,8 +32,7 @@ router.get("", (req: Request, res: Response) => {
     }));
   }
 
-  if (search) {
-    const searchValue = String(search).toLowerCase();
+  if (searchValue) {
     posts = posts.filter((post) => {
       const title = post.title.toLowerCase().includes(searchValue);
       const username =

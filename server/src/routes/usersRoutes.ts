@@ -23,8 +23,9 @@ router.get("", (req: Request, res: Response) => {
   const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
   let users = dbData.users;
 
-  if (search) {
-    const searchValue = String(search).toLowerCase();
+  const searchValue = typeof search === "string" ? search.toLowerCase() : "";
+
+  if (searchValue) {
     users = users.filter(
       (user) =>
         user.name.toLowerCase().includes(searchValue) ||
