@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { BarChart, XAxis, YAxis, Tooltip, Bar, ResponsiveContainer } from 'recharts';
 
-import { CustomBarShape, CustomCursor, CustomTooltip } from './BarCustomComponents';
+import { CustomBarShape, CustomCursor, CustomTooltipBar } from './ChartsCustomComponents';
 
 export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }: BarChartProps) => {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export const BarChartComponent = ({ queryKey, axisKey, tooltip, fetchFunction }:
           <BarChart data={data} barSize={20}>
             <YAxis width={30} axisLine={false} tickLine={false} />
             <XAxis hide={true} dataKey={axisKey.xKey} />
-            <Tooltip cursor={<CustomCursor />} content={<CustomTooltip tooltip={tooltip} />} />
+            <Tooltip cursor={<CustomCursor />} content={<CustomTooltipBar tooltip={tooltip} />} />
             <Bar dataKey={axisKey.yKey} shape={<CustomBarShape />} barSize={20} />
           </BarChart>
         </ResponsiveContainer>
