@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ACCESS_TOKEN, Routes } from '@src/app-constants';
-import { Loading, FormInput } from '@src/components';
+import { Loading, FormInput, Helmet } from '@src/components';
 import { getLoginSchema } from '@src/schemas';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -44,6 +44,7 @@ export const Login = () => {
 
   return (
     <>
+      <Helmet page="login" />
       <div className="auth__header">
         <h1 className="title">{t('form.login.title')}</h1>
         <p className="description">{t('form.login.description')}</p>

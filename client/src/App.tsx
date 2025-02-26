@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { Dashboard } from '@src/layouts/dashboard/Dashboard';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
@@ -30,43 +31,45 @@ const routesConfig = [
 
 export const App = () => {
   return (
-    <AppProvider>
-      <Suspense fallback={<Loading />}>
-        <Router>
-          <ToastContainer
-            autoClose={2000}
-            closeOnClick={true}
-            draggable={false}
-            position="top-center"
-            hideProgressBar={true}
-            limit={3}
-            theme="dark"
-            stacked
-            className="custom-toast-container"
-          />
-          <ScrollToTop />
-          <RouterPaths>
-            {/* Auth */}
-            <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
-            <Route element={<LayoutAuth />}>
-              <Route path={Routes.Login} element={<Login />} />
-              <Route path={Routes.Register} element={<Register />} />
-            </Route>
+    <HelmetProvider>
+      <AppProvider>
+        <Suspense fallback={<Loading />}>
+          <Router>
+            <ToastContainer
+              autoClose={2000}
+              closeOnClick={true}
+              draggable={false}
+              position="top-center"
+              hideProgressBar={true}
+              limit={3}
+              theme="dark"
+              stacked
+              className="custom-toast-container"
+            />
+            <ScrollToTop />
+            <RouterPaths>
+              {/* Auth */}
+              <Route path="/" element={<Navigate to={Routes.Dashboard} />} />
+              <Route element={<LayoutAuth />}>
+                <Route path={Routes.Login} element={<Login />} />
+                <Route path={Routes.Register} element={<Register />} />
+              </Route>
 
-            {/* Main */}
-            <Route element={<TokenAuth element={<Layout />} />}>
-              {routesConfig.map(({ path, element: Component, requiredRoles }) => (
-                <Route
-                  key={path}
-                  path={path}
-                  element={<RoleAccess requiredRoles={requiredRoles} element={<Component />} />}
-                />
-              ))}
-              <Route path={Routes.NotFound} element={<ErrorMessage status_code="404" />} />
-            </Route>
-          </RouterPaths>
-        </Router>
-      </Suspense>
-    </AppProvider>
+              {/* Main */}
+              <Route element={<TokenAuth element={<Layout />} />}>
+                {routesConfig.map(({ path, element: Component, requiredRoles }) => (
+                  <Route
+                    key={path}
+                    path={path}
+                    element={<RoleAccess requiredRoles={requiredRoles} element={<Component />} />}
+                  />
+                ))}
+                <Route path={Routes.NotFound} element={<ErrorMessage status_code="404" />} />
+              </Route>
+            </RouterPaths>
+          </Router>
+        </Suspense>
+      </AppProvider>
+    </HelmetProvider>
   );
 };
