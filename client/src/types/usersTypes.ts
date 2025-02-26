@@ -118,6 +118,13 @@ export type UserList = {
   rows: number;
 };
 
+export type UserHook = {
+  data: UserCreate;
+  userId?: number;
+  setError: UseFormSetError<UserCreateForm>;
+  onClose: () => void;
+};
+
 export type UserLoginSubmit = (
   data: UserLogin,
   setError: UseFormSetError<UserLogin>,

@@ -25,6 +25,12 @@ export type PostsList = {
   rows: number;
 };
 
+export type PostHook = {
+  data: PostCreate;
+  postId?: number;
+  onClose: () => void;
+};
+
 export type PostForm = Omit<Posts, 'id' | 'userId'>;
 
 export type PostCreate = Omit<Posts, 'id'>;

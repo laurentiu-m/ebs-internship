@@ -1,5 +1,5 @@
 import { apiClient } from '@src/api';
-import { PostCreate } from '@src/types';
+import { PostHook } from '@src/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ export const useCreatePost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data }: { data: PostCreate; onClose: () => void }) => {
+    mutationFn: async ({ data }: PostHook) => {
       await apiClient.posts.create(data);
     },
     onSuccess: (_, { onClose }) => {
