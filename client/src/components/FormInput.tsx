@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { FieldError, FieldValues, UseFormRegister, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 type InputProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
@@ -19,7 +18,6 @@ export const FormInput = <T extends FieldValues>({
   placeholder,
   error
 }: InputProps<T>) => {
-  const { t } = useTranslation();
   return (
     <div className="form__input">
       <div className="form__input-wrapper">
@@ -35,9 +33,7 @@ export const FormInput = <T extends FieldValues>({
           className={cn('form__input-field', { 'form__input-field--error': error })}
         />
       </div>
-      {error && (
-        <p className="form__input-error">{error?.type === 'server' ? t(`error.${error?.message}`) : error?.message}</p>
-      )}
+      {error && <p className="form__input-error">{error?.message}</p>}
     </div>
   );
 };

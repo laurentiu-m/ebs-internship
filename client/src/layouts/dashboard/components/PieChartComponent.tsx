@@ -1,5 +1,6 @@
 import { Loading } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
+import i18n from '@src/i18n';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
@@ -25,7 +26,7 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
   const { tokenData } = useAppContext();
 
   const { data, isLoading } = useQuery<PieChartData>({
-    queryKey: [queryKey, tokenData?.userId],
+    queryKey: [queryKey, tokenData?.userId, i18n.language],
     queryFn: fetchFunction
   });
 

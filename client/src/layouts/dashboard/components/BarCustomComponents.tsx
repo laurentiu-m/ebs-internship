@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 export const CustomCursor = ({ x, y, width, height }: { x?: number; y?: number; width?: number; height?: number }) => {
   return (
     <g>
@@ -39,6 +41,8 @@ export const CustomTooltip = ({
     value: number;
   }[];
 }) => {
+  const { t } = useTranslation();
+
   if (!payload || payload.length === 0) {
     return null;
   }
@@ -51,12 +55,12 @@ export const CustomTooltip = ({
       <p>
         {username ?? (
           <>
-            {tooltip?.xKey}: <span>{label}</span>
+            {t(`${tooltip?.xKey}`)}: <span>{label}</span>
           </>
         )}
       </p>
       <p>
-        {tooltip?.yKey}: <span>{value}</span>
+        {t(`${tooltip?.yKey}`)}: <span>{value}</span>
       </p>
     </div>
   );

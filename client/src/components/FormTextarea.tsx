@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { FieldError, FieldValues, UseFormRegister, Path } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 
 type TextareaProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
@@ -17,8 +16,6 @@ export const FormTextarea = <T extends FieldValues>({
   placeholder,
   error
 }: TextareaProps<T>) => {
-  const { t } = useTranslation();
-
   return (
     <div className="form__textarea">
       <div className="form__textarea-wrapper">
@@ -33,9 +30,7 @@ export const FormTextarea = <T extends FieldValues>({
           className={cn('form__textarea-field', { 'form__textarea-field--error': error })}
         />
       </div>
-      {error && (
-        <p className="form__input-error">{error?.type === 'server' ? t(`error.${error?.message}`) : error?.message}</p>
-      )}
+      {error && <p className="form__input-error">{error?.message}</p>}
     </div>
   );
 };
