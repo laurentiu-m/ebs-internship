@@ -55,11 +55,7 @@ export const PostsForm = ({ mainClass, initialValues, postId, postUserId, onClos
   };
 
   const getTitle = () => {
-    if (postId) {
-      return t('posts.title-edit');
-    } else {
-      return t('posts.title-create');
-    }
+    return postId ? t('posts.title-edit') : t('posts.title-create');
   };
 
   return (

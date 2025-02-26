@@ -66,16 +66,12 @@ export const UserForm = ({ mainClass, submitButton, initialValues, userId, onClo
     };
 
     return userId
-      ? editUser({ userId: userId, data: registerData, setError, onClose })
+      ? editUser({ data: registerData, userId, setError, onClose })
       : createUser({ data: registerData, setError, onClose });
   };
 
   const getTitle = () => {
-    if (userId) {
-      return initialValues?.username;
-    } else {
-      return t('users.title-create');
-    }
+    return userId ? initialValues?.username : t('users.title-create');
   };
 
   return (

@@ -1,5 +1,5 @@
 import { apiClient } from '@src/api';
-import { PostCreate } from '@src/types';
+import { PostHook } from '@src/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
@@ -9,8 +9,8 @@ export const useEditPost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ data, postId }: { data: PostCreate; postId: number; onClose: () => void }) => {
-      await apiClient.posts.edit(data, postId);
+    mutationFn: async ({ data, postId }: PostHook) => {
+      await apiClient.posts.edit(data, postId!);
     },
     onSuccess: (_, { postId, onClose }) => {
       queryClient.invalidateQueries({ queryKey: [`edit_post_${postId}`] });
