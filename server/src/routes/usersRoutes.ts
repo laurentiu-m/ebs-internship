@@ -1,8 +1,6 @@
 import { Router, Request, Response } from "express";
 import jsonServer from "json-server";
 import dotenv from "dotenv";
-import { axiosInstance } from "../api/axios";
-import { readFileSync } from "fs";
 
 dotenv.config();
 
@@ -15,13 +13,14 @@ const db = jsonServer.router(config.db).db;
 const router = Router();
 
 router.get("", (req: Request, res: Response) => {
+  db.read();
+
   const { search, page, rows } = req.query;
 
   const pageNumber = Number(page) || 1;
   const rowsNumber = Number(rows) || 10;
 
-  const dbData = JSON.parse(readFileSync(config.db, "utf-8"));
-  let users = dbData.users;
+  let users = db.get("users").value();
 
   const searchValue = typeof search === "string" ? search.toLowerCase() : "";
 
@@ -41,6 +40,7 @@ router.get("", (req: Request, res: Response) => {
 
   const startIndex = (validPage - 1) * rowsNumber;
   const endIndex = startIndex + rowsNumber;
+
   users = users.slice(startIndex, endIndex);
 
   res.json({
@@ -53,22 +53,22 @@ router.get("", (req: Request, res: Response) => {
 });
 
 router.put("/edit/:id", async (req: Request, res: Response) => {
+  db.read();
+
   const { id } = req.params;
   const { email, username } = req.body;
 
-  const users = db
-    .get("users")
-    .filter((user) => user.id !== Number(id))
-    .value();
+  const users = db.get("users").value();
+  const otherUsers = users.filter((user) => user.id !== Number(id));
 
-  const isEmailTaken = users.some((user) => user.email === email);
-  const isUsernameTaken = users.some((user) => user.username === username);
+  const isEmailTaken = otherUsers.some((user) => user.email === email);
+  const isUsernameTaken = otherUsers.some((user) => user.username === username);
 
   if (isEmailTaken) {
     res.status(404).json({
       field: "email",
       type: "server",
-      messageKey: "email_server",
+      messageKey: req.t("email_taken"),
     });
     return;
   }
@@ -77,20 +77,24 @@ router.put("/edit/:id", async (req: Request, res: Response) => {
     res.status(404).json({
       field: "username",
       type: "server",
-      messageKey: "username_server",
+      messageKey: req.t("username_taken"),
     });
     return;
   }
 
-  try {
-    await axiosInstance.put(`/users/${id}`, req.body);
+  const user = db
+    .get("users")
+    .find({ id: Number(id) })
+    .value();
 
-    res.status(200).json({
-      message: `You've edited successfully user ${id}`,
-    });
-  } catch (err) {
-    res.status(500).json({ message: "An error occurred during editing user" });
-  }
+  Object.assign(user, req.body);
+
+  db.write();
+
+  res.status(200).json({
+    message: `You've edited user ${id} successfully`,
+    user,
+  });
 });
 
 export default router;

@@ -51,6 +51,8 @@ router.get("/posts/top", (req: Request, res: Response) => {
 });
 
 router.get("/gender", (req: Request, res: Response) => {
+  db.read();
+
   const users = db.get("users").value();
 
   const { female, male, prefer_not_to_say } = users.reduce((acc, user) => {
@@ -59,8 +61,6 @@ router.get("/gender", (req: Request, res: Response) => {
   }, {});
 
   const total = female + male + prefer_not_to_say;
-
-  console.log(req.get("Accept-Language"));
 
   res.json({
     total,
@@ -85,6 +85,8 @@ router.get("/gender", (req: Request, res: Response) => {
 });
 
 router.get("/roles", (req: Request, res: Response) => {
+  db.read();
+
   const users = db.get("users").value();
 
   const { admin, moderator, user } = users.reduce((acc, user) => {
