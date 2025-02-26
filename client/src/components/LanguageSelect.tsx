@@ -1,3 +1,4 @@
+import { setLanguage } from '@src/api/axios';
 import { useTranslation } from 'react-i18next';
 
 import { CustomSelect } from './CustomSelect';
@@ -37,9 +38,10 @@ export const LanguageSelect = () => {
   const onChangeLanguage = (newValue: unknown) => {
     const selectedValue = newValue as { value: string; label: string };
     if (!selectedValue) return;
+
     const lang = selectedValue.value;
     if (i18n.language === lang) return;
-    i18n.changeLanguage(lang);
+    i18n.changeLanguage(lang).then(() => setLanguage(lang));
   };
 
   return (

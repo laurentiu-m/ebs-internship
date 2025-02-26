@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { apiClient } from '@src/api';
-import { Roles } from '@src/app-constants';
-import { ModalTypeEnum } from '@src/app-constants';
-import { DeleteIcon, EditIcon } from '@src/assets/icons';
-import { Loading, Table, ScrollToTop } from '@src/components';
+import { Roles, ModalTypeEnum } from '@src/app-constants';
+import { Loading, Table, ScrollToTop, TableOptions } from '@src/components';
 import { DeleteModal } from '@src/components/DeleteModal';
 import { useAppContext } from '@src/hooks/useAppContext';
 import { PostsTable as Posts } from '@src/types';
@@ -18,7 +16,8 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
   PaginationState,
-  RowData
+  RowData,
+  Row
 } from '@tanstack/react-table';
 import { useTranslation } from 'react-i18next';
 import Modal from 'react-modal';
@@ -105,6 +104,10 @@ export const PostsTable = () => {
     deletePost(postId);
   };
 
+  const cellOptions = (row: Row<Posts>) => {
+    return <TableOptions id={row.original.id} onOpenModal={onOpenModal} />;
+  };
+
   const modalConfig = {
     [ModalTypeEnum.Create]: <PostsCreate onClose={onCloseModal} />,
     [ModalTypeEnum.Edit]: selectedCell !== undefined && <PostEdit id={selectedCell} onClose={onCloseModal} />,
@@ -133,12 +136,7 @@ export const PostsTable = () => {
       id: 'actions',
       header: t('table.options'),
       meta: { className: 'options-wrapper center end' },
-      cell: ({ row }) => (
-        <div className="options center">
-          <EditIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Edit, row.original.id)} />
-          <DeleteIcon className="icon" onClick={() => onOpenModal(ModalTypeEnum.Delete, row.original.id)} />
-        </div>
-      )
+      cell: ({ row }) => cellOptions(row)
     })
   ];
 
@@ -167,7 +165,7 @@ export const PostsTable = () => {
         page={{
           pageIndex: pagination.pageIndex,
           pageSize: pagination.pageSize,
-          totalPages: data?.totalPages || 0,
+          totalPages: data?.totalPages ?? 0,
           onPageChange: (pageIndex: number) => setPagination((prev) => ({ ...prev, pageIndex })),
           onRowsChange: (pageSize: number) => setPagination(() => ({ pageIndex: 0, pageSize }))
         }}

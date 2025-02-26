@@ -3,6 +3,8 @@ import jsonServer from "json-server";
 import cors from "cors";
 import dotenv from "dotenv";
 import routes from "./routes/index";
+import i18next from "./i18n";
+import middleware from "i18next-http-middleware";
 
 dotenv.config();
 
@@ -18,6 +20,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(middleware.handle(i18next));
 
 app.use(jsonMiddlewares);
 app.use("/api", routes);

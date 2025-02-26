@@ -16,7 +16,7 @@ import api from './axios';
 import { stringifyUrl } from './queryString';
 
 export const users = {
-  getList: async (params: StringifiableRecord): Promise<UserList> => {
+  getList: async (params?: StringifiableRecord): Promise<UserList> => {
     const { data } = await api.get(stringifyUrl('/api/users', params));
     return { ...data };
   },

@@ -58,6 +58,23 @@
     "title-create": "Crează postare",
     "title-edit": "Editează postare"
   },
+
+  "chart": {
+    "comments": "Comentarii",
+    "title": "Titlu"
+  },
+
+  "select": {
+    "male": "Masculin",
+    "female": "Feminin",
+    "prefer_not_to_say": "Prefer să nu specific",
+    "admin": "Admin",
+    "moderator": "Moderator",
+    "user": "Utilizator",
+    "gender": "Gen",
+    "role": "Roluri"
+  },
+
   "dashboard": {
     "top_users": "Utilizatorii cu Cele Mai Multe Postări",
     "top_posts": "Postările cu Cele Mai Multe Comentarii",
@@ -101,17 +118,14 @@
     "name_letters": "Trebuie să conțină doar litere",
     "username_empty": "Numele de utilizator este obligatoriu.",
     "username_min": "Numele de utilizator trebuie să aibă cel puțin 4 caractere.",
-    "username_server": "Acest nume de utilizator este deja folosit. Te rugăm să alegi altul.",
     "email_empty": "Adresa de email este obligatorie.",
     "email_invalid": "Introdu o adresă de email validă.",
-    "email_server": "Această adresă de email este deja înregistrată. Încearcă alta.",
     "phone_empty": "Numărul de telefon este obligatoriu.",
     "phone_invalid": "Introdu un număr de telefon valid.",
     "gender_empty": "Genul este obligatoriu.",
     "role_empty": "Rolul este obligatoriu.",
     "language_empty": "Selectează limba preferată.",
     "password_empty": "Parola este obligatorie.",
-    "invalid_email_or_password": "Email sau parolă invalidă.",
     "password_min": "Parola trebuie să aibă cel puțin 8 caractere.",
     "confirm_password_empty": "Confirmarea parolei este obligatorie.",
     "confirm_password_invalid": "Parolele nu se potrivesc.",

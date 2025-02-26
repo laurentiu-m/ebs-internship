@@ -60,21 +60,23 @@ router.get("/gender", (req: Request, res: Response) => {
 
   const total = female + male + prefer_not_to_say;
 
+  console.log(req.get("Accept-Language"));
+
   res.json({
     total,
     result: [
       {
-        name: "female",
+        name: req.t("gender.female"),
         value: female,
         percentage: onPercentage(female, total),
       },
       {
-        name: "male",
+        name: req.t("gender.male"),
         value: male,
         percentage: onPercentage(male, total),
       },
       {
-        name: "prefer_not_to_say",
+        name: req.t("gender.prefer_not_to_say"),
         value: prefer_not_to_say,
         percentage: onPercentage(prefer_not_to_say, total),
       },
@@ -106,7 +108,7 @@ router.get("/roles", (req: Request, res: Response) => {
         percentage: onPercentage(moderator, total),
       },
       {
-        name: "user",
+        name: req.t("user"),
         value: user,
         percentage: onPercentage(user, total),
       },
