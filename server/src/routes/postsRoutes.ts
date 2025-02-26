@@ -12,6 +12,8 @@ const db = jsonServer.router(config.db).db;
 const router = Router();
 
 router.get("", (req: Request, res: Response) => {
+  db.read();
+
   const { userId, search, page, rows } = req.query;
 
   const pageNumber = Number(page) || 1;

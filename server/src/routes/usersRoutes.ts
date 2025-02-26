@@ -68,7 +68,7 @@ router.put("/edit/:id", async (req: Request, res: Response) => {
     res.status(404).json({
       field: "email",
       type: "server",
-      messageKey: req.t("email_taken"),
+      message: req.t("email_taken"),
     });
     return;
   }
@@ -77,7 +77,7 @@ router.put("/edit/:id", async (req: Request, res: Response) => {
     res.status(404).json({
       field: "username",
       type: "server",
-      messageKey: req.t("username_taken"),
+      message: req.t("username_taken"),
     });
     return;
   }
