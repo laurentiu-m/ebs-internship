@@ -26,7 +26,7 @@ type Props = {
       width: string;
       align: string;
       color: string;
-      hover: string;
+      hover?: string;
     };
   };
   options: {
