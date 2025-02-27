@@ -15,6 +15,11 @@
   padding: 0;
 }
 
+html,
+body {
+  background-color: map-get($neutral, 800);
+}
+
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.5);
   @include flex(center, center, column);
