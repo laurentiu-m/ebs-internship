@@ -11,7 +11,7 @@ export const Helmet = ({ page }: Props) => {
 
   return (
     <HelmetComponent>
-      <title>NexaPanel &#183; {title}</title>
+      <title>NexaPanel | {title}</title>
       <meta name="description" content={description} />
     </HelmetComponent>
   );
