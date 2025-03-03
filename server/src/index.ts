@@ -22,6 +22,11 @@ app.use(cors());
 app.use(express.json());
 app.use(middleware.handle(i18next));
 
+app.use((req, res, next) => {
+  jsonRouter.db.read();
+  next();
+});
+
 app.use(jsonMiddlewares);
 app.use("/api", routes);
 app.use("/", jsonRouter);

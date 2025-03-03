@@ -78,7 +78,7 @@ export type UserRegisterForm = Omit<UserRegister, 'name'> & {
   last_name: string;
 };
 
-export type UserCreateForm = {
+export type UserCreateForm = Omit<UserRegister, 'name'> & {
   first_name: string;
   last_name: string;
   role: string;
