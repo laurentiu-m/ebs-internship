@@ -13,4 +13,5 @@ export * from './TablePagination';
 export * from './Filter';
 export * from './FormTextarea';
 export * from './ScrollToTop';
+export * from './Helmet';
 export * from './TableOptions';

@@ -1,3 +1,4 @@
+import { Helmet } from '@src/components';
 import { useTranslation } from 'react-i18next';
 
 import { PostsTable } from '../components/PostsTable';
@@ -8,6 +9,7 @@ export const Posts = () => {
 
   return (
     <div className="posts">
+      <Helmet page="posts" />
       <h3 className="posts__header">{t('sidebar.posts')}</h3>
 
       <PostsTable />

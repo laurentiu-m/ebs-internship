@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Genders } from '@src/app-constants';
-import { FormInput, FormSelect } from '@src/components';
+import { FormInput, FormSelect, Helmet } from '@src/components';
 import { registerSubmit } from '@src/features/auth/utils/authUtils';
 import { getRegisterSchema } from '@src/schemas';
 import { UserRegister } from '@src/types';
@@ -45,6 +45,7 @@ export const Register = () => {
 
   return (
     <>
+      <Helmet page="register" />
       <div className={`auth__header`}>
         <h1 className="title">{t('form.register.title')}</h1>
         <p className="description">{t('form.register.description')}</p>
