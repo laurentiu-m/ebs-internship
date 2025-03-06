@@ -20,13 +20,18 @@ router.get("/users/top", (req: Request, res: Response) => {
   const posts = db.get("posts").value();
   const users = db.get("users").value();
 
-  const postCounts = users.map((user) => {
+  let postCounts = users.reduce((acc, user) => {
     const postCount = posts.filter((post) => post.userId === user.id).length;
-    return { userId: user.id, postCount, username: user.username };
-  });
+
+    if (postCount > 0) {
+      acc.push({ userId: user.id, postCount, username: user.username });
+    }
+
+    return acc;
+  }, []);
 
   const topUsers = postCounts
-    .sort((a, b) => b.postCount - a.postCount)
+    .toSorted((a, b) => b.postCount - a.postCount)
     .slice(0, 12);
 
   res.json(topUsers);
@@ -36,31 +41,40 @@ router.get("/posts/top", (req: Request, res: Response) => {
   const posts = db.get("posts").value();
   const comments = db.get("comments").value();
 
-  const commentCounts = posts.map((post) => {
+  const commentCounts = posts.reduce((acc, post) => {
     const commentCount = comments.filter(
       (comment) => comment.postId === post.id
     ).length;
-    return { title: post.title, commentCount };
-  });
+
+    if (commentCount > 0) {
+      acc.push({ title: post.title, commentCount });
+    }
+
+    return acc;
+  }, []);
 
   const topPosts = commentCounts
-    .sort((a, b) => b.commentCount - a.commentCount)
+    .toSorted((a, b) => b.commentCount - a.commentCount)
     .slice(0, 12);
 
   res.json(topPosts);
 });
 
 router.get("/gender", (req: Request, res: Response) => {
+  db.read();
+
   const users = db.get("users").value();
 
-  const { female, male, prefer_not_to_say } = users.reduce((acc, user) => {
+  const {
+    female = 0,
+    male = 0,
+    prefer_not_to_say = 0,
+  } = users.reduce((acc, user) => {
     acc[user.gender] = (acc[user.gender] || 0) + 1;
     return acc;
   }, {});
 
   const total = female + male + prefer_not_to_say;
-
-  console.log(req.get("Accept-Language"));
 
   res.json({
     total,
@@ -85,9 +99,15 @@ router.get("/gender", (req: Request, res: Response) => {
 });
 
 router.get("/roles", (req: Request, res: Response) => {
+  db.read();
+
   const users = db.get("users").value();
 
-  const { admin, moderator, user } = users.reduce((acc, user) => {
+  const {
+    admin = 0,
+    moderator = 0,
+    user = 0,
+  } = users.reduce((acc, user) => {
     acc[user.role] = (acc[user.role] || 0) + 1;
     return acc;
   }, {});

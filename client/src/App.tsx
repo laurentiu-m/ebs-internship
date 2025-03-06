@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes as RouterPaths, Navigate } from 
 import { ToastContainer } from 'react-toastify';
 
 import { Roles, Routes } from './app-constants';
-import { Layout, Error, Loading, ScrollToTop } from './components';
+import { Layout, ErrorMessage, Loading, ScrollToTop } from './components';
 import { AppProvider } from './contexts/TokenContext/AppProvider';
 import { Layout as LayoutAuth } from './features/auth/components/Layout';
 import { Login, Register } from './features/auth/pages';
@@ -64,7 +64,7 @@ export const App = () => {
                     element={<RoleAccess requiredRoles={requiredRoles} element={<Component />} />}
                   />
                 ))}
-                <Route path={Routes.NotFound} element={<Error status_code="404" />} />
+                <Route path={Routes.NotFound} element={<ErrorMessage status_code="404" />} />
               </Route>
             </RouterPaths>
           </Router>

@@ -3,7 +3,6 @@ import jsonServer from "json-server";
 import { User, LoginUser, RegisterUser } from "../types";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import { axiosInstance } from "../api/axios";
 
 dotenv.config();
 
@@ -19,6 +18,8 @@ const db = jsonServer.router(config.db).db;
 const router = Router();
 
 router.post("/login", (req: Request, res: Response) => {
+  db.read();
+
   const { email, password }: LoginUser = req.body;
 
   const users: User[] = db.get("users").value();
@@ -100,30 +101,36 @@ router.post("/register", async (req: Request, res: Response) => {
     return;
   }
 
-  try {
-    const response = await axiosInstance.post("/users", {
-      name,
-      username,
-      email,
-      phone,
-      gender,
-      password,
-      role: role || "user",
-    });
+  const newId =
+    users.length > 0
+      ? Math.max(...users.map((user) => Number(user.id))) + 1
+      : 1;
 
-    const user = response.data;
-    const token = jwt.sign(
-      { userId: user.id, username: user.username, role: user.role },
-      config.jwtSecret,
-      { expiresIn: config.jwtExpiration }
-    );
-    res.status(200).json({
-      message: req.t("register_success"),
-      token,
-    });
-  } catch (error) {
-    res.status(500).json({ message: req.t("register_error") });
-  }
+  const newUser = {
+    id: newId,
+    name,
+    username,
+    email,
+    phone,
+    gender,
+    password,
+    role: role || "user",
+  };
+
+  db.get("users").push(newUser).write();
+
+  const user = db.get("users").find({ email }).value();
+
+  const token = jwt.sign(
+    { userId: user.id, username: user.username, role: user.role },
+    config.jwtSecret,
+    { expiresIn: config.jwtExpiration }
+  );
+
+  res.status(200).json({
+    message: req.t("register_success"),
+    token,
+  });
 });
 
 router.post("/valid", (req: Request, res: Response) => {

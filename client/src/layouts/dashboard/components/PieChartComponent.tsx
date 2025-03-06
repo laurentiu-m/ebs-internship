@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
+import { CustomTooltipPie } from './ChartsCustomComponents';
+
 type PieChartData = {
   total: number;
   result: [
@@ -38,33 +40,6 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
     );
   if (!data) return;
 
-  const CustomTooltip = ({
-    active,
-    payload
-  }: {
-    active?: boolean;
-    payload?: {
-      payload: {
-        name: string;
-        value: number;
-      };
-    }[];
-  }) => {
-    if (active && payload && payload.length) {
-      const { name, value } = payload[0].payload;
-
-      return (
-        <div className="custom-tooltip">
-          <p>
-            {name}: <span>{value}</span>
-          </p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <div className="pie-chart">
       <div className="header">
@@ -86,11 +61,11 @@ export const PieChartComponent = ({ queryKey, fetchFunction }: Props) => {
               cx="50%"
               cy="50%"
             >
-              {data.result.map((_, index) => (
-                <Cell key={`cell-${index}`} className={`color-${index}`} />
+              {data.result.map((item, index) => (
+                <Cell key={`cell-${item.name}`} className={`color-${index}`} />
               ))}
             </Pie>
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltipPie />} />
           </PieChart>
         </ResponsiveContainer>
         <div className="total">{data.total}</div>

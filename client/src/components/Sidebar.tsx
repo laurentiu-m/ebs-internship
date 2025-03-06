@@ -48,8 +48,8 @@ export const Sidebar = () => {
           <h2 className="text">NexaPanel</h2>
         </div>
 
-        <div className={cn('toggle', { 'toggle--rotated': isSidebarClosed })} onClick={onToggleSidebar}>
-          <ArrowIcon className={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
+        <div className="toggle">
+          <ArrowIcon onClick={onToggleSidebar} className={`icon ${isSidebarClosed ? 'icon--closed' : ''}`} />
         </div>
       </div>
 

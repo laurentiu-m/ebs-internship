@@ -26,7 +26,7 @@ export const CustomBarShape = ({
   );
 };
 
-export const CustomTooltip = ({
+export const CustomTooltipBar = ({
   tooltip,
   label,
   payload
@@ -64,4 +64,31 @@ export const CustomTooltip = ({
       </p>
     </div>
   );
+};
+
+export const CustomTooltipPie = ({
+  active,
+  payload
+}: {
+  active?: boolean;
+  payload?: {
+    payload: {
+      name: string;
+      value: number;
+    };
+  }[];
+}) => {
+  if (active && payload?.length) {
+    const { name, value } = payload[0].payload;
+
+    return (
+      <div className="custom-tooltip">
+        <p>
+          {name}: <span>{value}</span>
+        </p>
+      </div>
+    );
+  }
+
+  return null;
 };

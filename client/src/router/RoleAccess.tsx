@@ -1,4 +1,4 @@
-import { Error, Loading } from '@src/components';
+import { ErrorMessage, Loading } from '@src/components';
 import { useAppContext } from '@src/hooks/useAppContext';
 
 type RoleAccessProps = {
@@ -16,7 +16,7 @@ export const RoleAccess = ({ element, requiredRoles }: RoleAccessProps) => {
   const userRole = tokenData?.role;
 
   if (!userRole || !requiredRoles.includes(userRole)) {
-    return <Error status_code="403" />;
+    return <ErrorMessage status_code="403" />;
   }
 
   return element;

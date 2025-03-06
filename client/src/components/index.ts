@@ -1,6 +1,6 @@
 export * from './Layout';
 export * from './Loading';
-export * from './Error';
+export * from './ErrorMessage';
 export * from './LanguageSelect';
 export * from './FormInput';
 export * from './FormSelect';

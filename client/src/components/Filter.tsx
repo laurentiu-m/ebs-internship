@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 import { CustomSelect } from './CustomSelect';
 
+type OptionType = { value: string; label: string };
+
 const style = {
   container: {
     width: '100%'
@@ -25,7 +27,8 @@ const style = {
     font_size: '10px',
     width: '100%',
     align: 'center',
-    color: '#ffffff'
+    color: '#ffffff',
+    hover: '#5a60e6'
   }
 };
 
@@ -34,6 +37,11 @@ export const Filter = <TData,>({ column }: { column: Column<TData, unknown> }) =
   const { filterVariant, placeholder } = column.columnDef.meta ?? {};
 
   const sortedUniqueValues = useMemo(() => Array.from(column.getFacetedUniqueValues().keys()).slice(0, 5), [column]);
+
+  const handleChange = (newValue: unknown) => {
+    const option = newValue as OptionType;
+    column.setFilterValue(option.value ?? '');
+  };
 
   return (
     filterVariant === 'select' && (
@@ -45,9 +53,7 @@ export const Filter = <TData,>({ column }: { column: Column<TData, unknown> }) =
           { value: '', label: t(`select.${placeholder}`) },
           ...sortedUniqueValues.map((value) => ({ value, label: t(`select.${value}`) }))
         ]}
-        onChange={(selectedOption, _actionMeta) =>
-          column.setFilterValue((selectedOption as { value: string } | null)?.value || '')
-        }
+        onChange={handleChange}
       />
     )
   );
